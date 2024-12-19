@@ -1,0 +1,17 @@
+Miembros del grupo: 
+
+Macorís Decena Giménez, Francisco José del Río Domínguez 
+
+Idea del proyecto Android: 
+
+desarrollar una aplicación de organización de tareas del estilo de myHomework. Permitirá añadir, editar y eliminar asignaturas/materias, tareas. 
+
+Las tareas se podrán marcar como completadas, y ver su estado, su fecha de vencimiento, etc.
+
+También incluiremos notificaciones para avisar al usuario sobre el vencimiento próximo de sus tareas, así como un menú de opciones para configurar parámetros variables.
+
+Además, para mejorar la aplicación particular myHomework, se incluirán los siguientes aspectos:
+
+- un apartado de notas rápidas, que echamos bastante de menos como usuarios de myHomework.
+- un incentivo a completar tareas y usar la aplicación: incluiremos temas estéticos, para personalizar la aplicación según los gustos del usuario, en una especie de tienda de temas. Al completar tareas, el usuario ganará puntos, con limitación de ganancia diaria para evitar trampas del usuario o bots. Con esos puntos, podrá comprar temas y personalizar la aplicación.
+- Cualquier otra idea que se nos ocurra sobre la marcha
