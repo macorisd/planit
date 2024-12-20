@@ -66,17 +66,28 @@ public class TaskManager {
         );
 
         while (cursor.moveToNext()) {
+            String id = cursor.getString(cursor.getColumnIndexOrThrow(TaskContract.TaskEntry.COLUMN_NAME_ID));
             String name = cursor.getString(cursor.getColumnIndexOrThrow(TaskContract.TaskEntry.COLUMN_NAME_NAME));
             String description = cursor.getString(cursor.getColumnIndexOrThrow(TaskContract.TaskEntry.COLUMN_NAME_DESCRIPTION));
             int completed = cursor.getInt(cursor.getColumnIndexOrThrow(TaskContract.TaskEntry.COLUMN_NAME_COMPLETED));
             int importance = cursor.getInt(cursor.getColumnIndexOrThrow(TaskContract.TaskEntry.COLUMN_NAME_IMPORTANCE));
 
-            tasks.add(new Task(name, description, completed == 1, importance));
+            tasks.add(new Task(id, name, description, completed == 1, importance));
         }
         cursor.close();
 
         return tasks;
     }
+
+    // Método para eliminar una tarea
+    public void deleteTask(int taskId) {
+        String selection = TaskContract.TaskEntry.COLUMN_NAME_ID + " = ?";
+        String[] selectionArgs = {String.valueOf(taskId)};
+
+        // Eliminar la tarea de la base de datos
+        db.delete(TaskContract.TaskEntry.TABLE_NAME, selection, selectionArgs);
+    }
+
 
 
     @Override

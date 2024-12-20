@@ -1,5 +1,6 @@
 package com.example.planit.entity;
 
+import android.content.Intent;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -9,6 +10,7 @@ import androidx.annotation.NonNull;
 import androidx.recyclerview.widget.RecyclerView;
 
 import com.example.planit.R;
+import com.example.planit.activity.TaskDetailActivity;
 
 import java.util.List;
 
@@ -32,6 +34,17 @@ public class TaskAdapter extends RecyclerView.Adapter<TaskAdapter.TaskViewHolder
         Task task = taskList.get(position);
         holder.taskName.setText(task.getName());
         holder.taskDescription.setText(task.getDescription());
+
+        // Manejar clics en los elementos de la lista
+        holder.itemView.setOnClickListener(v -> {
+            Intent intent = new Intent(v.getContext(), TaskDetailActivity.class);
+            intent.putExtra("TASK_ID", task.getId());
+            intent.putExtra("TASK_NAME", task.getName());
+            intent.putExtra("TASK_DESCRIPTION", task.getDescription());
+            intent.putExtra("TASK_COMPLETED", task.isCompleted());
+            intent.putExtra("TASK_IMPORTANCE", task.getImportance());
+            v.getContext().startActivity(intent);
+        });
     }
 
     @Override
