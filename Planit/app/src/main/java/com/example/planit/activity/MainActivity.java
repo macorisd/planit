@@ -1,52 +1,55 @@
 package com.example.planit.activity;
 
 import android.os.Bundle;
-import android.view.View;
-import android.widget.Toast;
 
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
 import com.example.planit.R;
-import com.example.planit.entity.TaskAdapter;
 import com.example.planit.entity.SingletonTaskList;
-import com.example.planit.entity.Task;
-
-import java.util.List;
+import com.example.planit.entity.TaskAdapter;
+import com.example.planit.entity.TaskManager;
 
 public class MainActivity extends AppCompatActivity {
 
-    // RecyclerView para mostrar las tareas
-    private RecyclerView recyclerView;
-    private TaskAdapter taskAdapter;
+    public static final String DATABASE_NAME = "planitDB.db";
+    public static final String SHARED_AGENDA = "SHARED_AGENDA";
+
+    // Resto de atributos
+    private TaskManager taskManager;
+
+    private void initTaskManager() {
+        taskManager = (TaskManager) SingletonTaskList.getInstance().get(MainActivity.SHARED_AGENDA);
+        if (taskManager == null) {
+            taskManager = new TaskManager(getApplicationContext(), MainActivity.DATABASE_NAME);
+            SingletonTaskList.getInstance().put(MainActivity.SHARED_AGENDA, taskManager);
+        }
+    }
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
 
-        // Inicializar el RecyclerView
-        recyclerView = findViewById(R.id.recyclerView);
+        initTaskManager();
+        taskManager.initTaskManager();
+
+        RecyclerView recyclerView = findViewById(R.id.recyclerView);
+
+        // Configurar el RecyclerView
         recyclerView.setLayoutManager(new LinearLayoutManager(this));
-
-        // Obtener la lista de tareas desde el SingletonTaskList
-        List<Task> tasks = SingletonTaskList.getInstance().getTaskList();
-
-        // Comprobar si la lista de tareas está vacía
-        if (tasks.isEmpty()) {
-            Toast.makeText(this, "No hay tareas disponibles", Toast.LENGTH_SHORT).show();
-        }
-
-        // Configurar el adaptador del RecyclerView
-        taskAdapter = new TaskAdapter(tasks);
+        TaskAdapter taskAdapter = new TaskAdapter(taskManager.getTasks());
         recyclerView.setAdapter(taskAdapter);
     }
 
     @Override
-    protected void onStart() {
-        super.onStart();
-        // Actualizar el adaptador si la lista de tareas cambia
-        taskAdapter.notifyDataSetChanged();
+    protected void onDestroy() {
+        super.onDestroy();
+        try {
+            taskManager.finalize();
+        } catch (Throwable e) {
+            throw new RuntimeException(e);
+        }
     }
 }
