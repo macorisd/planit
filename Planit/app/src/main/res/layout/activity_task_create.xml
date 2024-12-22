@@ -1,0 +1,68 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:padding="16dp"
+    android:orientation="vertical">
+
+    <!-- Campo de nombre de tarea -->
+    <EditText
+        android:id="@+id/editTextTaskName"
+        android:layout_width="match_parent"
+        android:layout_height="48dp"
+        android:hint="Nombre de la tarea"
+        android:inputType="text" />
+
+    <!-- Campo de descripción de tarea -->
+    <EditText
+        android:id="@+id/editTextTaskDescription"
+        android:layout_width="match_parent"
+        android:layout_height="48dp"
+        android:hint="Descripción"
+        android:inputType="text" />
+
+    <!-- Campo de fecha de vencimiento -->
+    <EditText
+        android:id="@+id/editTextDueDate"
+        android:layout_width="match_parent"
+        android:layout_height="48dp"
+        android:hint="Fecha de vencimiento (YYYY-MM-DD)"
+        android:inputType="date" />
+
+    <!-- Campo de hora de vencimiento -->
+    <EditText
+        android:id="@+id/editTextDueTime"
+        android:layout_width="match_parent"
+        android:layout_height="48dp"
+        android:hint="Hora de vencimiento (HH:MM)"
+        android:inputType="time" />
+
+    <!-- Spinner de importancia -->
+    <Spinner
+        android:id="@+id/spinnerImportance"
+        android:layout_width="match_parent"
+        android:layout_height="48dp"
+        android:entries="@array/importance_array" />
+
+    <!-- Spinner de tipo -->
+    <Spinner
+        android:id="@+id/spinnerType"
+        android:layout_width="match_parent"
+        android:layout_height="48dp"
+        android:entries="@array/type_array" />
+
+    <!-- Spinner de asignatura -->
+    <Spinner
+        android:id="@+id/spinnerSubject"
+        android:layout_width="match_parent"
+        android:layout_height="48dp"
+        android:entries="@array/subject_array" />
+
+    <!-- Botón de guardar -->
+    <Button
+        android:id="@+id/buttonSaveTask"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:text="Guardar tarea" />
+
+</LinearLayout>

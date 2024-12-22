@@ -17,6 +17,14 @@ public class TaskDetailActivity extends AppCompatActivity {
 
     private TaskManager taskManager;
     private int taskId; // ID de la tarea para eliminarla
+    private String taskName;
+    private String taskDescription;
+    private boolean taskCompleted;
+    private int taskImportance;
+    private String taskType;
+    private int taskSubjectId;
+    private String taskDueDate;
+    private String taskDueTime;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -25,25 +33,38 @@ public class TaskDetailActivity extends AppCompatActivity {
 
         // Obtener datos de la tarea
         taskId = getIntent().getIntExtra("TASK_ID", -1);
-        String name = getIntent().getStringExtra("TASK_NAME");
-        String description = getIntent().getStringExtra("TASK_DESCRIPTION");
-        boolean completed = getIntent().getBooleanExtra("TASK_COMPLETED", false);
-        int importance = getIntent().getIntExtra("TASK_IMPORTANCE", 0);
+        taskName = getIntent().getStringExtra("TASK_NAME");
+        taskDescription = getIntent().getStringExtra("TASK_DESCRIPTION");
+        taskCompleted = getIntent().getBooleanExtra("TASK_COMPLETED", false);
+        taskImportance = getIntent().getIntExtra("TASK_IMPORTANCE", 0);
+        taskType = getIntent().getStringExtra("TASK_TYPE");
+        taskSubjectId = getIntent().getIntExtra("TASK_SUBJECT_ID", -1);
+        taskDueDate = getIntent().getStringExtra("TASK_DUE_DATE");
+        taskDueTime = getIntent().getStringExtra("TASK_DUE_TIME");
 
         // Inicializar TaskManager
         taskManager = (TaskManager) SingletonTaskList.getInstance().get(MainActivity.SHARED_AGENDA);
 
         // Configurar vistas
-        TextView taskName = findViewById(R.id.taskDetailName);
-        TextView taskDescription = findViewById(R.id.taskDetailDescription);
-        TextView taskCompleted = findViewById(R.id.taskDetailCompleted);
-        TextView taskImportance = findViewById(R.id.taskDetailImportance);
+        TextView taskNameView = findViewById(R.id.taskDetailName);
+        TextView taskDescriptionView = findViewById(R.id.taskDetailDescription);
+        TextView taskCompletedView = findViewById(R.id.taskDetailCompleted);
+        TextView taskImportanceView = findViewById(R.id.taskDetailImportance);
+        TextView taskTypeView = findViewById(R.id.taskDetailType);
+        TextView taskSubjectView = findViewById(R.id.taskDetailSubject);
+        TextView taskDueDateView = findViewById(R.id.taskDetailDueDate);
+        TextView taskDueTimeView = findViewById(R.id.taskDetailDueTime);
         Button deleteButton = findViewById(R.id.deleteTaskButton);
+        Button editButton = findViewById(R.id.editTaskButton);
 
-        taskName.setText(name);
-        taskDescription.setText(description);
-        taskCompleted.setText(completed ? "Completada" : "Pendiente");
-        taskImportance.setText("Importancia: " + importance);
+        taskNameView.setText(taskName);
+        taskDescriptionView.setText(taskDescription);
+        taskCompletedView.setText(taskCompleted ? "Completada" : "Pendiente");
+        taskImportanceView.setText("Importancia: " + taskImportance);
+        taskTypeView.setText("Tipo: " + taskType);
+        taskSubjectView.setText("Asignatura: " + taskSubjectId);
+        taskDueDateView.setText("Fecha de vencimiento: " + taskDueDate);
+        taskDueTimeView.setText("Hora de vencimiento: " + taskDueTime);
 
         // Manejar el clic del botón "Eliminar"
         deleteButton.setOnClickListener(v -> {
@@ -58,6 +79,26 @@ public class TaskDetailActivity extends AppCompatActivity {
                 finish();
             } else {
                 Toast.makeText(this, "Error al eliminar la tarea", Toast.LENGTH_SHORT).show();
+            }
+        });
+
+        // Manejar el clic del botón "Editar"
+        editButton.setOnClickListener(v -> {
+            if (taskId != -1) {
+                // Pasar los detalles de la tarea a la actividad de edición
+                Intent intent = new Intent(this, TaskEditActivity.class);
+                intent.putExtra("TASK_ID", taskId);
+                intent.putExtra("TASK_NAME", taskName);
+                intent.putExtra("TASK_DESCRIPTION", taskDescription);
+                intent.putExtra("TASK_COMPLETED", taskCompleted);
+                intent.putExtra("TASK_IMPORTANCE", taskImportance);
+                intent.putExtra("TASK_TYPE", taskType);
+                intent.putExtra("TASK_SUBJECT_ID", taskSubjectId);
+                intent.putExtra("TASK_DUE_DATE", taskDueDate);
+                intent.putExtra("TASK_DUE_TIME", taskDueTime);
+                startActivity(intent);
+            } else {
+                Toast.makeText(this, "Error al editar la tarea", Toast.LENGTH_SHORT).show();
             }
         });
     }

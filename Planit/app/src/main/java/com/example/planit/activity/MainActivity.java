@@ -1,6 +1,9 @@
 package com.example.planit.activity;
 
+import android.content.Intent;
 import android.os.Bundle;
+import android.view.View;
+import android.widget.Button;
 
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.recyclerview.widget.LinearLayoutManager;
@@ -12,8 +15,6 @@ import com.example.planit.entity.TaskAdapter;
 import com.example.planit.entity.TaskManager;
 
 public class MainActivity extends AppCompatActivity {
-
-    public static final String DATABASE_NAME = "planitDB.db";
     public static final String SHARED_AGENDA = "SHARED_AGENDA";
 
     // Resto de atributos
@@ -22,7 +23,7 @@ public class MainActivity extends AppCompatActivity {
     private void initTaskManager() {
         taskManager = (TaskManager) SingletonTaskList.getInstance().get(MainActivity.SHARED_AGENDA);
         if (taskManager == null) {
-            taskManager = new TaskManager(getApplicationContext(), MainActivity.DATABASE_NAME);
+            taskManager = new TaskManager(getApplicationContext());
             SingletonTaskList.getInstance().put(MainActivity.SHARED_AGENDA, taskManager);
         }
     }
@@ -41,15 +42,16 @@ public class MainActivity extends AppCompatActivity {
         recyclerView.setLayoutManager(new LinearLayoutManager(this));
         TaskAdapter taskAdapter = new TaskAdapter(taskManager.getTasks());
         recyclerView.setAdapter(taskAdapter);
-    }
 
-    @Override
-    protected void onDestroy() {
-        super.onDestroy();
-        try {
-            taskManager.finalize();
-        } catch (Throwable e) {
-            throw new RuntimeException(e);
-        }
+        // Configurar el botón para añadir tarea
+        Button addButton = findViewById(R.id.buttonAddTask);
+        addButton.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                // Iniciar la actividad para añadir una nueva tarea
+                Intent intent = new Intent(MainActivity.this, TaskCreateActivity.class);
+                startActivity(intent);
+            }
+        });
     }
 }

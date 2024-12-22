@@ -1,0 +1,85 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:padding="16dp"
+    android:orientation="vertical">
+
+    <!-- Campo de nombre de tarea -->
+    <EditText
+        android:id="@+id/etTaskName"
+        android:layout_width="match_parent"
+        android:layout_height="48dp"
+        android:hint="Nombre de la tarea"
+        android:inputType="text" />
+
+    <!-- Campo de descripción de tarea -->
+    <EditText
+        android:id="@+id/etDescription"
+        android:layout_width="match_parent"
+        android:layout_height="48dp"
+        android:hint="Descripción"
+        android:inputType="text" />
+
+    <!-- Campo de importancia -->
+    <EditText
+        android:id="@+id/etImportance"
+        android:layout_width="match_parent"
+        android:layout_height="48dp"
+        android:hint="Importancia (1-5)"
+        android:inputType="number" />
+
+    <!-- Campo de tipo de tarea -->
+    <EditText
+        android:id="@+id/etType"
+        android:layout_width="match_parent"
+        android:layout_height="48dp"
+        android:hint="Tipo de tarea"
+        android:inputType="text" />
+
+    <!-- Campo de ID de asignatura -->
+    <EditText
+        android:id="@+id/etSubjectId"
+        android:layout_width="match_parent"
+        android:layout_height="48dp"
+        android:hint="ID de la materia"
+        android:inputType="number" />
+
+    <!-- Campo de fecha de vencimiento -->
+    <EditText
+        android:id="@+id/etDueDate"
+        android:layout_width="match_parent"
+        android:layout_height="48dp"
+        android:hint="Fecha de vencimiento"
+        android:inputType="date" />
+
+    <!-- Campo de hora de vencimiento -->
+    <EditText
+        android:id="@+id/etDueTime"
+        android:layout_width="match_parent"
+        android:layout_height="48dp"
+        android:hint="Hora de vencimiento"
+        android:inputType="time" />
+
+    <!-- Campo de completado -->
+    <EditText
+        android:id="@+id/etCompleted"
+        android:layout_width="match_parent"
+        android:layout_height="48dp"
+        android:hint="Completada (1 para sí, 0 para no)"
+        android:inputType="number" />
+
+    <!-- Botón de guardar -->
+    <Button
+        android:id="@+id/btnSave"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:text="Guardar" />
+
+    <!-- Botón de cancelar -->
+    <Button
+        android:id="@+id/btnCancel"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:text="Cancelar" />
+</LinearLayout>

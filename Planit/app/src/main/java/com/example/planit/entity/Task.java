@@ -1,13 +1,13 @@
 package com.example.planit.entity;
 
 public class Task {
-    private String id;
+    private int id;
     private String name;
     private String description;
     private boolean completed;
     private int importance;
 
-    public Task(String id, String name, String description, boolean completed, int importance) {
+    public Task(int id, String name, String description, boolean completed, int importance) {
         this.id = id;
         this.name = name;
         this.description = description;
@@ -15,7 +15,7 @@ public class Task {
         this.importance = importance;
     }
 
-    public String getId() {
+    public int getId() {
         return id;
     }
 
