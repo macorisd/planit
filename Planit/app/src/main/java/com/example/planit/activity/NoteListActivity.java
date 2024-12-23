@@ -11,6 +11,7 @@ import com.example.planit.R;
 import com.example.planit.entity.SingletonEntity;
 import com.example.planit.entity.note.NoteAdapter;
 import com.example.planit.entity.note.NoteManager;
+import com.example.planit.entity.note.Note;
 import com.google.android.material.bottomnavigation.BottomNavigationView;
 
 public class NoteListActivity extends AppCompatActivity {
@@ -43,9 +44,15 @@ public class NoteListActivity extends AppCompatActivity {
 
         // Configurar el botón para añadir una nota
         findViewById(R.id.buttonAddNote).setOnClickListener(v -> {
-            // Iniciar la actividad para añadir una nueva nota
-//            Intent intent = new Intent(NoteListActivity.this, NoteCreateActivity.class);
-//            startActivity(intent);
+            // Crear una nueva nota vacía
+            Note newNote = noteManager.createNote("", "");
+
+            // Iniciar la actividad de edición de notas con los datos de la nueva nota
+            Intent intent = new Intent(NoteListActivity.this, NoteEditActivity.class);
+            intent.putExtra("NOTE_ID", newNote.getId());
+            intent.putExtra("NOTE_TITLE", newNote.getTitle());
+            intent.putExtra("NOTE_CONTENT", newNote.getContent());
+            startActivity(intent);
         });
 
         // Configurar la barra de navegación inferior

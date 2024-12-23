@@ -1,5 +1,6 @@
 package com.example.planit.entity.note;
 
+import android.content.Intent;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -9,6 +10,7 @@ import androidx.annotation.NonNull;
 import androidx.recyclerview.widget.RecyclerView;
 
 import com.example.planit.R;
+import com.example.planit.activity.NoteEditActivity;
 
 import java.util.List;
 
@@ -31,6 +33,15 @@ public class NoteAdapter extends RecyclerView.Adapter<NoteAdapter.NoteViewHolder
         Note note = notes.get(position);
         holder.titleTextView.setText(note.getTitle());
         holder.contentTextView.setText(note.getContent());
+
+        // Handle item click
+        holder.itemView.setOnClickListener(v -> {
+            Intent intent = new Intent(v.getContext(), NoteEditActivity.class);
+            intent.putExtra("NOTE_ID", note.getId());
+            intent.putExtra("NOTE_TITLE", note.getTitle());
+            intent.putExtra("NOTE_CONTENT", note.getContent());
+            v.getContext().startActivity(intent);
+        });
     }
 
     @Override

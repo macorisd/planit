@@ -63,7 +63,7 @@ public class NoteManager {
     }
 
     // Method to create a new note
-    public void createNote(String name, String content) {
+    public Note createNote(String name, String content) {
         if (name.isEmpty() || content.isEmpty()) {
             throw new IllegalArgumentException("All fields are required");
         }
@@ -77,6 +77,8 @@ public class NoteManager {
         if (newRowId == -1) {
             throw new RuntimeException("Error saving the note");
         }
+
+        return new Note((int) newRowId, name, content);
     }
 
     // Method to edit an existing note

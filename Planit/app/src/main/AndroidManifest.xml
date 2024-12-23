@@ -12,9 +12,7 @@
         android:supportsRtl="true"
         android:theme="@style/Theme.Planit"
         tools:targetApi="31">
-        <activity
-            android:name=".activity.NoteListActivity"
-            android:exported="false" />
+
         <activity
             android:name=".activity.MainActivity"
             android:exported="true"
@@ -41,6 +39,12 @@
             android:exported="false"
             android:label="@string/task_edit_label"
             android:theme="@style/Theme.Planit" />
+        <activity
+            android:name=".activity.NoteListActivity"
+            android:exported="false" />
+        <activity
+            android:name=".activity.NoteEditActivity"
+            android:exported="false" />
     </application>
 
 </manifest>
