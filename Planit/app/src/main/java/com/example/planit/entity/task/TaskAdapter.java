@@ -1,4 +1,4 @@
-package com.example.planit.entity;
+package com.example.planit.entity.task;
 
 import android.content.Intent;
 import android.view.LayoutInflater;
@@ -41,8 +41,12 @@ public class TaskAdapter extends RecyclerView.Adapter<TaskAdapter.TaskViewHolder
             intent.putExtra("TASK_ID", task.getId());
             intent.putExtra("TASK_NAME", task.getName());
             intent.putExtra("TASK_DESCRIPTION", task.getDescription());
-            intent.putExtra("TASK_COMPLETED", task.isCompleted());
+            intent.putExtra("TASK_COMPLETED", task.getCompleted());
             intent.putExtra("TASK_IMPORTANCE", task.getImportance());
+            intent.putExtra("TASK_TYPE", task.getType());
+            intent.putExtra("TASK_SUBJECT_ID", task.getSubjectId());
+            intent.putExtra("TASK_DUE_DATE", task.getDueDate());
+            intent.putExtra("TASK_DUE_TIME", task.getDueTime());
             v.getContext().startActivity(intent);
         });
     }

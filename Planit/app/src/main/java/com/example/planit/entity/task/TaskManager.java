@@ -1,13 +1,12 @@
-package com.example.planit.entity;
+package com.example.planit.entity.task;
 
-import android.annotation.SuppressLint;
 import android.content.ContentValues;
 import android.content.Context;
 import android.database.Cursor;
 import android.database.sqlite.SQLiteDatabase;
 
 import com.example.planit.contract.TaskContract;
-import com.example.planit.dbhelper.TaskDbHelper;
+import com.example.planit.dbhelper.DbHelper;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -17,7 +16,7 @@ public class TaskManager {
     private SQLiteDatabase db;
 
     public TaskManager(Context context) {
-        db = TaskDbHelper.getInstance(context).getWritableDatabase();
+        db = DbHelper.getInstance(context).getWritableDatabase();
     }
 
     // Método para inicializar tareas de ejemplo en la BD
@@ -52,32 +51,42 @@ public class TaskManager {
                 TaskContract.TaskEntry.COLUMN_NAME_NAME,
                 TaskContract.TaskEntry.COLUMN_NAME_DESCRIPTION,
                 TaskContract.TaskEntry.COLUMN_NAME_COMPLETED,
-                TaskContract.TaskEntry.COLUMN_NAME_IMPORTANCE
+                TaskContract.TaskEntry.COLUMN_NAME_IMPORTANCE,
+                TaskContract.TaskEntry.COLUMN_NAME_TYPE,
+                TaskContract.TaskEntry.COLUMN_NAME_SUBJECT_ID,
+                TaskContract.TaskEntry.COLUMN_NAME_DUE_DATE,
+                TaskContract.TaskEntry.COLUMN_NAME_DUE_TIME
         };
 
         Cursor cursor = db.query(
-                TaskContract.TaskEntry.TABLE_NAME,
-                projection,
-                null,
-                null,
-                null,
-                null,
-                null
+                TaskContract.TaskEntry.TABLE_NAME,  // Nombre de la tabla
+                projection,                        // Columnas a devolver
+                null,                              // Condición WHERE (null para todas)
+                null,                              // Argumentos para la condición
+                null,                              // GROUP BY
+                null,                              // HAVING
+                null                               // ORDER BY
         );
 
         while (cursor.moveToNext()) {
             int id = cursor.getInt(cursor.getColumnIndexOrThrow(TaskContract.TaskEntry._ID));
             String name = cursor.getString(cursor.getColumnIndexOrThrow(TaskContract.TaskEntry.COLUMN_NAME_NAME));
             String description = cursor.getString(cursor.getColumnIndexOrThrow(TaskContract.TaskEntry.COLUMN_NAME_DESCRIPTION));
-            int completed = cursor.getInt(cursor.getColumnIndexOrThrow(TaskContract.TaskEntry.COLUMN_NAME_COMPLETED));
+            boolean completed = cursor.getInt(cursor.getColumnIndexOrThrow(TaskContract.TaskEntry.COLUMN_NAME_COMPLETED)) == 1;
             int importance = cursor.getInt(cursor.getColumnIndexOrThrow(TaskContract.TaskEntry.COLUMN_NAME_IMPORTANCE));
+            String type = cursor.getString(cursor.getColumnIndexOrThrow(TaskContract.TaskEntry.COLUMN_NAME_TYPE));
+            int subjectId = cursor.getInt(cursor.getColumnIndexOrThrow(TaskContract.TaskEntry.COLUMN_NAME_SUBJECT_ID));
+            String dueDate = cursor.getString(cursor.getColumnIndexOrThrow(TaskContract.TaskEntry.COLUMN_NAME_DUE_DATE));
+            String dueTime = cursor.getString(cursor.getColumnIndexOrThrow(TaskContract.TaskEntry.COLUMN_NAME_DUE_TIME));
 
-            tasks.add(new Task(id, name, description, completed == 1, importance));
+            // Crear un objeto Task con todos los datos recuperados
+            tasks.add(new Task(id, name, description, completed, importance, type, subjectId, dueDate, dueTime));
         }
         cursor.close();
 
         return tasks;
     }
+
 
     public void createTask(String name, String description, int importance, String type, int subjectId, String dueDate, String dueTime) {
         // Verificar que los parámetros no estén vacíos
@@ -116,7 +125,7 @@ public class TaskManager {
         ContentValues values = new ContentValues();
         values.put(TaskContract.TaskEntry.COLUMN_NAME_NAME, name);
         values.put(TaskContract.TaskEntry.COLUMN_NAME_DESCRIPTION, description);
-        values.put(TaskContract.TaskEntry.COLUMN_NAME_COMPLETED, completed);  // Establecer el estado de completada
+        values.put(TaskContract.TaskEntry.COLUMN_NAME_COMPLETED, completed);
         values.put(TaskContract.TaskEntry.COLUMN_NAME_IMPORTANCE, importance);
         values.put(TaskContract.TaskEntry.COLUMN_NAME_TYPE, type);
         values.put(TaskContract.TaskEntry.COLUMN_NAME_SUBJECT_ID, subjectId);

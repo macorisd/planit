@@ -2,7 +2,6 @@ package com.example.planit.activity;
 
 import android.content.Intent;
 import android.os.Bundle;
-import android.view.View;
 import android.widget.Button;
 import android.widget.EditText;
 import android.widget.Spinner;
@@ -11,7 +10,7 @@ import android.widget.Toast;
 import androidx.appcompat.app.AppCompatActivity;
 
 import com.example.planit.R;
-import com.example.planit.entity.TaskManager;
+import com.example.planit.entity.task.TaskManager;
 
 public class TaskCreateActivity extends AppCompatActivity {
 
@@ -42,7 +41,7 @@ public class TaskCreateActivity extends AppCompatActivity {
         // Configuración del botón de guardar
         saveButton.setOnClickListener(v -> {
             saveTask();
-            Toast.makeText(this, "Tarea creada con éxito", Toast.LENGTH_SHORT).show();
+            Toast.makeText(TaskCreateActivity.this, "Tarea creada con éxito", Toast.LENGTH_SHORT).show();
 
             // Volver a MainActivity y actualizar la lista
             Intent intent = new Intent(this, MainActivity.class);
@@ -70,9 +69,6 @@ public class TaskCreateActivity extends AppCompatActivity {
         try {
             // Llamar al método createTask para insertar la nueva tarea
             taskManager.createTask(name, description, importance, type, subjectId, dueDate, dueTime);
-
-            Toast.makeText(this, "Tarea guardada con éxito", Toast.LENGTH_SHORT).show();
-            finish();  // Cerrar la actividad después de guardar
         } catch (IllegalArgumentException e) {
             Toast.makeText(this, "Por favor, complete todos los campos", Toast.LENGTH_SHORT).show();
         } catch (RuntimeException e) {

@@ -1,5 +1,8 @@
 <resources>
     <string name="app_name">Planit</string>
+    <string name="task_detail_label">Task Details</string>
+    <string name="task_create_label">Create Task</string>
+    <string name="task_edit_label">Edit Task</string>
     <!-- Strings used for fragments for navigation -->
     <string name="first_fragment_label">First Fragment</string>
     <string name="second_fragment_label">Second Fragment</string>

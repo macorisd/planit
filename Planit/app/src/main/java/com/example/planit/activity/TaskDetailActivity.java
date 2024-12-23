@@ -2,7 +2,6 @@ package com.example.planit.activity;
 
 import android.content.Intent;
 import android.os.Bundle;
-import android.view.View;
 import android.widget.Button;
 import android.widget.TextView;
 import android.widget.Toast;
@@ -10,8 +9,8 @@ import android.widget.Toast;
 import androidx.appcompat.app.AppCompatActivity;
 
 import com.example.planit.R;
-import com.example.planit.entity.SingletonTaskList;
-import com.example.planit.entity.TaskManager;
+import com.example.planit.entity.SingletonEntity;
+import com.example.planit.entity.task.TaskManager;
 
 public class TaskDetailActivity extends AppCompatActivity {
 
@@ -43,7 +42,7 @@ public class TaskDetailActivity extends AppCompatActivity {
         taskDueTime = getIntent().getStringExtra("TASK_DUE_TIME");
 
         // Inicializar TaskManager
-        taskManager = (TaskManager) SingletonTaskList.getInstance().get(MainActivity.SHARED_AGENDA);
+        taskManager = (TaskManager) SingletonEntity.getInstance().get(MainActivity.SHARED_ACTIVITY_LIST);
 
         // Configurar vistas
         TextView taskNameView = findViewById(R.id.taskDetailName);
