@@ -37,7 +37,7 @@ public class NoteListActivity extends AppCompatActivity {
 
         RecyclerView recyclerView = findViewById(R.id.recyclerViewNotes);
 
-        // Configure el RecyclerView
+        // Configurar el RecyclerView
         recyclerView.setLayoutManager(new LinearLayoutManager(this));
         NoteAdapter noteAdapter = new NoteAdapter(noteManager.getAllNotes());
         recyclerView.setAdapter(noteAdapter);
@@ -48,11 +48,11 @@ public class NoteListActivity extends AppCompatActivity {
             Note newNote = noteManager.createNote("", "");
 
             // Iniciar la actividad de edición de notas con los datos de la nueva nota
-            Intent intent = new Intent(NoteListActivity.this, NoteEditActivity.class);
-            intent.putExtra("NOTE_ID", newNote.getId());
-            intent.putExtra("NOTE_TITLE", newNote.getTitle());
-            intent.putExtra("NOTE_CONTENT", newNote.getContent());
-            startActivity(intent);
+            Intent editIntent = new Intent(NoteListActivity.this, NoteEditActivity.class);
+            editIntent.putExtra("NOTE_ID", newNote.getId());
+            editIntent.putExtra("NOTE_TITLE", newNote.getTitle());
+            editIntent.putExtra("NOTE_CONTENT", newNote.getContent());
+            startActivity(editIntent);
         });
 
         // Configurar la barra de navegación inferior
@@ -66,6 +66,11 @@ public class NoteListActivity extends AppCompatActivity {
                 return true;
             } else if (itemId == R.id.nav_notes) {
                 // Mantenerse en la actividad actual
+                return true;
+            } else if (itemId == R.id.nav_subjects) {
+                // Navegar a la actividad de subjects
+                Intent subjectIntent = new Intent(NoteListActivity.this, SubjectListActivity.class);
+                startActivity(subjectIntent);
                 return true;
             } else {
                 return false;

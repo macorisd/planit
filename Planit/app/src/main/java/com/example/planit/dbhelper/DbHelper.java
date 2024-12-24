@@ -5,6 +5,7 @@ import android.database.sqlite.SQLiteDatabase;
 import android.database.sqlite.SQLiteOpenHelper;
 
 import com.example.planit.contract.NoteContract;
+import com.example.planit.contract.SubjectContract;
 import com.example.planit.contract.TaskContract;
 
 public class DbHelper extends SQLiteOpenHelper {
@@ -54,16 +55,30 @@ public class DbHelper extends SQLiteOpenHelper {
     private static final String SQL_DELETE_NOTE_ENTRIES =
             "DROP TABLE IF EXISTS " + NoteContract.NoteEntry.TABLE_NAME;
 
+    // Crear la tabla subject con las columnas definidas en SubjectContract
+    private static final String SQL_CREATE_SUBJECT_ENTRIES =
+            "CREATE TABLE " + SubjectContract.SubjectEntry.TABLE_NAME + " (" +
+                    SubjectContract.SubjectEntry._ID + " INTEGER PRIMARY KEY AUTOINCREMENT," +
+                    SubjectContract.SubjectEntry.COLUMN_NAME_NAME + " TEXT," +
+                    SubjectContract.SubjectEntry.COLUMN_NAME_COLOR + " INTEGER" +
+                    " )";
+
+    // Eliminar la tabla subject si existe
+    private static final String SQL_DELETE_SUBJECT_ENTRIES =
+            "DROP TABLE IF EXISTS " + SubjectContract.SubjectEntry.TABLE_NAME;
+
     @Override
     public void onCreate(SQLiteDatabase sqLiteDatabase) {
         sqLiteDatabase.execSQL(SQL_CREATE_TASK_ENTRIES);
         sqLiteDatabase.execSQL(SQL_CREATE_NOTE_ENTRIES);
+        sqLiteDatabase.execSQL(SQL_CREATE_SUBJECT_ENTRIES);
     }
 
     @Override
     public void onUpgrade(SQLiteDatabase sqLiteDatabase, int i, int i1) {
         sqLiteDatabase.execSQL(SQL_DELETE_TASK_ENTRIES);
         sqLiteDatabase.execSQL(SQL_DELETE_NOTE_ENTRIES);
+        sqLiteDatabase.execSQL(SQL_DELETE_SUBJECT_ENTRIES);
         onCreate(sqLiteDatabase);
     }
 
@@ -71,6 +86,7 @@ public class DbHelper extends SQLiteOpenHelper {
     public void onDowngrade(SQLiteDatabase db, int oldVersion, int newVersion) {
         db.execSQL(SQL_DELETE_TASK_ENTRIES);
         db.execSQL(SQL_DELETE_NOTE_ENTRIES);
+        db.execSQL(SQL_DELETE_SUBJECT_ENTRIES);
         onCreate(db);
     }
 }

@@ -8,4 +8,9 @@
         android:id="@+id/nav_notes"
         android:icon="@drawable/text_snippet_24px"
         android:title="Notas" />
+    <item
+        android:id="@+id/nav_subjects"
+        android:icon="@drawable/school_24px"
+        android:title="Asignaturas" />
+
 </menu>

@@ -9,13 +9,12 @@ import android.widget.Toast;
 import androidx.appcompat.app.AppCompatActivity;
 
 import com.example.planit.R;
-import com.example.planit.entity.note.Note;
 import com.example.planit.entity.note.NoteManager;
 
 public class NoteEditActivity extends AppCompatActivity {
 
     private EditText editTextNoteTitle, editTextNoteContent;
-    private Button buttonSaveNote;
+    private Button buttonSaveNote, buttonDeleteNote;
     private NoteManager noteManager;
     private int noteId = -1;
 
@@ -27,6 +26,7 @@ public class NoteEditActivity extends AppCompatActivity {
         editTextNoteTitle = findViewById(R.id.editTextNoteTitle);
         editTextNoteContent = findViewById(R.id.editTextNoteContent);
         buttonSaveNote = findViewById(R.id.buttonSaveNote);
+        buttonDeleteNote = findViewById(R.id.buttonDeleteNote);
 
         noteManager = new NoteManager(this);
 
@@ -41,6 +41,7 @@ public class NoteEditActivity extends AppCompatActivity {
         }
 
         buttonSaveNote.setOnClickListener(v -> saveNote());
+        buttonDeleteNote.setOnClickListener(v -> deleteNote());
     }
 
     private void saveNote() {
@@ -61,5 +62,15 @@ public class NoteEditActivity extends AppCompatActivity {
         }
 
         finish();
+    }
+
+    private void deleteNote() {
+        if (noteId != -1) {
+            noteManager.deleteNote(noteId);
+            Toast.makeText(this, "Note deleted successfully", Toast.LENGTH_SHORT).show();
+            finish();
+        } else {
+            Toast.makeText(this, "Error deleting note", Toast.LENGTH_SHORT).show();
+        }
     }
 }

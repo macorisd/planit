@@ -70,11 +70,15 @@ public class MainActivity extends AppCompatActivity {
                 Intent noteIntent = new Intent(MainActivity.this, NoteListActivity.class);
                 startActivity(noteIntent);
                 return true;
+            } else if (itemId == R.id.nav_subjects) {
+                // Navegar a la actividad de subjects
+                Intent subjectIntent = new Intent(MainActivity.this, SubjectListActivity.class);
+                startActivity(subjectIntent);
+                return true;
             } else {
                 return false;
             }
         });
-
     }
 
     @Override

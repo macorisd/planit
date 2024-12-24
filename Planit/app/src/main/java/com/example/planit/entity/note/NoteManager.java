@@ -21,14 +21,14 @@ public class NoteManager {
 
     // Método para inicializar notas de ejemplo en la BD
     public void initNoteManager() {
-        ContentValues values = new ContentValues();
-        values.put(NoteContract.NoteEntry.COLUMN_NAME_NAME, "Nota 1");
-        values.put(NoteContract.NoteEntry.COLUMN_NAME_CONTENT, "Contenido de la nota 1");
-        db.insert(NoteContract.NoteEntry.TABLE_NAME, null, values);
-
-        values.put(NoteContract.NoteEntry.COLUMN_NAME_NAME, "Nota 2");
-        values.put(NoteContract.NoteEntry.COLUMN_NAME_CONTENT, "Contenido de la nota 2");
-        db.insert(NoteContract.NoteEntry.TABLE_NAME, null, values);
+//        ContentValues values = new ContentValues();
+//        values.put(NoteContract.NoteEntry.COLUMN_NAME_NAME, "Nota 1");
+//        values.put(NoteContract.NoteEntry.COLUMN_NAME_CONTENT, "Contenido de la nota 1");
+//        db.insert(NoteContract.NoteEntry.TABLE_NAME, null, values);
+//
+//        values.put(NoteContract.NoteEntry.COLUMN_NAME_NAME, "Nota 2");
+//        values.put(NoteContract.NoteEntry.COLUMN_NAME_CONTENT, "Contenido de la nota 2");
+//        db.insert(NoteContract.NoteEntry.TABLE_NAME, null, values);
     }
 
     // Method to get all notes
@@ -64,10 +64,6 @@ public class NoteManager {
 
     // Method to create a new note
     public Note createNote(String name, String content) {
-        if (name.isEmpty() || content.isEmpty()) {
-            throw new IllegalArgumentException("All fields are required");
-        }
-
         ContentValues values = new ContentValues();
         values.put(NoteContract.NoteEntry.COLUMN_NAME_NAME, name);
         values.put(NoteContract.NoteEntry.COLUMN_NAME_CONTENT, content);
