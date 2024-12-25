@@ -11,6 +11,7 @@ import androidx.appcompat.app.AppCompatActivity;
 import com.example.planit.R;
 import com.example.planit.entity.SingletonEntity;
 import com.example.planit.entity.task.TaskManager;
+import com.example.planit.fragment.TaskFragment;
 
 public class TaskDetailActivity extends AppCompatActivity {
 
@@ -42,7 +43,7 @@ public class TaskDetailActivity extends AppCompatActivity {
         taskDueTime = getIntent().getStringExtra("TASK_DUE_TIME");
 
         // Inicializar TaskManager
-        taskManager = (TaskManager) SingletonEntity.getInstance().get(MainActivity.SHARED_ACTIVITY_LIST);
+        taskManager = (TaskManager) SingletonEntity.getInstance().get(TaskFragment.SHARED_TASK_LIST);
 
         // Configurar vistas
         TextView taskNameView = findViewById(R.id.taskDetailName);
@@ -72,9 +73,9 @@ public class TaskDetailActivity extends AppCompatActivity {
                 Toast.makeText(this, "Tarea eliminada", Toast.LENGTH_SHORT).show();
 
                 // Volver a MainActivity y actualizar la lista
-                Intent intent = new Intent(this, MainActivity.class);
-                intent.setFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP | Intent.FLAG_ACTIVITY_NEW_TASK);
-                startActivity(intent);
+//                Intent intent = new Intent(this, TaskListActivity.class);
+//                intent.setFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP | Intent.FLAG_ACTIVITY_NEW_TASK);
+//                startActivity(intent);
                 finish();
             } else {
                 Toast.makeText(this, "Error al eliminar la tarea", Toast.LENGTH_SHORT).show();
