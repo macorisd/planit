@@ -1,6 +1,7 @@
 package com.example.planit.entity.subject;
 
 import android.content.Intent;
+import android.graphics.Color;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -10,7 +11,7 @@ import androidx.annotation.NonNull;
 import androidx.recyclerview.widget.RecyclerView;
 
 import com.example.planit.R;
-//import com.example.planit.activity.SubjectEditActivity;
+import com.example.planit.activity.SubjectEditActivity;
 
 import java.util.List;
 
@@ -34,14 +35,15 @@ public class SubjectAdapter extends RecyclerView.Adapter<SubjectAdapter.SubjectV
         Subject subject = subjectList.get(position);
         holder.subjectName.setText(subject.getName());
         holder.subjectColor.setBackgroundColor(subject.getColor());
+//        holder.subjectColor.setBackgroundColor(Color.parseColor("#FF5733"));
 
-//        holder.itemView.setOnClickListener(v -> {
-//            Intent intent = new Intent(v.getContext(), SubjectEditActivity.class);
-//            intent.putExtra("SUBJECT_ID", subject.getId());
-//            intent.putExtra("SUBJECT_NAME", subject.getName());
-//            intent.putExtra("SUBJECT_COLOR", subject.getColor());
-//            v.getContext().startActivity(intent);
-//        });
+        holder.itemView.setOnClickListener(v -> {
+            Intent intent = new Intent(v.getContext(), SubjectEditActivity.class);
+            intent.putExtra("SUBJECT_ID", subject.getId());
+            intent.putExtra("SUBJECT_NAME", subject.getName());
+            intent.putExtra("SUBJECT_COLOR", subject.getColor());
+            v.getContext().startActivity(intent);
+        });
     }
 
     @Override

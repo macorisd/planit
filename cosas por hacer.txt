@@ -1,6 +1,5 @@
 FUNCIONALIDADES
 
-- crud asignaturas, enlazar tareas con asignaturas
 - temas estéticos y puntos
 - notificaciones
 - ajustes
@@ -8,8 +7,9 @@ FUNCIONALIDADES
 
 MEJORAS
 
-- mejorar visualización: iconos, tarea completada, colores, etc.
+- mejorar visualización: iconos, labels, tarea completada, colores, títulos de cada pantalla, etc.
 - formato correcto de todos los datos: fechas, etc
+- comprobación de errores
 - intentar corregir crasheo
 - modal confirmación al eliminar
 - filtrado y ordenado de tareas (por asignatura, prioridad, fecha...)

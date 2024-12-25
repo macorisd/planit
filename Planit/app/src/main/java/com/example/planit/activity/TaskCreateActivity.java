@@ -1,7 +1,7 @@
 package com.example.planit.activity;
 
-import android.content.Intent;
 import android.os.Bundle;
+import android.widget.ArrayAdapter;
 import android.widget.Button;
 import android.widget.EditText;
 import android.widget.Spinner;
@@ -10,7 +10,12 @@ import android.widget.Toast;
 import androidx.appcompat.app.AppCompatActivity;
 
 import com.example.planit.R;
+import com.example.planit.entity.subject.Subject;
+import com.example.planit.entity.subject.SubjectManager;
 import com.example.planit.entity.task.TaskManager;
+
+import java.util.ArrayList;
+import java.util.List;
 
 public class TaskCreateActivity extends AppCompatActivity {
 
@@ -19,6 +24,8 @@ public class TaskCreateActivity extends AppCompatActivity {
     private Button saveButton;
 
     private TaskManager taskManager;
+    private SubjectManager subjectManager;
+    private List<Subject> subjects;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -35,18 +42,24 @@ public class TaskCreateActivity extends AppCompatActivity {
         taskSubjectSpinner = findViewById(R.id.spinnerSubject);
         saveButton = findViewById(R.id.buttonSaveTask);
 
-        // Inicializar el TaskManager
+        // Inicializar el TaskManager y SubjectManager
         taskManager = new TaskManager(this);
+        subjectManager = new SubjectManager(this);
+
+        // Obtener los subjects y llenar el spinner
+        subjects = subjectManager.getSubjects();
+        List<String> subjectNames = new ArrayList<>();
+        for (Subject subject : subjects) {
+            subjectNames.add(subject.getName());
+        }
+        ArrayAdapter<String> adapter = new ArrayAdapter<>(this, android.R.layout.simple_spinner_item, subjectNames);
+        adapter.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
+        taskSubjectSpinner.setAdapter(adapter);
 
         // Configuración del botón de guardar
         saveButton.setOnClickListener(v -> {
             saveTask();
             Toast.makeText(TaskCreateActivity.this, "Tarea creada con éxito", Toast.LENGTH_SHORT).show();
-
-            // Volver a MainActivity y actualizar la lista
-//            Intent intent = new Intent(this, TaskListActivity.class);
-//            intent.setFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP | Intent.FLAG_ACTIVITY_NEW_TASK);
-//            startActivity(intent);
             finish();
         });
     }
@@ -59,7 +72,7 @@ public class TaskCreateActivity extends AppCompatActivity {
         String dueTime = taskDueTimeEditText.getText().toString();
         int importance = Integer.parseInt(taskImportanceSpinner.getSelectedItem().toString());
         String type = taskTypeSpinner.getSelectedItem().toString();
-        int subjectId = Integer.parseInt(taskSubjectSpinner.getSelectedItem().toString());  // Asumiendo que los IDs de los subjects son números.
+        int subjectId = subjects.get(taskSubjectSpinner.getSelectedItemPosition()).getId();
 
         if (name.isEmpty() || description.isEmpty() || dueDate.isEmpty() || dueTime.isEmpty()) {
             Toast.makeText(this, "Por favor, complete todos los campos", Toast.LENGTH_SHORT).show();

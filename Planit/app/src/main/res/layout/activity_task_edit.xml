@@ -37,13 +37,11 @@
         android:hint="Tipo de tarea"
         android:inputType="text" />
 
-    <!-- Campo de ID de asignatura -->
-    <EditText
-        android:id="@+id/etSubjectId"
+    <!-- Spinner de asignatura -->
+    <Spinner
+        android:id="@+id/spinnerSubject"
         android:layout_width="match_parent"
-        android:layout_height="48dp"
-        android:hint="ID de la materia"
-        android:inputType="number" />
+        android:layout_height="48dp"/>
 
     <!-- Campo de fecha de vencimiento -->
     <EditText

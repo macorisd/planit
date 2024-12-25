@@ -42,6 +42,9 @@
         <activity
             android:name=".activity.NoteEditActivity"
             android:exported="false" />
+        <activity
+            android:name=".activity.SubjectEditActivity"
+            android:exported="false" />
     </application>
 
 </manifest>

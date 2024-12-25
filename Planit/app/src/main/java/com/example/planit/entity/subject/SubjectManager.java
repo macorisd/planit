@@ -20,14 +20,14 @@ public class SubjectManager {
     }
 
     public void initSubjectManager() {
-        ContentValues values = new ContentValues();
-        values.put(SubjectContract.SubjectEntry.COLUMN_NAME_NAME, "Subject 1");
-        values.put(SubjectContract.SubjectEntry.COLUMN_NAME_COLOR, 0xFF000000);
-        db.insert(SubjectContract.SubjectEntry.TABLE_NAME, null, values);
-
-        values.put(SubjectContract.SubjectEntry.COLUMN_NAME_NAME, "Subject 2");
-        values.put(SubjectContract.SubjectEntry.COLUMN_NAME_COLOR, 0xFF000000);
-        db.insert(SubjectContract.SubjectEntry.TABLE_NAME, null, values);
+//        ContentValues values = new ContentValues();
+//        values.put(SubjectContract.SubjectEntry.COLUMN_NAME_NAME, "Subject 1");
+//        values.put(SubjectContract.SubjectEntry.COLUMN_NAME_COLOR, 0xFF000000);
+//        db.insert(SubjectContract.SubjectEntry.TABLE_NAME, null, values);
+//
+//        values.put(SubjectContract.SubjectEntry.COLUMN_NAME_NAME, "Subject 2");
+//        values.put(SubjectContract.SubjectEntry.COLUMN_NAME_COLOR, 0xFF000000);
+//        db.insert(SubjectContract.SubjectEntry.TABLE_NAME, null, values);
     }
 
     public List<Subject> getSubjects() {
@@ -60,11 +60,37 @@ public class SubjectManager {
         return subjects;
     }
 
-    public void createSubject(String name, int color) {
-        if (name.isEmpty()) {
-            throw new IllegalArgumentException("Name is required");
+    public Subject getById(int id) {
+        String[] projection = {
+                SubjectContract.SubjectEntry._ID,
+                SubjectContract.SubjectEntry.COLUMN_NAME_NAME,
+                SubjectContract.SubjectEntry.COLUMN_NAME_COLOR
+        };
+
+        String selection = SubjectContract.SubjectEntry._ID + " = ?";
+        String[] selectionArgs = {String.valueOf(id)};
+
+        Cursor cursor = db.query(
+                SubjectContract.SubjectEntry.TABLE_NAME,
+                projection,
+                selection,
+                selectionArgs,
+                null,
+                null,
+                null
+        );
+
+        if (cursor.moveToNext()) {
+            String name = cursor.getString(cursor.getColumnIndexOrThrow(SubjectContract.SubjectEntry.COLUMN_NAME_NAME));
+            int color = cursor.getInt(cursor.getColumnIndexOrThrow(SubjectContract.SubjectEntry.COLUMN_NAME_COLOR));
+
+            return new Subject(id, name, color);
         }
 
+        return null;
+    }
+
+    public Subject createSubject(String name, int color) {
         ContentValues values = new ContentValues();
         values.put(SubjectContract.SubjectEntry.COLUMN_NAME_NAME, name);
         values.put(SubjectContract.SubjectEntry.COLUMN_NAME_COLOR, color);
@@ -74,6 +100,8 @@ public class SubjectManager {
         if (newRowId == -1) {
             throw new RuntimeException("Error creating subject");
         }
+
+        return new Subject((int) newRowId, name, color);
     }
 
     public void editSubject(int subjectId, String name, int color) {

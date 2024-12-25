@@ -13,7 +13,7 @@ public class DbHelper extends SQLiteOpenHelper {
     public static final int DATABASE_VERSION = 1;
     private static DbHelper instance;
 
-    public static synchronized DbHelper getInstance(Context context) {
+    public static DbHelper getInstance(Context context) {
         if (instance == null) {
             instance = new DbHelper(context.getApplicationContext());
         }

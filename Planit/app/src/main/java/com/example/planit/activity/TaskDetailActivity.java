@@ -10,12 +10,15 @@ import androidx.appcompat.app.AppCompatActivity;
 
 import com.example.planit.R;
 import com.example.planit.entity.SingletonEntity;
+import com.example.planit.entity.subject.Subject;
+import com.example.planit.entity.subject.SubjectManager;
 import com.example.planit.entity.task.TaskManager;
 import com.example.planit.fragment.TaskFragment;
 
 public class TaskDetailActivity extends AppCompatActivity {
 
     private TaskManager taskManager;
+    private SubjectManager subjectManager;
     private int taskId; // ID de la tarea para eliminarla
     private String taskName;
     private String taskDescription;
@@ -42,8 +45,9 @@ public class TaskDetailActivity extends AppCompatActivity {
         taskDueDate = getIntent().getStringExtra("TASK_DUE_DATE");
         taskDueTime = getIntent().getStringExtra("TASK_DUE_TIME");
 
-        // Inicializar TaskManager
+        // Inicializar TaskManager y SubjectManager
         taskManager = (TaskManager) SingletonEntity.getInstance().get(TaskFragment.SHARED_TASK_LIST);
+        subjectManager = new SubjectManager(this);
 
         // Configurar vistas
         TextView taskNameView = findViewById(R.id.taskDetailName);
@@ -62,7 +66,15 @@ public class TaskDetailActivity extends AppCompatActivity {
         taskCompletedView.setText(taskCompleted ? "Completada" : "Pendiente");
         taskImportanceView.setText("Importancia: " + taskImportance);
         taskTypeView.setText("Tipo: " + taskType);
-        taskSubjectView.setText("Asignatura: " + taskSubjectId);
+
+        // Obtener el nombre de la asignatura
+        Subject subject = subjectManager.getById(taskSubjectId);
+        if (subject != null) {
+            taskSubjectView.setText("Asignatura: " + subject.getName());
+        } else {
+            taskSubjectView.setText("Asignatura: No encontrada");
+        }
+
         taskDueDateView.setText("Fecha de vencimiento: " + taskDueDate);
         taskDueTimeView.setText("Hora de vencimiento: " + taskDueTime);
 
@@ -71,11 +83,6 @@ public class TaskDetailActivity extends AppCompatActivity {
             if (taskId != -1) {
                 taskManager.deleteTask(taskId);
                 Toast.makeText(this, "Tarea eliminada", Toast.LENGTH_SHORT).show();
-
-                // Volver a MainActivity y actualizar la lista
-//                Intent intent = new Intent(this, TaskListActivity.class);
-//                intent.setFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP | Intent.FLAG_ACTIVITY_NEW_TASK);
-//                startActivity(intent);
                 finish();
             } else {
                 Toast.makeText(this, "Error al eliminar la tarea", Toast.LENGTH_SHORT).show();
