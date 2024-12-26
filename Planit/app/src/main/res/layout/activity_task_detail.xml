@@ -19,84 +19,99 @@
     <TextView
         android:id="@+id/taskDetailDescription"
         android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
+        android:layout_height="30dp"
+        android:paddingBottom="8dp"
         android:text="Task Description"
-        android:textSize="16sp"
-        android:paddingBottom="8dp" />
-
-    <!-- Variable: taskCompleted -->
-    <TextView
-        android:id="@+id/taskDetailCompleted"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:text="Task Status"
-        android:textSize="16sp"
-        android:paddingBottom="8dp" />
+        android:textSize="16sp"/>
 
     <!-- Variable: taskImportance -->
     <TextView
         android:id="@+id/taskDetailImportance"
         android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
+        android:layout_height="30dp"
         android:text="Task Importance"
-        android:textSize="16sp" />
+        android:textSize="16sp"
+        android:textStyle="bold" />
 
     <!-- Variable: taskType -->
     <TextView
         android:id="@+id/taskDetailType"
         android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
+        android:layout_height="30dp"
+        android:paddingBottom="8dp"
         android:text="Task Type"
         android:textSize="16sp"
-        android:paddingBottom="8dp" />
+        android:textStyle="bold" />
 
     <!-- Variable: taskSubject -->
     <TextView
         android:id="@+id/taskDetailSubject"
         android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
+        android:layout_height="30dp"
+        android:paddingBottom="8dp"
         android:text="Task Subject"
         android:textSize="16sp"
-        android:paddingBottom="8dp" />
+        android:textStyle="bold" />
 
     <!-- Variable: taskDueDate -->
     <TextView
         android:id="@+id/taskDetailDueDate"
         android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
+        android:layout_height="30dp"
+        android:paddingBottom="8dp"
         android:text="Task Due Date"
         android:textSize="16sp"
-        android:paddingBottom="8dp" />
+        android:textStyle="bold" />
 
     <!-- Variable: taskDueTime -->
     <TextView
         android:id="@+id/taskDetailDueTime"
         android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
+        android:layout_height="30dp"
+        android:paddingBottom="8dp"
         android:text="Task Due Time"
         android:textSize="16sp"
-        android:paddingBottom="8dp" />
+        android:textStyle="bold" />
 
-    <!-- Variable: editButton -->
-    <Button
-        android:id="@+id/editTaskButton"
+    <Switch
+        android:id="@+id/taskDetailCompletedSwitch"
+        android:layout_width="wrap_content"
+        android:layout_height="50dp"
+        android:paddingBottom="8dp"
+        android:text="Completada"
+        android:textStyle="bold" />
+
+    <!-- Espacio extra para empujar los botones hacia abajo -->
+    <View
+        android:layout_width="0dp"
+        android:layout_height="0dp"
+        android:layout_weight="1" />
+
+    <!-- Contenedor de los botones -->
+    <LinearLayout
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:layout_marginTop="16dp"
-        android:text="Editar Tarea"
-        android:backgroundTint="@color/design_default_color_primary"
-        android:textColor="@android:color/white"
-        android:layout_gravity="center" />
+        android:orientation="vertical">
 
-    <!-- Variable: deleteButton -->
-    <Button
-        android:id="@+id/deleteTaskButton"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:layout_marginTop="16dp"
-        android:text="Eliminar Tarea"
-        android:backgroundTint="@color/design_default_color_error"
-        android:textColor="@android:color/white"
-        android:layout_gravity="center" />
+        <!-- Variable: editButton -->
+        <Button
+            android:id="@+id/editTaskButton"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="16dp"
+            android:text="Editar Tarea"
+            android:backgroundTint="@color/design_default_color_primary"
+            android:textColor="@android:color/white" />
+
+        <!-- Variable: deleteButton -->
+        <Button
+            android:id="@+id/deleteTaskButton"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="16dp"
+            android:text="Eliminar Tarea"
+            android:backgroundTint="@color/design_default_color_error"
+            android:textColor="@android:color/white" />
+    </LinearLayout>
 
 </LinearLayout>

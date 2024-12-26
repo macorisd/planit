@@ -9,6 +9,7 @@ MEJORAS
 
 - mejorar visualización: iconos, labels, tarea completada, colores, títulos de cada pantalla, etc.
 - formato correcto de todos los datos: fechas, etc
+- obtener día de la semana para la lista de tareas
 - comprobación de errores
 - intentar corregir crasheo
 - modal confirmación al eliminar

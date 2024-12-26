@@ -3,6 +3,7 @@ package com.example.planit.activity;
 import android.content.Intent;
 import android.os.Bundle;
 import android.widget.Button;
+import android.widget.Switch;
 import android.widget.TextView;
 import android.widget.Toast;
 
@@ -19,7 +20,7 @@ public class TaskDetailActivity extends AppCompatActivity {
 
     private TaskManager taskManager;
     private SubjectManager subjectManager;
-    private int taskId; // ID de la tarea para eliminarla
+    private int taskId;
     private String taskName;
     private String taskDescription;
     private boolean taskCompleted;
@@ -52,19 +53,32 @@ public class TaskDetailActivity extends AppCompatActivity {
         // Configurar vistas
         TextView taskNameView = findViewById(R.id.taskDetailName);
         TextView taskDescriptionView = findViewById(R.id.taskDetailDescription);
-        TextView taskCompletedView = findViewById(R.id.taskDetailCompleted);
         TextView taskImportanceView = findViewById(R.id.taskDetailImportance);
         TextView taskTypeView = findViewById(R.id.taskDetailType);
         TextView taskSubjectView = findViewById(R.id.taskDetailSubject);
         TextView taskDueDateView = findViewById(R.id.taskDetailDueDate);
         TextView taskDueTimeView = findViewById(R.id.taskDetailDueTime);
+        Switch taskCompletedSwitch = findViewById(R.id.taskDetailCompletedSwitch);
         Button deleteButton = findViewById(R.id.deleteTaskButton);
         Button editButton = findViewById(R.id.editTaskButton);
 
         taskNameView.setText(taskName);
-        taskDescriptionView.setText(taskDescription);
-        taskCompletedView.setText(taskCompleted ? "Completada" : "Pendiente");
-        taskImportanceView.setText("Importancia: " + taskImportance);
+        taskDescriptionView.setText(taskDescription.length() > 0 ? taskDescription : "");
+
+        String importanceText = "";
+        switch(taskImportance) {
+            case 1:
+                importanceText = "Baja";
+                break;
+            case 2:
+                importanceText = "Media";
+                break;
+            case 3:
+                importanceText = "Alta";
+                break;
+        }
+
+        taskImportanceView.setText("Prioridad: " + importanceText);
         taskTypeView.setText("Tipo: " + taskType);
 
         // Obtener el nombre de la asignatura
@@ -72,11 +86,21 @@ public class TaskDetailActivity extends AppCompatActivity {
         if (subject != null) {
             taskSubjectView.setText("Asignatura: " + subject.getName());
         } else {
-            taskSubjectView.setText("Asignatura: No encontrada");
+            taskSubjectView.setText("(Sin asignatura)");
         }
 
         taskDueDateView.setText("Fecha de vencimiento: " + taskDueDate);
         taskDueTimeView.setText("Hora de vencimiento: " + taskDueTime);
+
+        // Configurar el estado del interruptor
+        taskCompletedSwitch.setChecked(taskCompleted);
+
+        // Manejar el cambio de estado del interruptor
+        taskCompletedSwitch.setOnCheckedChangeListener((buttonView, isChecked) -> {
+            taskManager.toggleCompleted(taskId);
+            taskCompleted = isChecked;
+            Toast.makeText(this, "Estado de la tarea actualizado", Toast.LENGTH_SHORT).show();
+        });
 
         // Manejar el clic del botón "Eliminar"
         deleteButton.setOnClickListener(v -> {

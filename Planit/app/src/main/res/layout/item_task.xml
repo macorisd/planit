@@ -11,19 +11,55 @@
         android:orientation="vertical"
         android:padding="16dp">
 
-        <TextView
-            android:id="@+id/taskName"
-            android:layout_width="wrap_content"
+        <LinearLayout
+            android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:text="Task Name"
-            android:textSize="18sp"
-            android:textStyle="bold"/>
+            android:orientation="horizontal"
+            android:gravity="center_vertical">
+
+            <TextView
+                android:id="@+id/taskName"
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:layout_weight="1"
+                android:text="Task Name"
+                android:textSize="18sp"
+                android:textStyle="bold"/>
+
+            <ImageView
+                android:id="@+id/priorityIcon"
+                android:layout_width="24dp"
+                android:layout_height="24dp"
+                android:contentDescription="Priority Icon"
+                android:layout_marginStart="8dp" />
+        </LinearLayout>
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:orientation="horizontal">
+
+            <TextView
+                android:id="@+id/taskDueDate"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="Due Date"
+                android:textSize="14sp"/>
+
+            <TextView
+                android:id="@+id/taskDueTime"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text=" Due Time"
+                android:textSize="14sp"
+                android:layout_marginLeft="5sp"/>
+        </LinearLayout>
 
         <TextView
-            android:id="@+id/taskDescription"
+            android:id="@+id/taskSubjectName"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:text="Task Description"
+            android:text="Subject Name"
             android:textSize="14sp"/>
     </LinearLayout>
 

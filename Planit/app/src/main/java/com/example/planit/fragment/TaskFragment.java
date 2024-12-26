@@ -41,7 +41,7 @@ public class TaskFragment extends Fragment {
 
         RecyclerView recyclerView = view.findViewById(R.id.recyclerView);
         recyclerView.setLayoutManager(new LinearLayoutManager(requireContext()));
-        TaskAdapter taskAdapter = new TaskAdapter(taskManager.getTasks());
+        TaskAdapter taskAdapter = new TaskAdapter(requireContext(), taskManager.getTasks());
         recyclerView.setAdapter(taskAdapter);
 
         view.findViewById(R.id.buttonAddTask).setOnClickListener(v -> {
@@ -57,7 +57,7 @@ public class TaskFragment extends Fragment {
         super.onResume();
         if (getView() != null) {
             RecyclerView recyclerView = getView().findViewById(R.id.recyclerView);
-            TaskAdapter taskAdapter = new TaskAdapter(taskManager.getTasks());
+            TaskAdapter taskAdapter = new TaskAdapter(requireContext(), taskManager.getTasks());
             recyclerView.setAdapter(taskAdapter);
         }
     }

@@ -150,6 +150,51 @@ public class TaskManager {
         }
     }
 
+    // Método para alternar el estado de compleción de una tarea
+    public void toggleCompleted(int taskId) {
+        // Consultar el estado actual de la tarea
+        String[] projection = { TaskContract.TaskEntry.COLUMN_NAME_COMPLETED };
+        String selection = TaskContract.TaskEntry._ID + " = ?";
+        String[] selectionArgs = { String.valueOf(taskId) };
+
+        Cursor cursor = db.query(
+                TaskContract.TaskEntry.TABLE_NAME,
+                projection,
+                selection,
+                selectionArgs,
+                null,
+                null,
+                null
+        );
+
+        if (cursor.moveToFirst()) {
+            int currentCompleted = cursor.getInt(cursor.getColumnIndexOrThrow(TaskContract.TaskEntry.COLUMN_NAME_COMPLETED));
+            cursor.close();
+
+            // Alternar el estado de compleción
+            int newCompleted = (currentCompleted == 0) ? 1 : 0;
+
+            // Actualizar el valor en la base de datos
+            ContentValues values = new ContentValues();
+            values.put(TaskContract.TaskEntry.COLUMN_NAME_COMPLETED, newCompleted);
+
+            int rowsUpdated = db.update(
+                    TaskContract.TaskEntry.TABLE_NAME,
+                    values,
+                    selection,
+                    selectionArgs
+            );
+
+            if (rowsUpdated == 0) {
+                throw new RuntimeException("Error al alternar el estado de compleción de la tarea");
+            }
+        } else {
+            cursor.close();
+            throw new IllegalArgumentException("No se encontró una tarea con el ID proporcionado");
+        }
+    }
+
+
 
 
     // Método para eliminar una tarea
