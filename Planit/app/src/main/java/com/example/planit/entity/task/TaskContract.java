@@ -1,4 +1,4 @@
-package com.example.planit.contract;
+package com.example.planit.entity.task;
 
 import android.provider.BaseColumns;
 

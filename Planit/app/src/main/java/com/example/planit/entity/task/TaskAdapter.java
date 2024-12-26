@@ -56,8 +56,10 @@ public class TaskAdapter extends RecyclerView.Adapter<TaskAdapter.TaskViewHolder
         Subject subject = subjectManager.getById(task.getSubjectId());
         if (subject != null) {
             holder.taskSubjectName.setText(subject.getName());
+            holder.subjectColorStrip.setBackgroundColor(subject.getColor());
         } else {
             holder.taskSubjectName.setText("(Sin asignatura)");
+            holder.subjectColorStrip.setBackgroundColor(holder.itemView.getContext().getResources().getColor(android.R.color.darker_gray));
         }
 
         // Establecer el icono de prioridad según la importancia
@@ -100,19 +102,21 @@ public class TaskAdapter extends RecyclerView.Adapter<TaskAdapter.TaskViewHolder
     }
 
     public static class TaskViewHolder extends RecyclerView.ViewHolder {
-    TextView taskName;
-    TextView taskDueDate;
-    TextView taskDueTime;
-    TextView taskSubjectName;
-    ImageView priorityIcon;
+        TextView taskName;
+        TextView taskDueDate;
+        TextView taskDueTime;
+        TextView taskSubjectName;
+        ImageView priorityIcon;
+        View subjectColorStrip;
 
-    public TaskViewHolder(@NonNull View itemView) {
-        super(itemView);
-        taskName = itemView.findViewById(R.id.taskName);
-        taskDueDate = itemView.findViewById(R.id.taskDueDate);
-        taskDueTime = itemView.findViewById(R.id.taskDueTime);
-        taskSubjectName = itemView.findViewById(R.id.taskSubjectName);
-        priorityIcon = itemView.findViewById(R.id.priorityIcon);
+        public TaskViewHolder(@NonNull View itemView) {
+            super(itemView);
+            taskName = itemView.findViewById(R.id.taskName);
+            taskDueDate = itemView.findViewById(R.id.taskDueDate);
+            taskDueTime = itemView.findViewById(R.id.taskDueTime);
+            taskSubjectName = itemView.findViewById(R.id.taskSubjectName);
+            priorityIcon = itemView.findViewById(R.id.priorityIcon);
+            subjectColorStrip = itemView.findViewById(R.id.subjectColorStrip);
+        }
     }
-}
 }

@@ -5,7 +5,6 @@ import android.content.Context;
 import android.database.Cursor;
 import android.database.sqlite.SQLiteDatabase;
 
-import com.example.planit.contract.SubjectContract;
 import com.example.planit.dbhelper.DbHelper;
 
 import java.util.ArrayList;

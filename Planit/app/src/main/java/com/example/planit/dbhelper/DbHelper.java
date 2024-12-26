@@ -5,9 +5,9 @@ import android.database.sqlite.SQLiteDatabase;
 import android.database.sqlite.SQLiteOpenHelper;
 import android.util.Log;
 
-import com.example.planit.contract.NoteContract;
-import com.example.planit.contract.SubjectContract;
-import com.example.planit.contract.TaskContract;
+import com.example.planit.entity.note.NoteContract;
+import com.example.planit.entity.subject.SubjectContract;
+import com.example.planit.entity.task.TaskContract;
 
 public class DbHelper extends SQLiteOpenHelper {
     public static final String DATABASE_NAME = "planitDB.db";
