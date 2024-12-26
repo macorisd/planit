@@ -16,7 +16,7 @@ public class NoteManager {
     private SQLiteDatabase db;
 
     public NoteManager(Context context) {
-        db = DbHelper.getInstance(context).getWritableDatabase();
+        db = DbHelper.getInstance(context).getDatabase();
     }
 
     // Método para inicializar notas de ejemplo en la BD

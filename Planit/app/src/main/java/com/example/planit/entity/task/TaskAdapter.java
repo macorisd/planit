@@ -13,8 +13,10 @@ import androidx.recyclerview.widget.RecyclerView;
 
 import com.example.planit.R;
 import com.example.planit.activity.TaskDetailActivity;
+import com.example.planit.entity.SingletonEntity;
 import com.example.planit.entity.subject.Subject;
 import com.example.planit.entity.subject.SubjectManager;
+import com.example.planit.fragment.SubjectFragment;
 
 import java.util.List;
 
@@ -23,9 +25,17 @@ public class TaskAdapter extends RecyclerView.Adapter<TaskAdapter.TaskViewHolder
     private List<Task> taskList;
     private SubjectManager subjectManager;
 
+    private void initSubjectManager(Context context) {
+        subjectManager = (SubjectManager) SingletonEntity.getInstance().get(SubjectFragment.SHARED_SUBJECT_LIST);
+        if (subjectManager == null) {
+            subjectManager = new SubjectManager(context);
+            SingletonEntity.getInstance().put(SubjectFragment.SHARED_SUBJECT_LIST, subjectManager);
+        }
+    }
+
     public TaskAdapter(Context context, List<Task> taskList) {
         this.taskList = taskList;
-        this.subjectManager = new SubjectManager(context);
+        initSubjectManager(context);
     }
 
     @NonNull

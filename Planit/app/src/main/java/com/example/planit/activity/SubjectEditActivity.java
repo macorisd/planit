@@ -13,7 +13,9 @@ import android.widget.Toast;
 import androidx.appcompat.app.AppCompatActivity;
 
 import com.example.planit.R;
+import com.example.planit.entity.SingletonEntity;
 import com.example.planit.entity.subject.SubjectManager;
+import com.example.planit.fragment.SubjectFragment;
 
 import java.util.HashMap;
 import java.util.Map;
@@ -29,6 +31,14 @@ public class SubjectEditActivity extends AppCompatActivity {
 
     private Map<String, String> colorMap;
 
+    private void initSubjectManager() {
+        subjectManager = (SubjectManager) SingletonEntity.getInstance().get(SubjectFragment.SHARED_SUBJECT_LIST);
+        if (subjectManager == null) {
+            subjectManager = new SubjectManager(this);
+            SingletonEntity.getInstance().put(SubjectFragment.SHARED_SUBJECT_LIST, subjectManager);
+        }
+    }
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -39,7 +49,7 @@ public class SubjectEditActivity extends AppCompatActivity {
         buttonSaveSubject = findViewById(R.id.buttonSaveSubject);
         buttonDeleteSubject = findViewById(R.id.buttonDeleteSubject);
 
-        subjectManager = new SubjectManager(this);
+        initSubjectManager();
 
         // Initialize color map
         initializeColorMap();

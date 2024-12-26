@@ -16,7 +16,7 @@ public class SubjectManager {
     private SQLiteDatabase db;
 
     public SubjectManager(Context context) {
-        db = DbHelper.getInstance(context).getWritableDatabase();
+        db = DbHelper.getInstance(context).getDatabase();
     }
 
     public void initSubjectManager() {

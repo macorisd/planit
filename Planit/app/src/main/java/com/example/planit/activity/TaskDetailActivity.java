@@ -14,6 +14,7 @@ import com.example.planit.entity.SingletonEntity;
 import com.example.planit.entity.subject.Subject;
 import com.example.planit.entity.subject.SubjectManager;
 import com.example.planit.entity.task.TaskManager;
+import com.example.planit.fragment.SubjectFragment;
 import com.example.planit.fragment.TaskFragment;
 
 public class TaskDetailActivity extends AppCompatActivity {
@@ -29,6 +30,14 @@ public class TaskDetailActivity extends AppCompatActivity {
     private int taskSubjectId;
     private String taskDueDate;
     private String taskDueTime;
+
+    private void initSubjectManager() {
+        subjectManager = (SubjectManager) SingletonEntity.getInstance().get(SubjectFragment.SHARED_SUBJECT_LIST);
+        if (subjectManager == null) {
+            subjectManager = new SubjectManager(this);
+            SingletonEntity.getInstance().put(SubjectFragment.SHARED_SUBJECT_LIST, subjectManager);
+        }
+    }
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -48,7 +57,7 @@ public class TaskDetailActivity extends AppCompatActivity {
 
         // Inicializar TaskManager y SubjectManager
         taskManager = (TaskManager) SingletonEntity.getInstance().get(TaskFragment.SHARED_TASK_LIST);
-        subjectManager = new SubjectManager(this);
+        initSubjectManager();
 
         // Configurar vistas
         TextView taskNameView = findViewById(R.id.taskDetailName);

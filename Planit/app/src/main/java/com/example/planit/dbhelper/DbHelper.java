@@ -3,6 +3,7 @@ package com.example.planit.dbhelper;
 import android.content.Context;
 import android.database.sqlite.SQLiteDatabase;
 import android.database.sqlite.SQLiteOpenHelper;
+import android.util.Log;
 
 import com.example.planit.contract.NoteContract;
 import com.example.planit.contract.SubjectContract;
@@ -12,12 +13,20 @@ public class DbHelper extends SQLiteOpenHelper {
     public static final String DATABASE_NAME = "planitDB.db";
     public static final int DATABASE_VERSION = 1;
     private static DbHelper instance;
+    private static SQLiteDatabase database;
 
-    public static synchronized DbHelper getInstance(Context context) {
+    public static DbHelper getInstance(Context context) {
         if (instance == null) {
             instance = new DbHelper(context.getApplicationContext());
         }
         return instance;
+    }
+
+    public synchronized SQLiteDatabase getDatabase() {
+        if (database == null || !database.isOpen()) {
+            database = getWritableDatabase();
+        }
+        return database;
     }
 
     public DbHelper(Context context) {
@@ -89,4 +98,14 @@ public class DbHelper extends SQLiteOpenHelper {
         db.execSQL(SQL_DELETE_SUBJECT_ENTRIES);
         onCreate(db);
     }
+
+    @Override
+    public void close() {
+        if (database != null && database.isOpen()) {
+            Log.d("DbHelper", "Closing database");
+            database.close();
+        }
+        super.close();
+    }
+
 }

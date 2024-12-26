@@ -16,7 +16,7 @@ public class TaskManager {
     private SQLiteDatabase db;
 
     public TaskManager(Context context) {
-        db = DbHelper.getInstance(context).getWritableDatabase();
+        db = DbHelper.getInstance(context).getDatabase();
     }
 
     // Método para inicializar tareas de ejemplo en la BD
@@ -107,6 +107,7 @@ public class TaskManager {
 
         // Insertar los valores en la base de datos
         long newRowId = db.insert(TaskContract.TaskEntry.TABLE_NAME, null, values);
+
 
         if (newRowId == -1) {
             // Si la inserción falla

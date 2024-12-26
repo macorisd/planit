@@ -10,9 +10,12 @@ import android.widget.Toast;
 import androidx.appcompat.app.AppCompatActivity;
 
 import com.example.planit.R;
+import com.example.planit.entity.SingletonEntity;
 import com.example.planit.entity.subject.Subject;
 import com.example.planit.entity.subject.SubjectManager;
 import com.example.planit.entity.task.TaskManager;
+import com.example.planit.fragment.SubjectFragment;
+import com.example.planit.fragment.TaskFragment;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -26,6 +29,22 @@ public class TaskCreateActivity extends AppCompatActivity {
     private TaskManager taskManager;
     private SubjectManager subjectManager;
     private List<Subject> subjects;
+
+    private void initTaskManager() {
+        taskManager = (TaskManager) SingletonEntity.getInstance().get(TaskFragment.SHARED_TASK_LIST);
+        if (taskManager == null) {
+            taskManager = new TaskManager(this);
+            SingletonEntity.getInstance().put(TaskFragment.SHARED_TASK_LIST, taskManager);
+        }
+    }
+
+    private void initSubjectManager() {
+        subjectManager = (SubjectManager) SingletonEntity.getInstance().get(SubjectFragment.SHARED_SUBJECT_LIST);
+        if (subjectManager == null) {
+            subjectManager = new SubjectManager(this);
+            SingletonEntity.getInstance().put(SubjectFragment.SHARED_SUBJECT_LIST, subjectManager);
+        }
+    }
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -43,8 +62,8 @@ public class TaskCreateActivity extends AppCompatActivity {
         saveButton = findViewById(R.id.buttonSaveTask);
 
         // Inicializar el TaskManager y SubjectManager
-        taskManager = new TaskManager(this);
-        subjectManager = new SubjectManager(this);
+        initTaskManager();
+        initSubjectManager();
 
         // Obtener los subjects y llenar el spinner
         subjects = subjectManager.getSubjects();

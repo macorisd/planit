@@ -9,7 +9,9 @@ import android.widget.Toast;
 import androidx.appcompat.app.AppCompatActivity;
 
 import com.example.planit.R;
+import com.example.planit.entity.SingletonEntity;
 import com.example.planit.entity.note.NoteManager;
+import com.example.planit.fragment.NoteFragment;
 
 public class NoteEditActivity extends AppCompatActivity {
 
@@ -17,6 +19,14 @@ public class NoteEditActivity extends AppCompatActivity {
     private Button buttonSaveNote, buttonDeleteNote;
     private NoteManager noteManager;
     private int noteId = -1;
+
+    private void initNoteManager() {
+        noteManager = (NoteManager) SingletonEntity.getInstance().get(NoteFragment.SHARED_NOTE_LIST);
+        if (noteManager == null) {
+            noteManager = new NoteManager(this);
+            SingletonEntity.getInstance().put(NoteFragment.SHARED_NOTE_LIST, noteManager);
+        }
+    }
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -28,7 +38,7 @@ public class NoteEditActivity extends AppCompatActivity {
         buttonSaveNote = findViewById(R.id.buttonSaveNote);
         buttonDeleteNote = findViewById(R.id.buttonDeleteNote);
 
-        noteManager = new NoteManager(this);
+        initNoteManager();
 
         Intent intent = getIntent();
         if (intent != null && intent.hasExtra("NOTE_ID")) {
