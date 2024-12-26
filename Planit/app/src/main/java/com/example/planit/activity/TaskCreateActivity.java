@@ -65,6 +65,12 @@ public class TaskCreateActivity extends AppCompatActivity {
         initTaskManager();
         initSubjectManager();
 
+        // Configurar el spinner de importancia
+        ArrayAdapter<CharSequence> importanceAdapter = ArrayAdapter.createFromResource(this,
+                R.array.importance_array, android.R.layout.simple_spinner_item);
+        importanceAdapter.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
+        taskImportanceSpinner.setAdapter(importanceAdapter);
+
         // Obtener los subjects y llenar el spinner
         subjects = subjectManager.getSubjects();
         List<String> subjectNames = new ArrayList<>();
@@ -89,9 +95,25 @@ public class TaskCreateActivity extends AppCompatActivity {
         String description = taskDescriptionEditText.getText().toString();
         String dueDate = taskDueDateEditText.getText().toString();
         String dueTime = taskDueTimeEditText.getText().toString();
-        int importance = Integer.parseInt(taskImportanceSpinner.getSelectedItem().toString());
+        String importanceString = taskImportanceSpinner.getSelectedItem().toString();
         String type = taskTypeSpinner.getSelectedItem().toString();
         int subjectId = subjects.get(taskSubjectSpinner.getSelectedItemPosition()).getId();
+
+        int importance;
+        switch (importanceString) {
+            case "Baja":
+                importance = 1;
+                break;
+            case "Media":
+                importance = 2;
+                break;
+            case "Alta":
+                importance = 3;
+                break;
+            default:
+                importance = 1;
+                break;
+        }
 
         if (name.isEmpty() || description.isEmpty() || dueDate.isEmpty() || dueTime.isEmpty()) {
             Toast.makeText(this, "Por favor, complete todos los campos", Toast.LENGTH_SHORT).show();

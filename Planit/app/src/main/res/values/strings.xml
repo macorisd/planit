@@ -47,9 +47,9 @@
     </string>
 
     <string-array name="importance_array">
-        <item>1</item>
-        <item>2</item>
-        <item>3</item>
+        <item>Baja</item>
+        <item>Media</item>
+        <item>Alta</item>
     </string-array>
 
     <string-array name="type_array">

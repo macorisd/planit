@@ -6,62 +6,145 @@
     android:orientation="vertical">
 
     <!-- Campo de nombre de tarea -->
-    <EditText
-        android:id="@+id/editTextTaskName"
+    <LinearLayout
         android:layout_width="match_parent"
-        android:layout_height="48dp"
-        android:hint="Nombre de la tarea"
-        android:inputType="text" />
+        android:layout_height="wrap_content"
+        android:orientation="horizontal"
+        android:layout_marginBottom="8dp">
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="Nombre:" />
+        <EditText
+            android:id="@+id/editTextTaskName"
+            android:layout_width="0dp"
+            android:layout_height="48dp"
+            android:layout_weight="1"
+            android:hint="Nombre de la tarea"
+            android:inputType="text" />
+    </LinearLayout>
 
     <!-- Campo de descripción de tarea -->
-    <EditText
-        android:id="@+id/editTextTaskDescription"
+    <LinearLayout
         android:layout_width="match_parent"
-        android:layout_height="48dp"
-        android:hint="Descripción"
-        android:inputType="text" />
+        android:layout_height="wrap_content"
+        android:orientation="horizontal"
+        android:layout_marginBottom="8dp">
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="Descripción:" />
+        <EditText
+            android:id="@+id/editTextTaskDescription"
+            android:layout_width="0dp"
+            android:layout_height="48dp"
+            android:layout_weight="1"
+            android:hint="Descripción"
+            android:inputType="text" />
+    </LinearLayout>
 
     <!-- Campo de fecha de vencimiento -->
-    <EditText
-        android:id="@+id/editTextDueDate"
+    <LinearLayout
         android:layout_width="match_parent"
-        android:layout_height="48dp"
-        android:hint="Fecha de vencimiento (YYYY-MM-DD)"
-        android:inputType="date" />
+        android:layout_height="wrap_content"
+        android:orientation="horizontal"
+        android:layout_marginBottom="8dp">
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="Fecha de vencimiento:" />
+        <EditText
+            android:id="@+id/editTextDueDate"
+            android:layout_width="0dp"
+            android:layout_height="48dp"
+            android:layout_weight="1"
+            android:hint="YYYY-MM-DD"
+            android:inputType="date" />
+    </LinearLayout>
 
     <!-- Campo de hora de vencimiento -->
-    <EditText
-        android:id="@+id/editTextDueTime"
+    <LinearLayout
         android:layout_width="match_parent"
-        android:layout_height="48dp"
-        android:hint="Hora de vencimiento (HH:MM)"
-        android:inputType="time" />
+        android:layout_height="wrap_content"
+        android:orientation="horizontal"
+        android:layout_marginBottom="8dp">
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="Hora de vencimiento:" />
+        <EditText
+            android:id="@+id/editTextDueTime"
+            android:layout_width="0dp"
+            android:layout_height="48dp"
+            android:layout_weight="1"
+            android:hint="HH:MM"
+            android:inputType="time" />
+    </LinearLayout>
 
     <!-- Spinner de importancia -->
-    <Spinner
-        android:id="@+id/spinnerImportance"
+    <LinearLayout
         android:layout_width="match_parent"
-        android:layout_height="48dp"
-        android:entries="@array/importance_array" />
+        android:layout_height="wrap_content"
+        android:orientation="horizontal"
+        android:layout_marginBottom="8dp">
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="Importancia:" />
+        <Spinner
+            android:id="@+id/spinnerImportance"
+            android:layout_width="0dp"
+            android:layout_height="48dp"
+            android:layout_weight="1"
+            android:entries="@array/importance_array" />
+    </LinearLayout>
 
     <!-- Spinner de tipo -->
-    <Spinner
-        android:id="@+id/spinnerType"
+    <LinearLayout
         android:layout_width="match_parent"
-        android:layout_height="48dp"
-        android:entries="@array/type_array" />
+        android:layout_height="wrap_content"
+        android:orientation="horizontal"
+        android:layout_marginBottom="8dp">
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="Tipo:" />
+        <Spinner
+            android:id="@+id/spinnerType"
+            android:layout_width="0dp"
+            android:layout_height="48dp"
+            android:layout_weight="1"
+            android:entries="@array/type_array" />
+    </LinearLayout>
 
     <!-- Spinner de asignatura -->
-    <Spinner
-        android:id="@+id/spinnerSubject"
+    <LinearLayout
         android:layout_width="match_parent"
-        android:layout_height="48dp"/>
+        android:layout_height="wrap_content"
+        android:orientation="horizontal"
+        android:layout_marginBottom="8dp">
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="Asignatura:" />
+        <Spinner
+            android:id="@+id/spinnerSubject"
+            android:layout_width="0dp"
+            android:layout_height="48dp"
+            android:layout_weight="1" />
+    </LinearLayout>
+
+    <View
+        android:layout_width="0dp"
+        android:layout_height="0dp"
+        android:layout_weight="1" />
 
     <!-- Botón de guardar -->
     <Button
         android:id="@+id/buttonSaveTask"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:text="Guardar tarea" />
+        android:text="Guardar tarea"
+        android:layout_gravity="bottom" />
 
 </LinearLayout>

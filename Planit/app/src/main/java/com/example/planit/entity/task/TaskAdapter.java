@@ -18,7 +18,10 @@ import com.example.planit.entity.subject.Subject;
 import com.example.planit.entity.subject.SubjectManager;
 import com.example.planit.fragment.SubjectFragment;
 
+import java.text.ParseException;
+import java.text.SimpleDateFormat;
 import java.util.List;
+import java.util.Locale;
 
 public class TaskAdapter extends RecyclerView.Adapter<TaskAdapter.TaskViewHolder> {
 
@@ -49,7 +52,7 @@ public class TaskAdapter extends RecyclerView.Adapter<TaskAdapter.TaskViewHolder
     public void onBindViewHolder(@NonNull TaskViewHolder holder, int position) {
         Task task = taskList.get(position);
         holder.taskName.setText(task.getName());
-        holder.taskDueDate.setText(task.getDueDate());
+        holder.taskDueDate.setText(formatDate(task.getDueDate()));
         holder.taskDueTime.setText("a las " + task.getDueTime());
 
         // Obtener el nombre de la asignatura
@@ -99,6 +102,17 @@ public class TaskAdapter extends RecyclerView.Adapter<TaskAdapter.TaskViewHolder
     @Override
     public int getItemCount() {
         return taskList.size();
+    }
+
+    private String formatDate(String date) {
+        SimpleDateFormat inputFormat = new SimpleDateFormat("yyyy/MM/dd", Locale.getDefault());
+        SimpleDateFormat outputFormat = new SimpleDateFormat("dd/MM/yyyy", Locale.getDefault());
+        try {
+            return outputFormat.format(inputFormat.parse(date));
+        } catch (ParseException e) {
+            e.printStackTrace();
+            return date;
+        }
     }
 
     public static class TaskViewHolder extends RecyclerView.ViewHolder {

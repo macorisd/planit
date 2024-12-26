@@ -11,15 +11,13 @@ MEJORAS
 - formato correcto de todos los datos: fechas, etc
 - obtener día de la semana para la lista de tareas
 - comprobación de errores
-- intentar corregir crasheo
 - modal confirmación al eliminar
 - filtrado y ordenado de tareas (por asignatura, prioridad, fecha...)
 - calendario
 
 NEXT
 
-- color en lista de tareas
-- división en la lista de tareas
 - crear tarea: mejora
 - editar tarea: mejora
+- actividades de creación de notas y asignaturas
 - mejoras: notas, asignaturas
