@@ -62,7 +62,7 @@ public class TaskAdapter extends RecyclerView.Adapter<TaskAdapter.TaskViewHolder
             holder.subjectColorStrip.setBackgroundColor(subject.getColor());
         } else {
             holder.taskSubjectName.setText("(Sin asignatura)");
-            holder.subjectColorStrip.setBackgroundColor(holder.itemView.getContext().getResources().getColor(android.R.color.darker_gray));
+            holder.subjectColorStrip.setBackgroundColor(holder.itemView.getContext().getResources().getColor(android.R.color.white));
         }
 
         // Establecer el icono de prioridad según la importancia

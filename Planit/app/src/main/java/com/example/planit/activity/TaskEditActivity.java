@@ -92,6 +92,7 @@ public class TaskEditActivity extends AppCompatActivity {
         // Obtener los subjects y llenar el spinner
         subjects = subjectManager.getSubjects();
         List<String> subjectNames = new ArrayList<>();
+        subjectNames.add("(Sin asignatura)");
         for (Subject subject : subjects) {
             subjectNames.add(subject.getName());
         }
@@ -99,14 +100,19 @@ public class TaskEditActivity extends AppCompatActivity {
         adapter.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
         spinnerSubject.setAdapter(adapter);
 
-        // Seleccionar el subject actual en el spinner
-        for (int i = 0; i < subjects.size(); i++) {
-            if (subjects.get(i).getId() == subjectId) {
-                spinnerSubject.setSelection(i);
-                break;
+        if (subjectId == -1) {
+            spinnerSubject.setSelection(0);
+        }
+        else {
+            // Seleccionar el subject actual en el spinner
+            for (int i = 0; i < subjects.size(); i++) {
+                if (subjects.get(i).getId() == subjectId) {
+                    spinnerSubject.setSelection(i);
+                    break;
+                }
             }
         }
-
+        
         // Configurar el botón de guardar
         btnSave.setOnClickListener(v -> {
             // Obtener los nuevos valores de los campos

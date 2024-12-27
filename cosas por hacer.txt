@@ -1,9 +1,9 @@
 FUNCIONALIDADES
 
-- temas estéticos y puntos
+- idiomas
 - notificaciones
 - ajustes
-- idiomas
+- temas estéticos y puntos
 
 MEJORAS
 
@@ -18,6 +18,10 @@ MEJORAS
 NEXT
 
 - crear tarea: mejora
+	- formato asignatura: problema al editar tarea sin asignatura, visualización rara de categorías
 - editar tarea: mejora
 - actividades de creación de notas y asignaturas
-- mejoras: notas, asignaturas
+- mejoras: 
+	tareas: si no hay tareas pendientes, indicarlo (u ocultar label si no hay de una categoría)
+	notas
+	asignaturas

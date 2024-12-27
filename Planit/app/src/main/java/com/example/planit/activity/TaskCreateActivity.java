@@ -74,6 +74,7 @@ public class TaskCreateActivity extends AppCompatActivity {
         // Obtener los subjects y llenar el spinner
         subjects = subjectManager.getSubjects();
         List<String> subjectNames = new ArrayList<>();
+        subjectNames.add("(Sin asignatura)");
         for (Subject subject : subjects) {
             subjectNames.add(subject.getName());
         }
@@ -97,7 +98,9 @@ public class TaskCreateActivity extends AppCompatActivity {
         String dueTime = taskDueTimeEditText.getText().toString();
         String importanceString = taskImportanceSpinner.getSelectedItem().toString();
         String type = taskTypeSpinner.getSelectedItem().toString();
-        int subjectId = subjects.get(taskSubjectSpinner.getSelectedItemPosition()).getId();
+
+        int taskItemPosition = taskSubjectSpinner.getSelectedItemPosition();
+        int subjectId = taskItemPosition == 0 ? -1 : subjects.get(taskItemPosition - 1).getId();
 
         int importance;
         switch (importanceString) {

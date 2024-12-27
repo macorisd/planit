@@ -53,8 +53,13 @@
     </string-array>
 
     <string-array name="type_array">
-        <item>Personal</item>
-        <item>Trabajo</item>
         <item>Estudio</item>
+        <item>Deberes</item>
+        <item>Examen</item>
+        <item>Proyecto</item>
+        <item>Práctica</item>
+        <item>Presentación</item>
+        <item>Reunión</item>
+        <item>Otro</item>
     </string-array>
 </resources>
