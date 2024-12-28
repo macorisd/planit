@@ -39,20 +39,28 @@
     <LinearLayout
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:orientation="horizontal"
+        android:orientation="vertical"
         android:layout_marginBottom="8dp">
+
         <TextView
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:text="Descripción:" />
+
         <EditText
             android:id="@+id/editTextTaskDescription"
-            android:layout_width="0dp"
-            android:layout_height="48dp"
-            android:layout_weight="1"
-            android:hint="Descripción"
-            android:inputType="text" />
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:hint="Descripción detallada"
+            android:inputType="textMultiLine"
+            android:lines="10"
+            android:minLines="2"
+            android:scrollbars="vertical"
+            android:gravity="start|top"
+            android:overScrollMode="always"
+            android:padding="8dp" />
     </LinearLayout>
+
 
     <!-- Spinner de asignatura -->
     <LinearLayout

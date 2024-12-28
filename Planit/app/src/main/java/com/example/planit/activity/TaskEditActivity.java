@@ -181,8 +181,8 @@ public class TaskEditActivity extends AppCompatActivity {
         }
 
         // Validar la longitud del nombre
-        if (newName.length() < 3 || newName.length() > 40) {
-            Toast.makeText(TaskEditActivity.this, "El nombre debe tener entre 3 y 40 caracteres", Toast.LENGTH_SHORT).show();
+        if (newName.length() < 3 || newName.length() > 50) {
+            Toast.makeText(TaskEditActivity.this, "El nombre debe tener entre 3 y 50 caracteres", Toast.LENGTH_SHORT).show();
             return;
         }
 
