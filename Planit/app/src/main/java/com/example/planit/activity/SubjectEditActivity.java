@@ -21,15 +21,14 @@ import java.util.HashMap;
 import java.util.Map;
 
 public class SubjectEditActivity extends AppCompatActivity {
-
     private EditText editTextSubjectName;
     private Spinner spinnerSubjectColor;
     private Button buttonSaveSubject, buttonDeleteSubject;
     private SubjectManager subjectManager;
     private int subjectId = -1;
-    private String selectedColorValue = "#FFFFFF";  // Default color
+    private int selectedColorValue = 0;  // Default color
 
-    private Map<String, String> colorMap;
+    private Map<String, Integer> colorMap;
 
     private void initSubjectManager() {
         subjectManager = (SubjectManager) SingletonEntity.getInstance().get(SubjectFragment.SHARED_SUBJECT_LIST);
@@ -63,7 +62,7 @@ public class SubjectEditActivity extends AppCompatActivity {
         spinnerSubjectColor.setOnItemSelectedListener(new AdapterView.OnItemSelectedListener() {
             @Override
             public void onItemSelected(AdapterView<?> parentView, android.view.View selectedItemView, int position, long id) {
-                selectedColorValue = colorMap.get(parentView.getItemAtPosition(position).toString());
+                selectedColorValue = colorMap.get(parentView.getItemAtPosition(position));
             }
 
             @Override
@@ -76,12 +75,12 @@ public class SubjectEditActivity extends AppCompatActivity {
         if (intent != null && intent.hasExtra("SUBJECT_ID")) {
             subjectId = intent.getIntExtra("SUBJECT_ID", -1);
             String subjectName = intent.getStringExtra("SUBJECT_NAME");
-            String subjectColor = intent.getStringExtra("SUBJECT_COLOR");
+            int subjectColor = intent.getIntExtra("SUBJECT_COLOR", 0);
 
             editTextSubjectName.setText(subjectName);
             // Set the color in the spinner
-            if (subjectColor != null && colorMap.containsValue(subjectColor)) {
-                for (Map.Entry<String, String> entry : colorMap.entrySet()) {
+            if (subjectColor != 0 && colorMap.containsValue(subjectColor)) {
+                for (Map.Entry<String, Integer> entry : colorMap.entrySet()) {
                     if (entry.getValue().equals(subjectColor)) {
                         spinnerSubjectColor.setSelection(getKeyIndex(entry.getKey()));
                         break;
@@ -90,11 +89,11 @@ public class SubjectEditActivity extends AppCompatActivity {
             }
         }
 
-        buttonSaveSubject.setOnClickListener(v -> saveSubject());
+        buttonSaveSubject.setOnClickListener(v -> updateSubject());
         buttonDeleteSubject.setOnClickListener(v -> deleteSubject());
     }
 
-    private void saveSubject() {
+    private void updateSubject() {
         String name = editTextSubjectName.getText().toString();
 
         if (name.isEmpty()) {
@@ -102,23 +101,15 @@ public class SubjectEditActivity extends AppCompatActivity {
             return;
         }
 
-        int color;
-        try {
-            color = Color.parseColor(selectedColorValue);
-        } catch (IllegalArgumentException e) {
-            Toast.makeText(this, "Please select a valid color", Toast.LENGTH_SHORT).show();
-            return;
-        }
+        int color = selectedColorValue;
 
-        if (subjectId == -1) {
-            subjectManager.createSubject(name, color);
-            Toast.makeText(this, "Subject created successfully", Toast.LENGTH_SHORT).show();
-        } else {
+        if (subjectId != -1) {
             subjectManager.editSubject(subjectId, name, color);
             Toast.makeText(this, "Subject updated successfully", Toast.LENGTH_SHORT).show();
+            finish();
+        } else {
+            Toast.makeText(this, "Error updating subject", Toast.LENGTH_SHORT).show();
         }
-
-        finish();
     }
 
     private void deleteSubject() {
@@ -133,16 +124,17 @@ public class SubjectEditActivity extends AppCompatActivity {
 
     private void initializeColorMap() {
         colorMap = new HashMap<>();
-        colorMap.put("Red", "#FF0000");
-        colorMap.put("Green", "#00FF00");
-        colorMap.put("Blue", "#0000FF");
-        colorMap.put("Yellow", "#FFFF00");
-        colorMap.put("Purple", "#800080");
-        colorMap.put("Cyan", "#00FFFF");
-        colorMap.put("Orange", "#FFA500");
-        colorMap.put("Pink", "#FFC0CB");
-        colorMap.put("Black", "#000000");
-        colorMap.put("White", "#FFFFFF");
+        colorMap.put("Red", Color.parseColor("#FF0000"));
+        colorMap.put("Green", Color.parseColor("#00FF00"));
+        colorMap.put("Blue", Color.parseColor("#0000FF"));
+        colorMap.put("Yellow", Color.parseColor("#FFFF00"));
+        colorMap.put("Purple", Color.parseColor("#800080"));
+        colorMap.put("Cyan", Color.parseColor("#00FFFF"));
+        colorMap.put("Orange", Color.parseColor("#FFA500"));
+        colorMap.put("Pink", Color.parseColor("#FFC0CB"));
+        colorMap.put("Black", Color.parseColor("#000000"));
+        colorMap.put("White", Color.parseColor("#FFFFFF"));
+
     }
 
     private int getKeyIndex(String key) {

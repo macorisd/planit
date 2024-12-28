@@ -1,6 +1,5 @@
 package com.example.planit.activity;
 
-import android.content.Intent;
 import android.os.Bundle;
 import android.widget.Button;
 import android.widget.EditText;
@@ -13,12 +12,11 @@ import com.example.planit.entity.SingletonEntity;
 import com.example.planit.entity.note.NoteManager;
 import com.example.planit.fragment.NoteFragment;
 
-public class NoteEditActivity extends AppCompatActivity {
+public class NoteCreateActivity extends AppCompatActivity {
 
     private EditText editTextNoteTitle, editTextNoteContent;
-    private Button buttonSaveNote, buttonDeleteNote;
+    private Button buttonSaveNote;
     private NoteManager noteManager;
-    private int noteId = -1;
 
     private void initNoteManager() {
         noteManager = (NoteManager) SingletonEntity.getInstance().get(NoteFragment.SHARED_NOTE_LIST);
@@ -31,30 +29,18 @@ public class NoteEditActivity extends AppCompatActivity {
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        setContentView(R.layout.activity_note_edit);
+        setContentView(R.layout.activity_note_create);
 
         editTextNoteTitle = findViewById(R.id.editTextNoteTitle);
         editTextNoteContent = findViewById(R.id.editTextNoteContent);
         buttonSaveNote = findViewById(R.id.buttonSaveNote);
-        buttonDeleteNote = findViewById(R.id.buttonDeleteNote);
 
         initNoteManager();
 
-        Intent intent = getIntent();
-        if (intent != null && intent.hasExtra("NOTE_ID")) {
-            noteId = intent.getIntExtra("NOTE_ID", -1);
-            String noteTitle = intent.getStringExtra("NOTE_TITLE");
-            String noteContent = intent.getStringExtra("NOTE_CONTENT");
-
-            editTextNoteTitle.setText(noteTitle);
-            editTextNoteContent.setText(noteContent);
-        }
-
-        buttonSaveNote.setOnClickListener(v -> updateNote());
-        buttonDeleteNote.setOnClickListener(v -> deleteNote());
+        buttonSaveNote.setOnClickListener(v -> saveNote());
     }
 
-    private void updateNote() {
+    private void saveNote() {
         String title = editTextNoteTitle.getText().toString();
         String content = editTextNoteContent.getText().toString();
 
@@ -63,23 +49,12 @@ public class NoteEditActivity extends AppCompatActivity {
             return;
         }
 
-        if (noteId != -1) {
-            noteManager.editNote(noteId, title, content);
-            Toast.makeText(this, "Note updated successfully", Toast.LENGTH_SHORT).show();
+        try {
+            noteManager.createNote(title, content);
+            Toast.makeText(this, "Note created successfully", Toast.LENGTH_SHORT).show();
             finish();
-        }
-        else {
-            Toast.makeText(this, "Error updating note", Toast.LENGTH_SHORT).show();
-        }
-    }
-
-    private void deleteNote() {
-        if (noteId != -1) {
-            noteManager.deleteNote(noteId);
-            Toast.makeText(this, "Note deleted successfully", Toast.LENGTH_SHORT).show();
-            finish();
-        } else {
-            Toast.makeText(this, "Error deleting note", Toast.LENGTH_SHORT).show();
+        } catch (Exception e) {
+            Toast.makeText(this, "Error creating note", Toast.LENGTH_SHORT).show();
         }
     }
 }

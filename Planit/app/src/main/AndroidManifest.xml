@@ -40,7 +40,13 @@
             android:label="@string/task_edit_label"
             android:theme="@style/Theme.Planit" />
         <activity
+            android:name=".activity.NoteCreateActivity"
+            android:exported="false" />
+        <activity
             android:name=".activity.NoteEditActivity"
+            android:exported="false" />
+        <activity
+            android:name=".activity.SubjectCreateActivity"
             android:exported="false" />
         <activity
             android:name=".activity.SubjectEditActivity"

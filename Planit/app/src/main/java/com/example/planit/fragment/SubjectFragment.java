@@ -14,6 +14,7 @@ import androidx.recyclerview.widget.RecyclerView;
 
 import com.example.planit.R;
 //import com.example.planit.activity.SubjectEditActivity;
+import com.example.planit.activity.SubjectCreateActivity;
 import com.example.planit.activity.SubjectEditActivity;
 import com.example.planit.entity.SingletonEntity;
 import com.example.planit.entity.subject.SubjectAdapter;
@@ -47,12 +48,8 @@ public class SubjectFragment extends Fragment {
         recyclerView.setAdapter(subjectAdapter);
 
         view.findViewById(R.id.buttonAddSubject).setOnClickListener(v -> {
-            Subject newSubject = subjectManager.createSubject("", 0);
-            Intent editIntent = new Intent(requireContext(), SubjectEditActivity.class);
-            editIntent.putExtra("SUBJECT_ID", newSubject.getId());
-            editIntent.putExtra("SUBJECT_NAME", newSubject.getName());
-            editIntent.putExtra("SUBJECT_COLOR", newSubject.getColor());
-            startActivity(editIntent);
+            Intent intent = new Intent(requireContext(), SubjectCreateActivity.class);
+            startActivity(intent);
         });
 
         return view;

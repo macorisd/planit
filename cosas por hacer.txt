@@ -1,7 +1,6 @@
 NEXT
 
-- actividades de creación de notas y asignaturas
-- mejoras: 
+- mejoras:
 	tareas:
 	notas:
 	asignaturas:

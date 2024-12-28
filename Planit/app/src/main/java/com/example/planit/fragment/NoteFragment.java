@@ -13,6 +13,7 @@ import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
 import com.example.planit.R;
+import com.example.planit.activity.NoteCreateActivity;
 import com.example.planit.activity.NoteEditActivity;
 import com.example.planit.entity.SingletonEntity;
 import com.example.planit.entity.note.NoteAdapter;
@@ -46,12 +47,8 @@ public class NoteFragment extends Fragment {
         recyclerView.setAdapter(noteAdapter);
 
         view.findViewById(R.id.buttonAddNote).setOnClickListener(v -> {
-            Note newNote = noteManager.createNote("", "");
-            Intent editIntent = new Intent(requireContext(), NoteEditActivity.class);
-            editIntent.putExtra("NOTE_ID", newNote.getId());
-            editIntent.putExtra("NOTE_TITLE", newNote.getTitle());
-            editIntent.putExtra("NOTE_CONTENT", newNote.getContent());
-            startActivity(editIntent);
+            Intent intent = new Intent(requireContext(), NoteCreateActivity.class);
+            startActivity(intent);
         });
 
         return view;
