@@ -6,6 +6,21 @@
     android:layout_height="match_parent"
     tools:context=".activity.NoteEditActivity">
 
+    <!-- Título de la pantalla -->
+    <TextView
+        android:id="@+id/textViewEditNote"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="Editar Nota"
+        android:textSize="20sp"
+        android:textStyle="bold"
+        android:layout_marginTop="16dp"
+        android:layout_marginStart="16dp"
+        android:layout_marginEnd="16dp"
+        app:layout_constraintTop_toTopOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintEnd_toEndOf="parent" />
+
     <EditText
         android:id="@+id/editTextNoteTitle"
         android:layout_width="0dp"
@@ -15,7 +30,7 @@
         android:textSize="18sp"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toTopOf="parent" />
+        app:layout_constraintTop_toBottomOf="@id/textViewEditNote" />
 
     <EditText
         android:id="@+id/editTextNoteContent"

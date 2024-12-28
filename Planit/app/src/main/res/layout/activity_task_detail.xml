@@ -5,6 +5,17 @@
     android:orientation="vertical"
     android:padding="16dp">
 
+    <!-- Título de la pantalla -->
+    <TextView
+        android:id="@+id/titleTaskDetail"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="Detalles de Tarea"
+        android:textSize="18sp"
+        android:textStyle="bold"
+        android:layout_marginBottom="16dp"
+        android:layout_gravity="center" />
+
     <!-- Variable: taskName -->
     <TextView
         android:id="@+id/taskDetailName"

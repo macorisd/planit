@@ -5,6 +5,17 @@
     android:padding="16dp"
     android:orientation="vertical">
 
+    <!-- Título de la pantalla -->
+    <TextView
+        android:id="@+id/titleEditTask"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="Editar Tarea"
+        android:textSize="18sp"
+        android:textStyle="bold"
+        android:layout_marginBottom="16dp"
+        android:layout_gravity="center" />
+
     <!-- Campo de nombre de tarea -->
     <EditText
         android:id="@+id/etTaskName"

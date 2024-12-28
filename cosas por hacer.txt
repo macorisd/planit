@@ -17,10 +17,16 @@ MEJORAS
 
 NEXT
 
-- crear tarea: mejora
+- labels descriptivos de cada pantalla: editar asignatura
+- icono para tareas
 - editar tarea: mejora
 - actividades de creación de notas y asignaturas
 - mejoras: 
 	tareas: si no hay tareas pendientes, indicarlo (u ocultar label si no hay de una categoría)
 	notas
 	asignaturas
+
+- idiomas
+- notificaciones
+- ajustes
+- icono de app
