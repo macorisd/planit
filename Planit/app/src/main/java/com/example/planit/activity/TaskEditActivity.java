@@ -28,13 +28,14 @@ import java.util.Locale;
 
 public class TaskEditActivity extends AppCompatActivity {
 
-    private EditText etTaskName, etDescription, etImportance, etType, etDueDate, etDueTime, etCompleted;
-    private Spinner spinnerSubject;
+    private EditText etTaskName, etDescription, etDueDate, etDueTime;
+    private Spinner spinnerImportance, spinnerType, spinnerSubject;
     private Button btnSave, btnCancel;
     private TaskManager taskManager;
     private SubjectManager subjectManager;
     private List<Subject> subjects;
     private int taskId;
+    private boolean completed;
 
     private void initTaskManager() {
         taskManager = (TaskManager) SingletonEntity.getInstance().get(TaskFragment.SHARED_TASK_LIST);
@@ -71,28 +72,38 @@ public class TaskEditActivity extends AppCompatActivity {
         int subjectId = intent.getIntExtra("TASK_SUBJECT_ID", -1);
         String dueDate = intent.getStringExtra("TASK_DUE_DATE");
         String dueTime = intent.getStringExtra("TASK_DUE_TIME");
-        int completed = intent.getIntExtra("TASK_COMPLETED", 0);
+        this.completed = intent.getBooleanExtra("TASK_COMPLETED", false);
 
-        // Vincular los EditText, Spinner y los botones
+        // Vincular los EditText, Spinner y botones
         etTaskName = findViewById(R.id.etTaskName);
         etDescription = findViewById(R.id.etDescription);
-        etImportance = findViewById(R.id.etImportance);
-        etType = findViewById(R.id.etType);
-        spinnerSubject = findViewById(R.id.spinnerSubject);
         etDueDate = findViewById(R.id.etDueDate);
         etDueTime = findViewById(R.id.etDueTime);
-        etCompleted = findViewById(R.id.etCompleted);
+        spinnerImportance = findViewById(R.id.spinnerImportance);
+        spinnerType = findViewById(R.id.spinnerType);
+        spinnerSubject = findViewById(R.id.spinnerSubject);
         btnSave = findViewById(R.id.btnSave);
         btnCancel = findViewById(R.id.btnCancel);
 
         // Llenar los campos con los datos actuales de la tarea
         etTaskName.setText(name);
         etDescription.setText(description);
-        etImportance.setText(String.valueOf(importance));
-        etType.setText(type);
         etDueDate.setText(Task.formatDate(dueDate));
         etDueTime.setText(dueTime);
-        etCompleted.setText(String.valueOf(completed));
+
+        // Configurar el spinner de importancia
+        ArrayAdapter<CharSequence> importanceAdapter = ArrayAdapter.createFromResource(this,
+                R.array.importance_array, android.R.layout.simple_spinner_item);
+        importanceAdapter.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
+        spinnerImportance.setAdapter(importanceAdapter);
+        spinnerImportance.setSelection(importance - 1);
+
+        // Configurar el spinner de tipo
+        ArrayAdapter<CharSequence> typeAdapter = ArrayAdapter.createFromResource(this,
+                R.array.type_array, android.R.layout.simple_spinner_item);
+        typeAdapter.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
+        spinnerType.setAdapter(typeAdapter);
+        spinnerType.setSelection(typeAdapter.getPosition(type));
 
         // Obtener los subjects y llenar el spinner
         subjects = subjectManager.getSubjects();
@@ -101,14 +112,13 @@ public class TaskEditActivity extends AppCompatActivity {
         for (Subject subject : subjects) {
             subjectNames.add(subject.getName());
         }
-        ArrayAdapter<String> adapter = new ArrayAdapter<>(this, android.R.layout.simple_spinner_item, subjectNames);
-        adapter.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
-        spinnerSubject.setAdapter(adapter);
+        ArrayAdapter<String> subjectAdapter = new ArrayAdapter<>(this, android.R.layout.simple_spinner_item, subjectNames);
+        subjectAdapter.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
+        spinnerSubject.setAdapter(subjectAdapter);
 
         if (subjectId == -1) {
             spinnerSubject.setSelection(0);
         } else {
-            // Seleccionar el subject actual en el spinner
             for (int i = 0; i < subjects.size(); i++) {
                 if (subjects.get(i).getId() == subjectId) {
                     spinnerSubject.setSelection(i + 1);
@@ -120,48 +130,15 @@ public class TaskEditActivity extends AppCompatActivity {
         // Configurar el campo de fecha para mostrar el DatePickerDialog
         etDueDate.setOnClickListener(v -> showDatePickerDialog());
 
-        // Configurar el botón de guardar
+        // Configurar el botón de guardar con validaciones
         btnSave.setOnClickListener(v -> {
-            // Obtener los nuevos valores de los campos
-            String name1 = etTaskName.getText().toString();
-            String description1 = etDescription.getText().toString();
-            int importance1 = Integer.parseInt(etImportance.getText().toString());
-            String type1 = etType.getText().toString();
-
-            int taskItemPosition = spinnerSubject.getSelectedItemPosition();
-            int subjectId1 = taskItemPosition == 0 ? -1 : subjects.get(taskItemPosition - 1).getId();
-
-            String dueDate1 = Task.formatDateReversed(etDueDate.getText().toString());
-            String dueTime1 = etDueTime.getText().toString();
-            int completed1 = Integer.parseInt(etCompleted.getText().toString());
-
-            // Llamar al método editTask para guardar los cambios
-            try {
-                taskManager.editTask(taskId, name1, description1, importance1, type1, subjectId1, dueDate1, dueTime1, completed1);
-                Toast.makeText(TaskEditActivity.this, "Tarea actualizada correctamente", Toast.LENGTH_SHORT).show();
-
-                Intent intent2 = new Intent(this, TaskDetailActivity.class);
-                intent2.putExtra("TASK_ID", taskId);
-                intent2.putExtra("TASK_NAME", name1);
-                intent2.putExtra("TASK_DESCRIPTION", description1);
-                intent2.putExtra("TASK_COMPLETED", completed1);
-                intent2.putExtra("TASK_IMPORTANCE", importance1);
-                intent2.putExtra("TASK_TYPE", type1);
-                intent2.putExtra("TASK_SUBJECT_ID", subjectId1);
-                intent2.putExtra("TASK_DUE_DATE", dueDate1);
-                intent2.putExtra("TASK_DUE_TIME", dueTime1);
-                intent2.setFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP | Intent.FLAG_ACTIVITY_NEW_TASK);
-                startActivity(intent2);
-
-                finish(); // Cerrar la actividad después de guardar
-            } catch (Exception e) {
-                Toast.makeText(TaskEditActivity.this, "Error al actualizar la tarea", Toast.LENGTH_SHORT).show();
-            }
+            updateTask();
         });
 
         // Configurar el botón de cancelar
-        btnCancel.setOnClickListener(v -> finish()); // Cerrar la actividad sin guardar cambios
+        btnCancel.setOnClickListener(v -> finish());
     }
+
 
     private void showDatePickerDialog() {
         final Calendar calendar = Calendar.getInstance();
@@ -186,4 +163,84 @@ public class TaskEditActivity extends AppCompatActivity {
 
         datePickerDialog.show();
     }
+
+    // Método para actualizar una tarea existente
+    private void updateTask() {
+        // Obtener los nuevos valores de los campos
+        String newName = etTaskName.getText().toString().trim();
+        String newDescription = etDescription.getText().toString().trim();
+        String newDueDate = Task.formatDateReversed(etDueDate.getText().toString());
+        String newDueTime = etDueTime.getText().toString().trim();
+        String newImportanceString = spinnerImportance.getSelectedItem().toString();
+        String newType = spinnerType.getSelectedItem().toString();
+
+        // Validar los campos obligatorios
+        if (newName.isEmpty() || newDueDate.isEmpty()) {
+            Toast.makeText(this, "Por favor, complete todos los campos obligatorios", Toast.LENGTH_SHORT).show();
+            return;
+        }
+
+        // Validar la longitud del nombre
+        if (newName.length() < 3 || newName.length() > 40) {
+            Toast.makeText(TaskEditActivity.this, "El nombre debe tener entre 3 y 40 caracteres", Toast.LENGTH_SHORT).show();
+            return;
+        }
+
+        // Validar la longitud de la descripción
+        if (newDescription.length() > 400) {
+            Toast.makeText(TaskEditActivity.this, "La descripción no puede tener más de 400 caracteres", Toast.LENGTH_SHORT).show();
+            return;
+        }
+
+        // Validar el formato de la hora (si no está vacía)
+        if (!newDueTime.isEmpty() && !newDueTime.matches("^([01]?\\d|2[0-3]):[0-5]\\d$")) {
+            Toast.makeText(TaskEditActivity.this, "La hora debe tener el formato HH:MM", Toast.LENGTH_SHORT).show();
+            return;
+        }
+
+        int newSubjectId = spinnerSubject.getSelectedItemPosition() == 0
+                ? -1
+                : subjects.get(spinnerSubject.getSelectedItemPosition() - 1).getId();
+
+        int newImportance;
+        switch (newImportanceString) {
+            case "Baja":
+                newImportance = 1;
+                break;
+            case "Media":
+                newImportance = 2;
+                break;
+            case "Alta":
+                newImportance = 3;
+                break;
+            default:
+                newImportance = 1;
+                break;
+        }
+
+        // Llamar al método editTask del TaskManager
+        try {
+            taskManager.editTask(taskId, newName, newDescription, newImportance, newType, newSubjectId, newDueDate, newDueTime, 0);
+            Toast.makeText(this, "Tarea actualizada correctamente", Toast.LENGTH_SHORT).show();
+
+            // Navegar de regreso a TaskDetailActivity con los nuevos datos
+            Intent intent = new Intent(this, TaskDetailActivity.class);
+            intent.putExtra("TASK_ID", taskId);
+            intent.putExtra("TASK_NAME", newName);
+            intent.putExtra("TASK_DESCRIPTION", newDescription);
+            intent.putExtra("TASK_COMPLETED", this.completed);
+            intent.putExtra("TASK_IMPORTANCE", newImportance);
+            intent.putExtra("TASK_TYPE", newType);
+            intent.putExtra("TASK_SUBJECT_ID", newSubjectId);
+            intent.putExtra("TASK_DUE_DATE", newDueDate);
+            intent.putExtra("TASK_DUE_TIME", newDueTime);
+            intent.setFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP | Intent.FLAG_ACTIVITY_NEW_TASK);
+            startActivity(intent);
+
+            finish();
+        } catch (Exception e) {
+            Toast.makeText(this, "Error al actualizar la tarea: " + e.getMessage(), Toast.LENGTH_LONG).show();
+        }
+    }
+
 }

@@ -91,45 +91,8 @@ public class TaskCreateActivity extends AppCompatActivity {
 
         // Configuración del botón de guardar
         saveButton.setOnClickListener(v -> {
-            // Obtener los valores ingresados por el usuario
-            String name = taskNameEditText.getText().toString().trim();
-            String description = taskDescriptionEditText.getText().toString().trim();
-            String dueDate = taskDueDateEditText.getText().toString().trim();
-            String dueTime = taskDueTimeEditText.getText().toString().trim();
-
-            // Validar los campos obligatorios
-            if (name.isEmpty() || dueDate.isEmpty()) {
-                Toast.makeText(this, "Por favor, complete todos los campos obligatorios", Toast.LENGTH_SHORT).show();
-                return;
-            }
-
-            // Validar la longitud del nombre
-            if (name.length() < 3 || name.length() > 40) {
-                Toast.makeText(TaskCreateActivity.this, "El nombre debe tener entre 3 y 40 caracteres", Toast.LENGTH_SHORT).show();
-                return;
-            }
-
-            // Validar la longitud de la descripción
-            if (description.length() > 400) {
-                Toast.makeText(TaskCreateActivity.this, "La descripción no puede tener más de 400 caracteres", Toast.LENGTH_SHORT).show();
-                return;
-            }
-
-            // Validar el formato de la hora (si no está vacía)
-            if (!dueTime.isEmpty()) {
-                if (!dueTime.matches("^([01]?\\d|2[0-3]):[0-5]\\d$")) {
-                    Toast.makeText(TaskCreateActivity.this, "La hora debe tener el formato HH:MM", Toast.LENGTH_SHORT).show();
-                    return;
-                }
-            }
-
-            // Si todo es válido, guardar la tarea
             saveTask();
-            Toast.makeText(TaskCreateActivity.this, "Tarea creada con éxito", Toast.LENGTH_SHORT).show();
-            finish();
         });
-
-
     }
 
     private void showDatePickerDialog() {
@@ -158,15 +121,40 @@ public class TaskCreateActivity extends AppCompatActivity {
 
     // Método para guardar la tarea en la base de datos
     private void saveTask() {
-        String name = taskNameEditText.getText().toString();
-        String description = taskDescriptionEditText.getText().toString();
-        String dueDate = Task.formatDateReversed(taskDueDateEditText.getText().toString());
-        String dueTime = taskDueTimeEditText.getText().toString();
+        // Obtener los valores ingresados por el usuario
+        String name = taskNameEditText.getText().toString().trim();
+        String description = taskDescriptionEditText.getText().toString().trim();
+        String dueDate = Task.formatDateReversed(taskDueDateEditText.getText().toString().trim());
+        String dueTime = taskDueTimeEditText.getText().toString().trim();
         String importanceString = taskImportanceSpinner.getSelectedItem().toString();
         String type = taskTypeSpinner.getSelectedItem().toString();
 
         int taskItemPosition = taskSubjectSpinner.getSelectedItemPosition();
         int subjectId = taskItemPosition == 0 ? -1 : subjects.get(taskItemPosition - 1).getId();
+
+        // Validar los campos obligatorios
+        if (name.isEmpty() || dueDate.isEmpty()) {
+            Toast.makeText(this, "Por favor, complete todos los campos obligatorios", Toast.LENGTH_SHORT).show();
+            return;
+        }
+
+        // Validar la longitud del nombre
+        if (name.length() < 3 || name.length() > 40) {
+            Toast.makeText(TaskCreateActivity.this, "El nombre debe tener entre 3 y 40 caracteres", Toast.LENGTH_SHORT).show();
+            return;
+        }
+
+        // Validar la longitud de la descripción
+        if (description.length() > 400) {
+            Toast.makeText(TaskCreateActivity.this, "La descripción no puede tener más de 400 caracteres", Toast.LENGTH_SHORT).show();
+            return;
+        }
+
+        // Validar el formato de la hora (si no está vacía)
+        if (!dueTime.isEmpty() && !dueTime.matches("^([01]?\\d|2[0-3]):[0-5]\\d$")) {
+            Toast.makeText(TaskCreateActivity.this, "La hora debe tener el formato HH:MM", Toast.LENGTH_SHORT).show();
+            return;
+        }
 
         int importance;
         switch (importanceString) {
@@ -187,6 +175,8 @@ public class TaskCreateActivity extends AppCompatActivity {
         try {
             // Llamar al método createTask para insertar la nueva tarea
             taskManager.createTask(name, description, importance, type, subjectId, dueDate, dueTime);
+            Toast.makeText(TaskCreateActivity.this, "Tarea creada con éxito", Toast.LENGTH_SHORT).show();
+            finish();
         } catch (IllegalArgumentException e) {
             Toast.makeText(this, "Por favor, complete todos los campos", Toast.LENGTH_SHORT).show();
         } catch (RuntimeException e) {

@@ -5,7 +5,7 @@
     android:padding="16dp"
     android:orientation="vertical">
 
-    <!-- Título de la pantalla -->
+    <!-- Título descriptivo -->
     <TextView
         android:id="@+id/titleEditTask"
         android:layout_width="wrap_content"
@@ -17,74 +17,147 @@
         android:layout_gravity="center" />
 
     <!-- Campo de nombre de tarea -->
-    <EditText
-        android:id="@+id/etTaskName"
+    <LinearLayout
         android:layout_width="match_parent"
-        android:layout_height="48dp"
-        android:hint="Nombre de la tarea"
-        android:inputType="text" />
+        android:layout_height="wrap_content"
+        android:orientation="horizontal"
+        android:layout_marginBottom="8dp">
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="Nombre:" />
+        <EditText
+            android:id="@+id/etTaskName"
+            android:layout_width="0dp"
+            android:layout_height="48dp"
+            android:layout_weight="1"
+            android:hint="Nombre de la tarea"
+            android:inputType="text" />
+    </LinearLayout>
 
     <!-- Campo de descripción de tarea -->
-    <EditText
-        android:id="@+id/etDescription"
+    <LinearLayout
         android:layout_width="match_parent"
-        android:layout_height="48dp"
-        android:hint="Descripción"
-        android:inputType="text" />
-
-    <!-- Campo de importancia -->
-    <EditText
-        android:id="@+id/etImportance"
-        android:layout_width="match_parent"
-        android:layout_height="48dp"
-        android:hint="Importancia (1-5)"
-        android:inputType="number" />
-
-    <!-- Campo de tipo de tarea -->
-    <EditText
-        android:id="@+id/etType"
-        android:layout_width="match_parent"
-        android:layout_height="48dp"
-        android:hint="Tipo de tarea"
-        android:inputType="text" />
+        android:layout_height="wrap_content"
+        android:orientation="horizontal"
+        android:layout_marginBottom="8dp">
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="Descripción:" />
+        <EditText
+            android:id="@+id/etDescription"
+            android:layout_width="0dp"
+            android:layout_height="48dp"
+            android:layout_weight="1"
+            android:hint="Descripción"
+            android:inputType="text" />
+    </LinearLayout>
 
     <!-- Spinner de asignatura -->
-    <Spinner
-        android:id="@+id/spinnerSubject"
+    <LinearLayout
         android:layout_width="match_parent"
-        android:layout_height="48dp"/>
+        android:layout_height="wrap_content"
+        android:orientation="horizontal"
+        android:layout_marginBottom="8dp">
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="Asignatura:" />
+        <Spinner
+            android:id="@+id/spinnerSubject"
+            android:layout_width="0dp"
+            android:layout_height="48dp"
+            android:layout_weight="1" />
+    </LinearLayout>
 
     <!-- Campo de fecha de vencimiento -->
-    <EditText
-        android:id="@+id/etDueDate"
+    <LinearLayout
         android:layout_width="match_parent"
-        android:layout_height="48dp"
-        android:hint="Fecha de vencimiento"
-        android:focusableInTouchMode="false"
-        android:inputType="date" />
+        android:layout_height="wrap_content"
+        android:orientation="horizontal"
+        android:layout_marginBottom="8dp">
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="Fecha de vencimiento:" />
+        <EditText
+            android:id="@+id/etDueDate"
+            android:layout_width="0dp"
+            android:layout_height="48dp"
+            android:layout_weight="1"
+            android:hint="DD-MM-YYYY"
+            android:focusableInTouchMode="false"
+            android:inputType="date" />
+    </LinearLayout>
 
     <!-- Campo de hora de vencimiento -->
-    <EditText
-        android:id="@+id/etDueTime"
+    <LinearLayout
         android:layout_width="match_parent"
-        android:layout_height="48dp"
-        android:hint="Hora de vencimiento"
-        android:inputType="time" />
+        android:layout_height="wrap_content"
+        android:orientation="horizontal"
+        android:layout_marginBottom="8dp">
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="Hora de vencimiento:" />
+        <EditText
+            android:id="@+id/etDueTime"
+            android:layout_width="0dp"
+            android:layout_height="48dp"
+            android:layout_weight="1"
+            android:hint="HH:MM"
+            android:inputType="time" />
+    </LinearLayout>
 
-    <!-- Campo de completado -->
-    <EditText
-        android:id="@+id/etCompleted"
+    <!-- Spinner de importancia -->
+    <LinearLayout
         android:layout_width="match_parent"
-        android:layout_height="48dp"
-        android:hint="Completada (1 para sí, 0 para no)"
-        android:inputType="number" />
+        android:layout_height="wrap_content"
+        android:orientation="horizontal"
+        android:layout_marginBottom="8dp">
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="Importancia:" />
+        <Spinner
+            android:id="@+id/spinnerImportance"
+            android:layout_width="0dp"
+            android:layout_height="48dp"
+            android:layout_weight="1"
+            android:entries="@array/importance_array" />
+    </LinearLayout>
+
+    <!-- Spinner de tipo -->
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:orientation="horizontal"
+        android:layout_marginBottom="8dp">
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="Tipo:" />
+        <Spinner
+            android:id="@+id/spinnerType"
+            android:layout_width="0dp"
+            android:layout_height="48dp"
+            android:layout_weight="1"
+            android:entries="@array/type_array" />
+    </LinearLayout>
+
+    <View
+        android:layout_width="0dp"
+        android:layout_height="0dp"
+        android:layout_weight="1" />
 
     <!-- Botón de guardar -->
     <Button
         android:id="@+id/btnSave"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:text="Guardar" />
+        android:text="Guardar"
+        android:layout_gravity="bottom" />
 
     <!-- Botón de cancelar -->
     <Button
@@ -92,4 +165,5 @@
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:text="Cancelar" />
+
 </LinearLayout>

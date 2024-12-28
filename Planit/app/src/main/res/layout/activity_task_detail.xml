@@ -35,30 +35,11 @@
         android:text="Task Description"
         android:textSize="16sp"/>
 
-    <!-- Variable: taskImportance -->
-    <TextView
-        android:id="@+id/taskDetailImportance"
-        android:layout_width="wrap_content"
-        android:layout_height="30dp"
-        android:text="Task Importance"
-        android:textSize="16sp"
-        android:textStyle="bold" />
-
-    <!-- Variable: taskType -->
-    <TextView
-        android:id="@+id/taskDetailType"
-        android:layout_width="wrap_content"
-        android:layout_height="30dp"
-        android:paddingBottom="8dp"
-        android:text="Task Type"
-        android:textSize="16sp"
-        android:textStyle="bold" />
-
     <!-- Variable: taskSubject -->
     <TextView
         android:id="@+id/taskDetailSubject"
         android:layout_width="wrap_content"
-        android:layout_height="30dp"
+        android:layout_height="50dp"
         android:paddingBottom="8dp"
         android:text="Task Subject"
         android:textSize="16sp"
@@ -81,6 +62,25 @@
         android:layout_height="30dp"
         android:paddingBottom="8dp"
         android:text="Task Due Time"
+        android:textSize="16sp"
+        android:textStyle="bold" />
+
+    <!-- Variable: taskImportance -->
+    <TextView
+        android:id="@+id/taskDetailImportance"
+        android:layout_width="wrap_content"
+        android:layout_height="30dp"
+        android:text="Task Importance"
+        android:textSize="16sp"
+        android:textStyle="bold" />
+
+    <!-- Variable: taskType -->
+    <TextView
+        android:id="@+id/taskDetailType"
+        android:layout_width="wrap_content"
+        android:layout_height="30dp"
+        android:paddingBottom="8dp"
+        android:text="Task Type"
         android:textSize="16sp"
         android:textStyle="bold" />
 
