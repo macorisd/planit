@@ -53,7 +53,7 @@ public class TaskAdapter extends RecyclerView.Adapter<TaskAdapter.TaskViewHolder
         Task task = taskList.get(position);
         holder.taskName.setText(task.getName());
         holder.taskDueDate.setText(formatDate(task.getDueDate()));
-        holder.taskDueTime.setText("a las " + task.getDueTime());
+        holder.taskDueTime.setText(task.getDueTime().isEmpty() ? "" : "a las " + task.getDueTime());
 
         // Obtener el nombre de la asignatura
         Subject subject = subjectManager.getById(task.getSubjectId());

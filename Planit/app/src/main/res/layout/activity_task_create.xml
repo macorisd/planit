@@ -43,6 +43,23 @@
             android:inputType="text" />
     </LinearLayout>
 
+    <!-- Spinner de asignatura -->
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:orientation="horizontal"
+        android:layout_marginBottom="8dp">
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="Asignatura:" />
+        <Spinner
+            android:id="@+id/spinnerSubject"
+            android:layout_width="0dp"
+            android:layout_height="48dp"
+            android:layout_weight="1" />
+    </LinearLayout>
+
     <!-- Campo de fecha de vencimiento -->
     <LinearLayout
         android:layout_width="match_parent"
@@ -59,6 +76,7 @@
             android:layout_height="48dp"
             android:layout_weight="1"
             android:hint="YYYY-MM-DD"
+            android:focusableInTouchMode="false"
             android:inputType="date" />
     </LinearLayout>
 
@@ -115,23 +133,6 @@
             android:layout_height="48dp"
             android:layout_weight="1"
             android:entries="@array/type_array" />
-    </LinearLayout>
-
-    <!-- Spinner de asignatura -->
-    <LinearLayout
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:orientation="horizontal"
-        android:layout_marginBottom="8dp">
-        <TextView
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:text="Asignatura:" />
-        <Spinner
-            android:id="@+id/spinnerSubject"
-            android:layout_width="0dp"
-            android:layout_height="48dp"
-            android:layout_weight="1" />
     </LinearLayout>
 
     <View

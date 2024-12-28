@@ -1,5 +1,6 @@
 package com.example.planit.activity;
 
+import android.app.DatePickerDialog;
 import android.os.Bundle;
 import android.widget.ArrayAdapter;
 import android.widget.Button;
@@ -17,8 +18,11 @@ import com.example.planit.entity.task.TaskManager;
 import com.example.planit.fragment.SubjectFragment;
 import com.example.planit.fragment.TaskFragment;
 
+import java.text.SimpleDateFormat;
 import java.util.ArrayList;
+import java.util.Calendar;
 import java.util.List;
+import java.util.Locale;
 
 public class TaskCreateActivity extends AppCompatActivity {
 
@@ -82,12 +86,62 @@ public class TaskCreateActivity extends AppCompatActivity {
         adapter.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
         taskSubjectSpinner.setAdapter(adapter);
 
+        taskDueDateEditText.setOnClickListener(v -> showDatePickerDialog());
+
         // Configuración del botón de guardar
         saveButton.setOnClickListener(v -> {
+            // Obtener los valores ingresados por el usuario
+            String name = taskNameEditText.getText().toString().trim();
+            String description = taskDescriptionEditText.getText().toString().trim();
+            String dueDate = taskDueDateEditText.getText().toString().trim();
+
+            // Validar los campos
+            if (name.isEmpty() || dueDate.isEmpty()) {
+                Toast.makeText(this, "Por favor, complete todos los campos", Toast.LENGTH_SHORT).show();
+                return;
+            }
+
+            if (name.length() < 3 || name.length() > 40) {
+                Toast.makeText(TaskCreateActivity.this, "El nombre debe tener entre 3 y 40 caracteres", Toast.LENGTH_SHORT).show();
+                return;
+            }
+
+            if (description.length() > 400) {
+                Toast.makeText(TaskCreateActivity.this, "La descripción no puede tener más de 400 caracteres", Toast.LENGTH_SHORT).show();
+                return;
+            }
+
+            // Si todo es válido, guardar la tarea
             saveTask();
             Toast.makeText(TaskCreateActivity.this, "Tarea creada con éxito", Toast.LENGTH_SHORT).show();
             finish();
         });
+
+    }
+
+    private void showDatePickerDialog() {
+        final Calendar calendar = Calendar.getInstance();
+        int year = calendar.get(Calendar.YEAR);
+        int month = calendar.get(Calendar.MONTH);
+        int day = calendar.get(Calendar.DAY_OF_MONTH);
+
+        // Crear y mostrar el DatePickerDialog
+        DatePickerDialog datePickerDialog = new DatePickerDialog(
+                this,
+                (view, selectedYear, selectedMonth, selectedDay) -> {
+                    // Formatear la fecha seleccionada como yyyy/MM/dd
+                    Calendar selectedDate = Calendar.getInstance();
+                    selectedDate.set(selectedYear, selectedMonth, selectedDay);
+                    SimpleDateFormat dateFormat = new SimpleDateFormat("yyyy/MM/dd", Locale.getDefault());
+                    String formattedDate = dateFormat.format(selectedDate.getTime());
+
+                    // Establecer la fecha en el EditText
+                    taskDueDateEditText.setText(formattedDate);
+                },
+                year, month, day
+        );
+
+        datePickerDialog.show();
     }
 
     // Método para guardar la tarea en la base de datos
@@ -116,11 +170,6 @@ public class TaskCreateActivity extends AppCompatActivity {
             default:
                 importance = 1;
                 break;
-        }
-
-        if (name.isEmpty() || description.isEmpty() || dueDate.isEmpty() || dueTime.isEmpty()) {
-            Toast.makeText(this, "Por favor, complete todos los campos", Toast.LENGTH_SHORT).show();
-            return;
         }
 
         try {

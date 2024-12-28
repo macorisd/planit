@@ -18,7 +18,6 @@ MEJORAS
 NEXT
 
 - crear tarea: mejora
-	- formato asignatura: problema al editar tarea sin asignatura, visualización rara de categorías
 - editar tarea: mejora
 - actividades de creación de notas y asignaturas
 - mejoras: 

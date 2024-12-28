@@ -90,10 +90,36 @@ public class TaskFragment extends Fragment {
 
         RecyclerView sectionRecyclerView = new RecyclerView(requireContext());
         sectionRecyclerView.setLayoutManager(new LinearLayoutManager(requireContext()));
+        sectionRecyclerView.setNestedScrollingEnabled(false);
+
         TaskAdapter taskAdapter = new TaskAdapter(requireContext(), tasks);
         sectionRecyclerView.setAdapter(taskAdapter);
+
         container.addView(sectionRecyclerView);
+
+        // Ajustar altura del RecyclerView basado en el número de ítems
+        sectionRecyclerView.post(() -> setRecyclerViewHeightBasedOnItems(sectionRecyclerView));
     }
+
+
+    private void setRecyclerViewHeightBasedOnItems(RecyclerView recyclerView) {
+        RecyclerView.Adapter adapter = recyclerView.getAdapter();
+        if (adapter == null) {
+            return;
+        }
+
+        int totalItems = adapter.getItemCount();
+        recyclerView.measure(
+                View.MeasureSpec.makeMeasureSpec(recyclerView.getWidth(), View.MeasureSpec.EXACTLY),
+                View.MeasureSpec.UNSPECIFIED
+        );
+
+        int itemHeight = recyclerView.getMeasuredHeight() / Math.max(1, totalItems);
+        recyclerView.getLayoutParams().height = itemHeight * totalItems;
+        recyclerView.requestLayout();
+    }
+
+
 
     private String getCurrentDateTime() {
         SimpleDateFormat sdf = new SimpleDateFormat("yyyy/MM/dd HH:mm", Locale.getDefault());

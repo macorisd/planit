@@ -107,7 +107,7 @@ public class TaskEditActivity extends AppCompatActivity {
             // Seleccionar el subject actual en el spinner
             for (int i = 0; i < subjects.size(); i++) {
                 if (subjects.get(i).getId() == subjectId) {
-                    spinnerSubject.setSelection(i);
+                    spinnerSubject.setSelection(i + 1);
                     break;
                 }
             }
@@ -120,7 +120,10 @@ public class TaskEditActivity extends AppCompatActivity {
             String description1 = etDescription.getText().toString();
             int importance1 = Integer.parseInt(etImportance.getText().toString());
             String type1 = etType.getText().toString();
-            int subjectId1 = subjects.get(spinnerSubject.getSelectedItemPosition()).getId();
+
+            int taskItemPosition = spinnerSubject.getSelectedItemPosition();
+            int subjectId1 = taskItemPosition == 0 ? -1 : subjects.get(taskItemPosition - 1).getId();
+
             String dueDate1 = etDueDate.getText().toString();
             String dueTime1 = etDueTime.getText().toString();
             int completed1 = Integer.parseInt(etCompleted.getText().toString());

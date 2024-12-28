@@ -99,7 +99,7 @@ public class TaskDetailActivity extends AppCompatActivity {
         }
 
         taskDueDateView.setText("Fecha de vencimiento: " + taskDueDate);
-        taskDueTimeView.setText("Hora de vencimiento: " + taskDueTime);
+        taskDueTimeView.setText(taskDueTime.isEmpty() ? "" : "Hora de vencimiento: " + taskDueTime);
 
         // Configurar el estado del interruptor
         taskCompletedSwitch.setChecked(taskCompleted);

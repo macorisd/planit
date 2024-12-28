@@ -89,8 +89,8 @@ public class TaskManager {
 
     public void createTask(String name, String description, int importance, String type, int subjectId, String dueDate, String dueTime) {
         // Verificar que los parámetros no estén vacíos
-        if (name.isEmpty() || description.isEmpty() || dueDate.isEmpty() || dueTime.isEmpty()) {
-            throw new IllegalArgumentException("Todos los campos son obligatorios");
+        if (name.isEmpty() || dueDate.isEmpty() || type.isEmpty()) {
+            throw new IllegalArgumentException("Alguno de los campos obligatorios está vacío");
         }
 
         // Crear un objeto ContentValues para insertar los valores en la base de datos
@@ -117,7 +117,7 @@ public class TaskManager {
     // Método para editar una tarea
     public void editTask(int taskId, String name, String description, int importance, String type, int subjectId, String dueDate, String dueTime, int completed) {
         // Verificar que los parámetros no estén vacíos
-        if (name.isEmpty() || description.isEmpty() || dueDate.isEmpty() || dueTime.isEmpty()) {
+        if (name.isEmpty() || dueDate.isEmpty() || type.isEmpty()) {
             throw new IllegalArgumentException("Todos los campos son obligatorios");
         }
 
