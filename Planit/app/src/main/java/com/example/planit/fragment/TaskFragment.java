@@ -82,6 +82,10 @@ public class TaskFragment extends Fragment {
     }
 
     private void addSection(ViewGroup container, String title, List<Task> tasks) {
+        if (tasks.isEmpty()) {
+            return; // Si no hay tareas, no agregamos la sección
+        }
+
         TextView sectionTitle = new TextView(requireContext());
         sectionTitle.setText(title);
         sectionTitle.setTextSize(18);
@@ -100,6 +104,7 @@ public class TaskFragment extends Fragment {
         // Ajustar altura del RecyclerView basado en el número de ítems
         sectionRecyclerView.post(() -> setRecyclerViewHeightBasedOnItems(sectionRecyclerView));
     }
+
 
 
     private void setRecyclerViewHeightBasedOnItems(RecyclerView recyclerView) {

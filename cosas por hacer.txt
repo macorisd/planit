@@ -1,32 +1,25 @@
-FUNCIONALIDADES
+NEXT
+
+- actividades de creación de notas y asignaturas
+- mejoras: 
+	tareas:
+	notas:
+	asignaturas:
 
 - idiomas
-- notificaciones
-- ajustes
-- temas estéticos y puntos
+- icono de app
+- notificaciones?
+- ajustes?
+- quitar comentarios
+- manual de usuario?
+
+
 
 MEJORAS
 
-- mejorar visualización: iconos, labels, tarea completada, colores, títulos de cada pantalla, etc.
-- formato correcto de todos los datos: fechas, etc
+- modal confirmación al eliminar
 - obtener día de la semana para la lista de tareas
 - comprobación de errores
-- modal confirmación al eliminar
 - filtrado y ordenado de tareas (por asignatura, prioridad, fecha...)
+- temas estéticos y puntos
 - calendario
-
-NEXT
-
-- labels descriptivos de cada pantalla: editar asignatura
-- icono para tareas
-- editar tarea: mejora
-- actividades de creación de notas y asignaturas
-- mejoras: 
-	tareas: si no hay tareas pendientes, indicarlo (u ocultar label si no hay de una categoría)
-	notas
-	asignaturas
-
-- idiomas
-- notificaciones
-- ajustes
-- icono de app
