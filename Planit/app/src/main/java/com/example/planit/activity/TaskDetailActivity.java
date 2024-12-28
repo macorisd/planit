@@ -13,6 +13,8 @@ import com.example.planit.R;
 import com.example.planit.entity.SingletonEntity;
 import com.example.planit.entity.subject.Subject;
 import com.example.planit.entity.subject.SubjectManager;
+import com.example.planit.entity.task.Task;
+import com.example.planit.entity.task.TaskAdapter;
 import com.example.planit.entity.task.TaskManager;
 import com.example.planit.fragment.SubjectFragment;
 import com.example.planit.fragment.TaskFragment;
@@ -98,7 +100,7 @@ public class TaskDetailActivity extends AppCompatActivity {
             taskSubjectView.setText("(Sin asignatura)");
         }
 
-        taskDueDateView.setText("Fecha de vencimiento: " + taskDueDate);
+        taskDueDateView.setText("Fecha de vencimiento: " + Task.formatDate(taskDueDate));
         taskDueTimeView.setText(taskDueTime.isEmpty() ? "" : "Hora de vencimiento: " + taskDueTime);
 
         // Configurar el estado del interruptor

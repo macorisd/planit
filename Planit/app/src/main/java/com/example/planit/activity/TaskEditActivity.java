@@ -1,5 +1,6 @@
 package com.example.planit.activity;
 
+import android.app.DatePickerDialog;
 import android.content.Intent;
 import android.os.Bundle;
 import android.widget.ArrayAdapter;
@@ -14,12 +15,16 @@ import com.example.planit.R;
 import com.example.planit.entity.SingletonEntity;
 import com.example.planit.entity.subject.Subject;
 import com.example.planit.entity.subject.SubjectManager;
+import com.example.planit.entity.task.Task;
 import com.example.planit.entity.task.TaskManager;
 import com.example.planit.fragment.SubjectFragment;
 import com.example.planit.fragment.TaskFragment;
 
+import java.text.SimpleDateFormat;
 import java.util.ArrayList;
+import java.util.Calendar;
 import java.util.List;
+import java.util.Locale;
 
 public class TaskEditActivity extends AppCompatActivity {
 
@@ -85,7 +90,7 @@ public class TaskEditActivity extends AppCompatActivity {
         etDescription.setText(description);
         etImportance.setText(String.valueOf(importance));
         etType.setText(type);
-        etDueDate.setText(dueDate);
+        etDueDate.setText(Task.formatDate(dueDate));
         etDueTime.setText(dueTime);
         etCompleted.setText(String.valueOf(completed));
 
@@ -102,8 +107,7 @@ public class TaskEditActivity extends AppCompatActivity {
 
         if (subjectId == -1) {
             spinnerSubject.setSelection(0);
-        }
-        else {
+        } else {
             // Seleccionar el subject actual en el spinner
             for (int i = 0; i < subjects.size(); i++) {
                 if (subjects.get(i).getId() == subjectId) {
@@ -112,7 +116,10 @@ public class TaskEditActivity extends AppCompatActivity {
                 }
             }
         }
-        
+
+        // Configurar el campo de fecha para mostrar el DatePickerDialog
+        etDueDate.setOnClickListener(v -> showDatePickerDialog());
+
         // Configurar el botón de guardar
         btnSave.setOnClickListener(v -> {
             // Obtener los nuevos valores de los campos
@@ -124,7 +131,7 @@ public class TaskEditActivity extends AppCompatActivity {
             int taskItemPosition = spinnerSubject.getSelectedItemPosition();
             int subjectId1 = taskItemPosition == 0 ? -1 : subjects.get(taskItemPosition - 1).getId();
 
-            String dueDate1 = etDueDate.getText().toString();
+            String dueDate1 = Task.formatDateReversed(etDueDate.getText().toString());
             String dueTime1 = etDueTime.getText().toString();
             int completed1 = Integer.parseInt(etCompleted.getText().toString());
 
@@ -154,5 +161,29 @@ public class TaskEditActivity extends AppCompatActivity {
 
         // Configurar el botón de cancelar
         btnCancel.setOnClickListener(v -> finish()); // Cerrar la actividad sin guardar cambios
+    }
+
+    private void showDatePickerDialog() {
+        final Calendar calendar = Calendar.getInstance();
+        int year = calendar.get(Calendar.YEAR);
+        int month = calendar.get(Calendar.MONTH);
+        int day = calendar.get(Calendar.DAY_OF_MONTH);
+
+        // Crear y mostrar el DatePickerDialog
+        DatePickerDialog datePickerDialog = new DatePickerDialog(
+                this,
+                (view, selectedYear, selectedMonth, selectedDay) -> {
+                    Calendar selectedDate = Calendar.getInstance();
+                    selectedDate.set(selectedYear, selectedMonth, selectedDay);
+                    SimpleDateFormat dateFormat = new SimpleDateFormat("dd/MM/yyyy", Locale.getDefault());
+                    String formattedDate = dateFormat.format(selectedDate.getTime());
+
+                    // Establecer la fecha en el EditText
+                    etDueDate.setText(formattedDate);
+                },
+                year, month, day
+        );
+
+        datePickerDialog.show();
     }
 }

@@ -52,7 +52,7 @@ public class TaskAdapter extends RecyclerView.Adapter<TaskAdapter.TaskViewHolder
     public void onBindViewHolder(@NonNull TaskViewHolder holder, int position) {
         Task task = taskList.get(position);
         holder.taskName.setText(task.getName());
-        holder.taskDueDate.setText(formatDate(task.getDueDate()));
+        holder.taskDueDate.setText(Task.formatDate(task.getDueDate()));
         holder.taskDueTime.setText(task.getDueTime().isEmpty() ? "" : "a las " + task.getDueTime());
 
         // Obtener el nombre de la asignatura
@@ -102,17 +102,6 @@ public class TaskAdapter extends RecyclerView.Adapter<TaskAdapter.TaskViewHolder
     @Override
     public int getItemCount() {
         return taskList.size();
-    }
-
-    private String formatDate(String date) {
-        SimpleDateFormat inputFormat = new SimpleDateFormat("yyyy/MM/dd", Locale.getDefault());
-        SimpleDateFormat outputFormat = new SimpleDateFormat("dd/MM/yyyy", Locale.getDefault());
-        try {
-            return outputFormat.format(inputFormat.parse(date));
-        } catch (ParseException e) {
-            e.printStackTrace();
-            return date;
-        }
     }
 
     public static class TaskViewHolder extends RecyclerView.ViewHolder {

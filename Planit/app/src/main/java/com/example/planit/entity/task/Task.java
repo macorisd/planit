@@ -1,5 +1,9 @@
 package com.example.planit.entity.task;
 
+import java.text.ParseException;
+import java.text.SimpleDateFormat;
+import java.util.Locale;
+
 public class Task {
     private int id;
     private String name;
@@ -57,5 +61,27 @@ public class Task {
 
     public String getDueTime() {
         return dueTime;
+    }
+
+    public static String formatDate(String date) {
+        SimpleDateFormat inputFormat = new SimpleDateFormat("yyyy/MM/dd", Locale.getDefault());
+        SimpleDateFormat outputFormat = new SimpleDateFormat("dd/MM/yyyy", Locale.getDefault());
+        try {
+            return outputFormat.format(inputFormat.parse(date));
+        } catch (ParseException e) {
+            e.printStackTrace();
+            return date;
+        }
+    }
+
+    public static String formatDateReversed(String date) {
+        SimpleDateFormat inputFormat = new SimpleDateFormat("dd/MM/yyyy", Locale.getDefault());
+        SimpleDateFormat outputFormat = new SimpleDateFormat("yyyy/MM/dd", Locale.getDefault());
+        try {
+            return outputFormat.format(inputFormat.parse(date));
+        } catch (ParseException e) {
+            e.printStackTrace();
+            return date;
+        }
     }
 }

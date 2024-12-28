@@ -49,6 +49,7 @@
         android:layout_width="match_parent"
         android:layout_height="48dp"
         android:hint="Fecha de vencimiento"
+        android:focusableInTouchMode="false"
         android:inputType="date" />
 
     <!-- Campo de hora de vencimiento -->

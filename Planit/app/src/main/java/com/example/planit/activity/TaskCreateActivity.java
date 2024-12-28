@@ -14,6 +14,7 @@ import com.example.planit.R;
 import com.example.planit.entity.SingletonEntity;
 import com.example.planit.entity.subject.Subject;
 import com.example.planit.entity.subject.SubjectManager;
+import com.example.planit.entity.task.Task;
 import com.example.planit.entity.task.TaskManager;
 import com.example.planit.fragment.SubjectFragment;
 import com.example.planit.fragment.TaskFragment;
@@ -94,21 +95,32 @@ public class TaskCreateActivity extends AppCompatActivity {
             String name = taskNameEditText.getText().toString().trim();
             String description = taskDescriptionEditText.getText().toString().trim();
             String dueDate = taskDueDateEditText.getText().toString().trim();
+            String dueTime = taskDueTimeEditText.getText().toString().trim();
 
-            // Validar los campos
+            // Validar los campos obligatorios
             if (name.isEmpty() || dueDate.isEmpty()) {
-                Toast.makeText(this, "Por favor, complete todos los campos", Toast.LENGTH_SHORT).show();
+                Toast.makeText(this, "Por favor, complete todos los campos obligatorios", Toast.LENGTH_SHORT).show();
                 return;
             }
 
+            // Validar la longitud del nombre
             if (name.length() < 3 || name.length() > 40) {
                 Toast.makeText(TaskCreateActivity.this, "El nombre debe tener entre 3 y 40 caracteres", Toast.LENGTH_SHORT).show();
                 return;
             }
 
+            // Validar la longitud de la descripción
             if (description.length() > 400) {
                 Toast.makeText(TaskCreateActivity.this, "La descripción no puede tener más de 400 caracteres", Toast.LENGTH_SHORT).show();
                 return;
+            }
+
+            // Validar el formato de la hora (si no está vacía)
+            if (!dueTime.isEmpty()) {
+                if (!dueTime.matches("^([01]?\\d|2[0-3]):[0-5]\\d$")) {
+                    Toast.makeText(TaskCreateActivity.this, "La hora debe tener el formato HH:MM", Toast.LENGTH_SHORT).show();
+                    return;
+                }
             }
 
             // Si todo es válido, guardar la tarea
@@ -116,6 +128,7 @@ public class TaskCreateActivity extends AppCompatActivity {
             Toast.makeText(TaskCreateActivity.this, "Tarea creada con éxito", Toast.LENGTH_SHORT).show();
             finish();
         });
+
 
     }
 
@@ -129,10 +142,9 @@ public class TaskCreateActivity extends AppCompatActivity {
         DatePickerDialog datePickerDialog = new DatePickerDialog(
                 this,
                 (view, selectedYear, selectedMonth, selectedDay) -> {
-                    // Formatear la fecha seleccionada como yyyy/MM/dd
                     Calendar selectedDate = Calendar.getInstance();
                     selectedDate.set(selectedYear, selectedMonth, selectedDay);
-                    SimpleDateFormat dateFormat = new SimpleDateFormat("yyyy/MM/dd", Locale.getDefault());
+                    SimpleDateFormat dateFormat = new SimpleDateFormat("dd/MM/yyyy", Locale.getDefault());
                     String formattedDate = dateFormat.format(selectedDate.getTime());
 
                     // Establecer la fecha en el EditText
@@ -148,7 +160,7 @@ public class TaskCreateActivity extends AppCompatActivity {
     private void saveTask() {
         String name = taskNameEditText.getText().toString();
         String description = taskDescriptionEditText.getText().toString();
-        String dueDate = taskDueDateEditText.getText().toString();
+        String dueDate = Task.formatDateReversed(taskDueDateEditText.getText().toString());
         String dueTime = taskDueTimeEditText.getText().toString();
         String importanceString = taskImportanceSpinner.getSelectedItem().toString();
         String type = taskTypeSpinner.getSelectedItem().toString();
