@@ -9,6 +9,7 @@ import android.widget.EditText;
 import android.widget.Spinner;
 import android.widget.Toast;
 
+import androidx.appcompat.app.AlertDialog;
 import androidx.appcompat.app.AppCompatActivity;
 
 import com.example.planit.R;
@@ -76,7 +77,22 @@ public class SubjectCreateActivity extends AppCompatActivity {
         String name = editTextSubjectName.getText().toString();
 
         if (name.isEmpty()) {
-            Toast.makeText(this, "Please fill out all fields", Toast.LENGTH_SHORT).show();
+            new AlertDialog.Builder(this)
+                    .setTitle(getString(R.string.dialog_error_title))
+                    .setMessage(getString(R.string.dialog_fill_out_all_fields))
+                    .setPositiveButton(getString(R.string.dialog_positive_button), null)
+                    .show();
+
+            return;
+        }
+
+        if (name.length() < 3 || name.length() > 50) {
+            new AlertDialog.Builder(this)
+                    .setTitle(getString(R.string.dialog_error_title))
+                    .setMessage(getString(R.string.dialog_subject_name_validation_error))
+                    .setPositiveButton(getString(R.string.dialog_positive_button), null)
+                    .show();
+
             return;
         }
 
@@ -84,16 +100,20 @@ public class SubjectCreateActivity extends AppCompatActivity {
         try {
             color = Color.parseColor(selectedColorValue);
         } catch (IllegalArgumentException e) {
-            Toast.makeText(this, "Please select a valid color", Toast.LENGTH_SHORT).show();
+            Toast.makeText(this, getString(R.string.dialog_subject_color_validation_error), Toast.LENGTH_SHORT).show();
             return;
         }
 
         try {
             subjectManager.createSubject(name, color);
-            Toast.makeText(this, "Subject created successfully", Toast.LENGTH_SHORT).show();
+            Toast.makeText(this, getString(R.string.toast_subject_created), Toast.LENGTH_SHORT).show();
             finish();
         } catch (Exception e) {
-            Toast.makeText(this, "Error creating subject", Toast.LENGTH_SHORT).show();
+            new AlertDialog.Builder(this)
+                    .setTitle(getString(R.string.dialog_error_title))
+                    .setMessage(getString(R.string.dialog_subject_create_error) + ": " + e.getMessage())
+                    .setPositiveButton(getString(R.string.dialog_positive_button), null)
+                    .show();
         }
     }
 

@@ -10,6 +10,7 @@ import android.widget.EditText;
 import android.widget.Spinner;
 import android.widget.Toast;
 
+import androidx.appcompat.app.AlertDialog;
 import androidx.appcompat.app.AppCompatActivity;
 
 import com.example.planit.R;
@@ -97,7 +98,22 @@ public class SubjectEditActivity extends AppCompatActivity {
         String name = editTextSubjectName.getText().toString();
 
         if (name.isEmpty()) {
-            Toast.makeText(this, "Please fill out all fields", Toast.LENGTH_SHORT).show();
+            new AlertDialog.Builder(this)
+                    .setTitle(getString(R.string.dialog_error_title))
+                    .setMessage(getString(R.string.dialog_fill_out_all_fields))
+                    .setPositiveButton(getString(R.string.dialog_positive_button), null)
+                    .show();
+
+            return;
+        }
+
+        if (name.length() < 3 || name.length() > 50) {
+            new AlertDialog.Builder(this)
+                    .setTitle(getString(R.string.dialog_error_title))
+                    .setMessage(getString(R.string.dialog_subject_name_validation_error))
+                    .setPositiveButton(getString(R.string.dialog_positive_button), null)
+                    .show();
+
             return;
         }
 
@@ -105,20 +121,28 @@ public class SubjectEditActivity extends AppCompatActivity {
 
         if (subjectId != -1) {
             subjectManager.editSubject(subjectId, name, color);
-            Toast.makeText(this, "Subject updated successfully", Toast.LENGTH_SHORT).show();
+            Toast.makeText(this, getString(R.string.toast_subject_updated), Toast.LENGTH_SHORT).show();
             finish();
         } else {
-            Toast.makeText(this, "Error updating subject", Toast.LENGTH_SHORT).show();
+            new AlertDialog.Builder(this)
+                    .setTitle(getString(R.string.dialog_error_title))
+                    .setMessage(getString(R.string.dialog_subject_update_error))
+                    .setPositiveButton(getString(R.string.dialog_positive_button), null)
+                    .show();
         }
     }
 
     private void deleteSubject() {
         if (subjectId != -1) {
             subjectManager.deleteSubject(subjectId);
-            Toast.makeText(this, "Subject deleted successfully", Toast.LENGTH_SHORT).show();
+            Toast.makeText(this, getString(R.string.toast_subject_deleted), Toast.LENGTH_SHORT).show();
             finish();
         } else {
-            Toast.makeText(this, "Error deleting subject", Toast.LENGTH_SHORT).show();
+            new AlertDialog.Builder(this)
+                    .setTitle(getString(R.string.dialog_error_title))
+                    .setMessage(getString(R.string.dialog_subject_delete_error))
+                    .setPositiveButton(getString(R.string.dialog_positive_button), null)
+                    .show();
         }
     }
 
