@@ -8,6 +8,7 @@ import android.widget.EditText;
 import android.widget.Spinner;
 import android.widget.Toast;
 
+import androidx.appcompat.app.AlertDialog;
 import androidx.appcompat.app.AppCompatActivity;
 
 import com.example.planit.R;
@@ -79,7 +80,7 @@ public class TaskCreateActivity extends AppCompatActivity {
         // Obtener los subjects y llenar el spinner
         subjects = subjectManager.getSubjects();
         List<String> subjectNames = new ArrayList<>();
-        subjectNames.add("(Sin asignatura)");
+        subjectNames.add(getString(R.string.no_subject));
         for (Subject subject : subjects) {
             subjectNames.add(subject.getName());
         }
@@ -134,56 +135,79 @@ public class TaskCreateActivity extends AppCompatActivity {
 
         // Validar los campos obligatorios
         if (name.isEmpty() || dueDate.isEmpty()) {
-            Toast.makeText(this, "Por favor, complete todos los campos obligatorios", Toast.LENGTH_SHORT).show();
+            new AlertDialog.Builder(this)
+                    .setTitle(getString(R.string.dialog_error_title))
+                    .setMessage(getString(R.string.dialog_fill_out_all_fields))
+                    .setPositiveButton(getString(R.string.dialog_positive_button), null)
+                    .show();
+
             return;
         }
 
         // Validar la longitud del nombre
         if (name.length() < 3 || name.length() > 50) {
-            Toast.makeText(TaskCreateActivity.this, "El nombre debe tener entre 3 y 50 caracteres", Toast.LENGTH_SHORT).show();
+            new AlertDialog.Builder(this)
+                    .setTitle(getString(R.string.dialog_error_title))
+                    .setMessage(getString(R.string.dialog_task_name_validation_error))
+                    .setPositiveButton(getString(R.string.dialog_positive_button), null)
+                    .show();
             return;
         }
 
         // Validar la longitud de la descripción
         if (description.length() > 400) {
-            Toast.makeText(TaskCreateActivity.this, "La descripción no puede tener más de 400 caracteres", Toast.LENGTH_SHORT).show();
+            new AlertDialog.Builder(this)
+                    .setTitle(getString(R.string.dialog_error_title))
+                    .setMessage(getString(R.string.dialog_task_description_validation_error))
+                    .setPositiveButton(getString(R.string.dialog_positive_button), null)
+                    .show();
             return;
         }
 
         // Validar el formato de la hora (si no está vacía)
         if (!dueTime.isEmpty() && !dueTime.matches("^([01]?\\d|2[0-3]):[0-5]\\d$")) {
-            Toast.makeText(TaskCreateActivity.this, "La hora debe tener el formato HH:MM", Toast.LENGTH_SHORT).show();
+            new AlertDialog.Builder(this)
+                    .setTitle(getString(R.string.dialog_error_title))
+                    .setMessage(getString(R.string.dialog_task_time_validation_error))
+                    .setPositiveButton(getString(R.string.dialog_positive_button), null)
+                    .show();
             return;
         }
 
         int importance;
-        switch (importanceString) {
-            case "Baja":
-                importance = 1;
-                break;
-            case "Media":
-                importance = 2;
-                break;
-            case "Alta":
-                importance = 3;
-                break;
-            default:
-                importance = 1;
-                break;
+        String[] importanceArray = getResources().getStringArray(R.array.importance_array);
+
+        if (importanceString.equals(importanceArray[0])) {
+            importance = 1;
+        }
+        else if (importanceString.equals(importanceArray[1])) {
+            importance = 2;
+        }
+        else if (importanceString.equals(importanceArray[2])) {
+            importance = 3;
+        }
+        else {
+            importance = 1;
         }
 
         try {
             // Llamar al método createTask para insertar la nueva tarea
             taskManager.createTask(name, description, importance, type, subjectId, dueDate, dueTime);
-            Toast.makeText(TaskCreateActivity.this, "Tarea creada con éxito", Toast.LENGTH_SHORT).show();
+            Toast.makeText(TaskCreateActivity.this, getString(R.string.toast_task_created), Toast.LENGTH_SHORT).show();
             finish();
-        } catch (IllegalArgumentException e) {
-            Toast.makeText(this, "Por favor, complete todos los campos", Toast.LENGTH_SHORT).show();
         } catch (RuntimeException e) {
-            Toast.makeText(this, "Error al guardar la tarea", Toast.LENGTH_SHORT).show();
+            new AlertDialog.Builder(this)
+                    .setTitle(getString(R.string.dialog_error_title))
+                    .setMessage(getString(R.string.dialog_task_create_error) + ": " + e.getMessage())
+                    .setPositiveButton(getString(R.string.dialog_positive_button), null)
+                    .show();
         } catch (Exception e) {
             e.printStackTrace();
-            Toast.makeText(this, "Error inesperado: " + e.getMessage(), Toast.LENGTH_LONG).show();
+            new AlertDialog.Builder(this)
+                    .setTitle(getString(R.string.dialog_error_title))
+                    .setMessage(getString(R.string.dialog_task_create_error) + ": " + e.getMessage())
+                    .setPositiveButton(getString(R.string.dialog_positive_button), null)
+                    .show();
         }
     }
 }

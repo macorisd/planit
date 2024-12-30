@@ -78,10 +78,6 @@ public class NoteManager {
 
     // Method to edit an existing note
     public void editNote(int noteId, String name, String content) {
-        if (name.isEmpty() || content.isEmpty()) {
-            throw new IllegalArgumentException("All fields are required");
-        }
-
         ContentValues values = new ContentValues();
         values.put(NoteContract.NoteEntry.COLUMN_NAME_NAME, name);
         values.put(NoteContract.NoteEntry.COLUMN_NAME_CONTENT, content);

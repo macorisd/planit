@@ -5,6 +5,7 @@ import android.widget.Button;
 import android.widget.EditText;
 import android.widget.Toast;
 
+import androidx.appcompat.app.AlertDialog;
 import androidx.appcompat.app.AppCompatActivity;
 
 import com.example.planit.R;
@@ -45,16 +46,25 @@ public class NoteCreateActivity extends AppCompatActivity {
         String content = editTextNoteContent.getText().toString();
 
         if (title.isEmpty() || content.isEmpty()) {
-            Toast.makeText(this, "Please fill out all fields", Toast.LENGTH_SHORT).show();
+            new AlertDialog.Builder(this)
+                    .setTitle(getString(R.string.dialog_error_title))
+                    .setMessage(getString(R.string.dialog_fill_out_all_fields))
+                    .setPositiveButton(getString(R.string.dialog_positive_button), null)
+                    .show();
+
             return;
         }
 
         try {
             noteManager.createNote(title, content);
-            Toast.makeText(this, "Note created successfully", Toast.LENGTH_SHORT).show();
+            Toast.makeText(this, getString(R.string.toast_note_created), Toast.LENGTH_SHORT).show();
             finish();
         } catch (Exception e) {
-            Toast.makeText(this, "Error creating note", Toast.LENGTH_SHORT).show();
+            new AlertDialog.Builder(this)
+                    .setTitle(getString(R.string.dialog_error_title))
+                    .setMessage(getString(R.string.dialog_note_create_error) + ": " + e.getMessage())
+                    .setPositiveButton(getString(R.string.dialog_positive_button), null)
+                    .show();
         }
     }
 }

@@ -7,6 +7,7 @@ import android.widget.Switch;
 import android.widget.TextView;
 import android.widget.Toast;
 
+import androidx.appcompat.app.AlertDialog;
 import androidx.appcompat.app.AppCompatActivity;
 
 import com.example.planit.R;
@@ -80,7 +81,7 @@ public class TaskDetailActivity extends AppCompatActivity {
         String importanceText = "";
 
         if (taskImportance >= 1 && taskImportance <= 3) {
-            importanceText = importanceArray[taskImportance - 1]; // Restamos 1 para que los índices empiecen en 0
+            importanceText = importanceArray[taskImportance - 1];
         }
 
         taskImportanceView.setText(getString(R.string.task_priority) + " " + importanceText);
@@ -105,17 +106,21 @@ public class TaskDetailActivity extends AppCompatActivity {
         taskCompletedSwitch.setOnCheckedChangeListener((buttonView, isChecked) -> {
             taskManager.toggleCompleted(taskId);
             taskCompleted = isChecked;
-            Toast.makeText(this, "Estado de la tarea actualizado", Toast.LENGTH_SHORT).show();
+            Toast.makeText(this, getString(R.string.toast_task_status_updated), Toast.LENGTH_SHORT).show();
         });
 
         // Manejar el clic del botón "Eliminar"
         deleteButton.setOnClickListener(v -> {
             if (taskId != -1) {
                 taskManager.deleteTask(taskId);
-                Toast.makeText(this, "Tarea eliminada", Toast.LENGTH_SHORT).show();
+                Toast.makeText(this, getString(R.string.toast_task_deleted), Toast.LENGTH_SHORT).show();
                 finish();
             } else {
-                Toast.makeText(this, "Error al eliminar la tarea", Toast.LENGTH_SHORT).show();
+                new AlertDialog.Builder(this)
+                        .setTitle(getString(R.string.dialog_error_title))
+                        .setMessage(getString(R.string.dialog_task_delete_error))
+                        .setPositiveButton(getString(R.string.dialog_positive_button), null)
+                        .show();
             }
         });
 
@@ -135,7 +140,11 @@ public class TaskDetailActivity extends AppCompatActivity {
                 intent.putExtra("TASK_DUE_TIME", taskDueTime);
                 startActivity(intent);
             } else {
-                Toast.makeText(this, "Error al editar la tarea", Toast.LENGTH_SHORT).show();
+                new AlertDialog.Builder(this)
+                        .setTitle(getString(R.string.dialog_error_title))
+                        .setMessage(getString(R.string.dialog_unexpected_error))
+                        .setPositiveButton(getString(R.string.dialog_positive_button), null)
+                        .show();
             }
         });
     }

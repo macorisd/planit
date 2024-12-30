@@ -50,9 +50,23 @@
 
     <!-- COMMON -->
 
+    <!-- Common buttons -->
+
     <string name="save_button">Save</string>
     <string name="cancel_button">Cancel</string>
     <string name="delete_button">Delete</string>
+
+    <!-- Common toasts -->
+
+
+    <!-- Common dialogs -->
+    <string name="dialog_fill_out_all_fields">Please fill out all fields</string>
+    <string name="dialog_unexpected_error">An unexpected error ocurred. Please try again later.</string>
+    <string name="dialog_error_title">Error</string>
+    <string name="dialog_positive_button">OK</string>
+
+    <!-- Common exception messages -->
+    <string name="exception_saving_entity">Error saving the entity</string>
 
     <!-- TASKS -->
 
@@ -84,6 +98,11 @@
     <string name="task_type">Type:</string>
     <string name="task_completed">Completed</string>
 
+    <string name="task_name_hint">Task name</string>
+    <string name="task_description_hint">Task description</string>
+    <string name="task_due_date_hint">DD/MM/YYYY</string>
+    <string name="task_due_time_hint">HH:MM</string>
+
     <string name="edit_task_button">Edit Task</string>
     <string name="delete_task_button">Delete Task</string>
 
@@ -104,6 +123,22 @@
         <item>Other</item>
     </string-array>
 
+    <!-- Task toasts -->
+    <string name="toast_task_created">Task created successfully</string>
+    <string name="toast_task_updated">Task updated successfully</string>
+    <string name="toast_task_deleted">Task deleted successfully</string>
+
+    <string name="toast_task_status_updated">Task status updated</string>
+
+    <!-- Task dialogs -->
+    <string name="dialog_task_create_error">Error creating task</string>
+    <string name="dialog_task_update_error">Error updating task</string>
+    <string name="dialog_task_delete_error">Error deleting task</string>
+
+    <string name="dialog_task_name_validation_error">The name must be between 3 and 50 characters</string>
+    <string name="dialog_task_description_validation_error">The description cannot exceed 400 characters</string>
+    <string name="dialog_task_time_validation_error">The time must be in HH:MM format</string>
+
 
     <!-- NOTES -->
 
@@ -116,6 +151,19 @@
 
     <string name="note_create_title">Create Note</string>
     <string name="note_edit_title">Edit Note</string>
+
+    <string name="note_title_hint">Note Title</string>
+    <string name="note_content_hint">Note Content</string>
+
+    <!-- Note toasts -->
+    <string name="toast_note_created">Note created successfully</string>
+    <string name="toast_note_updated">Note updated successfully</string>
+    <string name="toast_note_deleted">Note deleted successfully</string>
+
+    <!-- Note dialogs -->
+    <string name="dialog_note_create_error">Error creating note</string>
+    <string name="dialog_note_update_error">Error updating note</string>
+    <string name="dialog_note_delete_error">Error deleting note</string>
 
 
     <!-- SUBJECTS -->
@@ -143,6 +191,21 @@
     <string name="color_white">White</string>
 
     <string name="subject_edit_title">Edit Subject</string>
+
+    <string name="subject_name_hint">Subject Name</string>
+
+    <!-- Subject toasts -->
+    <string name="toast_subject_created">Subject created successfully</string>
+    <string name="toast_subject_updated">Subject updated successfully</string>
+    <string name="toast_subject_deleted">Subject deleted successfully</string>
+
+    <!-- Subject dialogs -->
+    <string name="dialog_subject_create_error">Error creating subject</string>
+    <string name="dialog_subject_update_error">Error updating subject</string>
+    <string name="dialog_subject_delete_error">Error deleting subject</string>
+
+    <string name="dialog_subject_name_validation_error">The name must be between 3 and 50 characters</string>
+    <string name="dialog_subject_color_validation_error">Please select a valid color</string>
 
 
 </resources>

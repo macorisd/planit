@@ -31,7 +31,7 @@
             android:layout_width="0dp"
             android:layout_height="48dp"
             android:layout_weight="1"
-            android:hint="@string/task_name"
+            android:hint="@string/task_name_hint"
             android:inputType="text" />
     </LinearLayout>
 
@@ -49,6 +49,7 @@
             android:id="@+id/etDescription"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
+            android:hint="@string/task_description_hint"
             android:inputType="textMultiLine"
             android:lines="10"
             android:minLines="2"
@@ -90,7 +91,7 @@
             android:layout_width="0dp"
             android:layout_height="48dp"
             android:layout_weight="1"
-            android:hint="DD-MM-YYYY"
+            android:hint="@string/task_due_date_hint"
             android:focusableInTouchMode="false"
             android:inputType="date" />
     </LinearLayout>
@@ -110,7 +111,7 @@
             android:layout_width="0dp"
             android:layout_height="48dp"
             android:layout_weight="1"
-            android:hint="HH:MM"
+            android:hint="@string/task_due_time_hint"
             android:inputType="time" />
     </LinearLayout>
 

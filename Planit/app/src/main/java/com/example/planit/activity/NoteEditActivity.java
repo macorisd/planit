@@ -6,6 +6,7 @@ import android.widget.Button;
 import android.widget.EditText;
 import android.widget.Toast;
 
+import androidx.appcompat.app.AlertDialog;
 import androidx.appcompat.app.AppCompatActivity;
 
 import com.example.planit.R;
@@ -59,27 +60,40 @@ public class NoteEditActivity extends AppCompatActivity {
         String content = editTextNoteContent.getText().toString();
 
         if (title.isEmpty() || content.isEmpty()) {
-            Toast.makeText(this, "Please fill out all fields", Toast.LENGTH_SHORT).show();
+            new AlertDialog.Builder(this)
+                    .setTitle(getString(R.string.dialog_error_title))
+                    .setMessage(getString(R.string.dialog_fill_out_all_fields))
+                    .setPositiveButton(getString(R.string.dialog_positive_button), null)
+                    .show();
+
             return;
         }
 
         if (noteId != -1) {
             noteManager.editNote(noteId, title, content);
-            Toast.makeText(this, "Note updated successfully", Toast.LENGTH_SHORT).show();
+            Toast.makeText(this, getString(R.string.toast_note_updated), Toast.LENGTH_SHORT).show();
             finish();
         }
         else {
-            Toast.makeText(this, "Error updating note", Toast.LENGTH_SHORT).show();
+            new AlertDialog.Builder(this)
+                    .setTitle(getString(R.string.dialog_error_title))
+                    .setMessage(getString(R.string.dialog_note_update_error))
+                    .setPositiveButton(getString(R.string.dialog_positive_button), null)
+                    .show();
         }
     }
 
     private void deleteNote() {
         if (noteId != -1) {
             noteManager.deleteNote(noteId);
-            Toast.makeText(this, "Note deleted successfully", Toast.LENGTH_SHORT).show();
+            Toast.makeText(this, getString(R.string.toast_note_deleted), Toast.LENGTH_SHORT).show();
             finish();
         } else {
-            Toast.makeText(this, "Error deleting note", Toast.LENGTH_SHORT).show();
+            new AlertDialog.Builder(this)
+                    .setTitle(getString(R.string.dialog_error_title))
+                    .setMessage(getString(R.string.dialog_note_delete_error))
+                    .setPositiveButton(getString(R.string.dialog_positive_button), null)
+                    .show();
         }
     }
 }

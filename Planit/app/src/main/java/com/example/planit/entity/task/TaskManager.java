@@ -88,11 +88,6 @@ public class TaskManager {
 
 
     public void createTask(String name, String description, int importance, String type, int subjectId, String dueDate, String dueTime) {
-        // Verificar que los parámetros no estén vacíos
-        if (name.isEmpty() || dueDate.isEmpty() || type.isEmpty()) {
-            throw new IllegalArgumentException("Alguno de los campos obligatorios está vacío");
-        }
-
         // Crear un objeto ContentValues para insertar los valores en la base de datos
         ContentValues values = new ContentValues();
         values.put(TaskContract.TaskEntry.COLUMN_NAME_NAME, name);
@@ -110,17 +105,12 @@ public class TaskManager {
 
         if (newRowId == -1) {
             // Si la inserción falla
-            throw new RuntimeException("Error al guardar la tarea");
+            throw new RuntimeException("Error saving the task");
         }
     }
 
     // Método para editar una tarea
     public void editTask(int taskId, String name, String description, int importance, String type, int subjectId, String dueDate, String dueTime, int completed) {
-        // Verificar que los parámetros no estén vacíos
-        if (name.isEmpty() || dueDate.isEmpty() || type.isEmpty()) {
-            throw new IllegalArgumentException("Todos los campos son obligatorios");
-        }
-
         // Crear un objeto ContentValues con los nuevos valores
         ContentValues values = new ContentValues();
         values.put(TaskContract.TaskEntry.COLUMN_NAME_NAME, name);
@@ -146,7 +136,7 @@ public class TaskManager {
 
         if (rowsUpdated == 0) {
             // Si no se actualizó ninguna fila, lanzar un error
-            throw new RuntimeException("Error al actualizar la tarea");
+            throw new RuntimeException("Error updating the task");
         }
     }
 
@@ -186,11 +176,11 @@ public class TaskManager {
             );
 
             if (rowsUpdated == 0) {
-                throw new RuntimeException("Error al alternar el estado de compleción de la tarea");
+                throw new RuntimeException("Error toggling the task completion status");
             }
         } else {
             cursor.close();
-            throw new IllegalArgumentException("No se encontró una tarea con el ID proporcionado");
+            throw new IllegalArgumentException("No task found with the provided ID");
         }
     }
 

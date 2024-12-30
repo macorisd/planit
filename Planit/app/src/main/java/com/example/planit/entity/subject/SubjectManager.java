@@ -104,10 +104,6 @@ public class SubjectManager {
     }
 
     public void editSubject(int subjectId, String name, int color) {
-        if (name.isEmpty()) {
-            throw new IllegalArgumentException("Name is required");
-        }
-
         ContentValues values = new ContentValues();
         values.put(SubjectContract.SubjectEntry.COLUMN_NAME_NAME, name);
         values.put(SubjectContract.SubjectEntry.COLUMN_NAME_COLOR, color);

@@ -9,6 +9,7 @@ import android.widget.EditText;
 import android.widget.Spinner;
 import android.widget.Toast;
 
+import androidx.appcompat.app.AlertDialog;
 import androidx.appcompat.app.AppCompatActivity;
 
 import com.example.planit.R;
@@ -108,7 +109,7 @@ public class TaskEditActivity extends AppCompatActivity {
         // Obtener los subjects y llenar el spinner
         subjects = subjectManager.getSubjects();
         List<String> subjectNames = new ArrayList<>();
-        subjectNames.add("(Sin asignatura)");
+        subjectNames.add(getString(R.string.no_subject));
         for (Subject subject : subjects) {
             subjectNames.add(subject.getName());
         }
@@ -176,25 +177,42 @@ public class TaskEditActivity extends AppCompatActivity {
 
         // Validar los campos obligatorios
         if (newName.isEmpty() || newDueDate.isEmpty()) {
-            Toast.makeText(this, "Por favor, complete todos los campos obligatorios", Toast.LENGTH_SHORT).show();
+            new AlertDialog.Builder(this)
+                    .setTitle(getString(R.string.dialog_error_title))
+                    .setMessage(getString(R.string.dialog_fill_out_all_fields))
+                    .setPositiveButton(getString(R.string.dialog_positive_button), null)
+                    .show();
+
             return;
         }
 
         // Validar la longitud del nombre
         if (newName.length() < 3 || newName.length() > 50) {
-            Toast.makeText(TaskEditActivity.this, "El nombre debe tener entre 3 y 50 caracteres", Toast.LENGTH_SHORT).show();
+            new AlertDialog.Builder(this)
+                    .setTitle(getString(R.string.dialog_error_title))
+                    .setMessage(getString(R.string.dialog_task_name_validation_error))
+                    .setPositiveButton(getString(R.string.dialog_positive_button), null)
+                    .show();
             return;
         }
 
         // Validar la longitud de la descripción
         if (newDescription.length() > 400) {
-            Toast.makeText(TaskEditActivity.this, "La descripción no puede tener más de 400 caracteres", Toast.LENGTH_SHORT).show();
+            new AlertDialog.Builder(this)
+                    .setTitle(getString(R.string.dialog_error_title))
+                    .setMessage(getString(R.string.dialog_task_description_validation_error))
+                    .setPositiveButton(getString(R.string.dialog_positive_button), null)
+                    .show();
             return;
         }
 
         // Validar el formato de la hora (si no está vacía)
         if (!newDueTime.isEmpty() && !newDueTime.matches("^([01]?\\d|2[0-3]):[0-5]\\d$")) {
-            Toast.makeText(TaskEditActivity.this, "La hora debe tener el formato HH:MM", Toast.LENGTH_SHORT).show();
+            new AlertDialog.Builder(this)
+                    .setTitle(getString(R.string.dialog_error_title))
+                    .setMessage(getString(R.string.dialog_task_time_validation_error))
+                    .setPositiveButton(getString(R.string.dialog_positive_button), null)
+                    .show();
             return;
         }
 
@@ -203,25 +221,25 @@ public class TaskEditActivity extends AppCompatActivity {
                 : subjects.get(spinnerSubject.getSelectedItemPosition() - 1).getId();
 
         int newImportance;
-        switch (newImportanceString) {
-            case "Baja":
-                newImportance = 1;
-                break;
-            case "Media":
-                newImportance = 2;
-                break;
-            case "Alta":
-                newImportance = 3;
-                break;
-            default:
-                newImportance = 1;
-                break;
+        String[] importanceArray = getResources().getStringArray(R.array.importance_array);
+
+        if (newImportanceString.equals(importanceArray[0])) {
+            newImportance = 1;
+        }
+        else if (newImportanceString.equals(importanceArray[1])) {
+            newImportance = 2;
+        }
+        else if (newImportanceString.equals(importanceArray[2])) {
+            newImportance = 3;
+        }
+        else {
+            newImportance = 1;
         }
 
         // Llamar al método editTask del TaskManager
         try {
             taskManager.editTask(taskId, newName, newDescription, newImportance, newType, newSubjectId, newDueDate, newDueTime, 0);
-            Toast.makeText(this, "Tarea actualizada correctamente", Toast.LENGTH_SHORT).show();
+            Toast.makeText(this, getString(R.string.toast_task_updated), Toast.LENGTH_SHORT).show();
 
             // Navegar de regreso a TaskDetailActivity con los nuevos datos
             Intent intent = new Intent(this, TaskDetailActivity.class);
@@ -239,7 +257,11 @@ public class TaskEditActivity extends AppCompatActivity {
 
             finish();
         } catch (Exception e) {
-            Toast.makeText(this, "Error al actualizar la tarea: " + e.getMessage(), Toast.LENGTH_LONG).show();
+            new AlertDialog.Builder(this)
+                    .setTitle(getString(R.string.dialog_error_title))
+                    .setMessage(getString(R.string.dialog_task_update_error) + ": " + e.getMessage())
+                    .setPositiveButton(getString(R.string.dialog_positive_button), null)
+                    .show();
         }
     }
 
