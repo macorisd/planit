@@ -165,6 +165,9 @@
     <string name="dialog_note_update_error">Error updating note</string>
     <string name="dialog_note_delete_error">Error deleting note</string>
 
+    <string name="dialog_note_title_validation_error">The title cannot exceed 50 characters</string>
+    <string name="dialog_note_content_validation_error">The content cannot exceed 30.000 characters</string>
+
 
     <!-- SUBJECTS -->
 

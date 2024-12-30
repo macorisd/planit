@@ -1,2 +1,215 @@
 <?xml version="1.0" encoding="utf-8"?>
-<resources></resources>
+<resources>
+    <string name="app_name">Planit</string>
+    <string name="task_detail_label">Detalles de la tarea</string>
+    <string name="task_create_label">Crear tarea</string>
+    <string name="task_edit_label">Editar tarea</string>
+    <string name="note_create_label">Crear nota</string>
+    <string name="note_edit_label">Editar nota</string>
+    <string name="subject_create_label">Crear asignatura</string>
+    <string name="subject_edit_label">Editar asignatura</string>
+    <!-- Strings used for fragments for navigation -->
+    <string name="next">Siguiente</string>
+    <string name="previous">Anterior</string>
+
+    <string name="lorem_ipsum">
+        Lorem ipsum dolor sit amet, consectetur adipiscing elit. Nam in scelerisque sem. Mauris
+        volutpat, dolor id interdum ullamcorper, risus dolor egestas lectus, sit amet mattis purus
+        dui nec risus. Maecenas non sodales nisi, vel dictum dolor. Class aptent taciti sociosqu ad
+        litora torquent per conubia nostra, per inceptos himenaeos. Suspendisse blandit eleifend
+        diam, vel rutrum tellus vulputate quis. Aliquam eget libero aliquet, imperdiet nisl a,
+        ornare ex. Sed rhoncus est ut libero porta lobortis. Fusce in dictum tellus.\n\n
+        Suspendisse interdum ornare ante. Aliquam nec cursus lorem. Morbi id magna felis. Vivamus
+        egestas, est a condimentum egestas, turpis nisl iaculis ipsum, in dictum tellus dolor sed
+        neque. Morbi tellus erat, dapibus ut sem a, iaculis tincidunt dui. Interdum et malesuada
+        fames ac ante ipsum primis in faucibus. Curabitur et eros porttitor, ultricies urna vitae,
+        molestie nibh. Phasellus at commodo eros, non aliquet metus. Sed maximus nisl nec dolor
+        bibendum, vel congue leo egestas.\n\n
+        Sed interdum tortor nibh, in sagittis risus mollis quis. Curabitur mi odio, condimentum sit
+        amet auctor at, mollis non turpis. Nullam pretium libero vestibulum, finibus orci vel,
+        molestie quam. Fusce blandit tincidunt nulla, quis sollicitudin libero facilisis et. Integer
+        interdum nunc ligula, et fermentum metus hendrerit id. Vestibulum lectus felis, dictum at
+        lacinia sit amet, tristique id quam. Cras eu consequat dui. Suspendisse sodales nunc ligula,
+        in lobortis sem porta sed. Integer id ultrices magna, in luctus elit. Sed a pellentesque
+        est.\n\n
+        Aenean nunc velit, lacinia sed dolor sed, ultrices viverra nulla. Etiam a venenatis nibh.
+        Morbi laoreet, tortor sed facilisis varius, nibh orci rhoncus nulla, id elementum leo dui
+        non lorem. Nam mollis ipsum quis auctor varius. Quisque elementum eu libero sed commodo. In
+        eros nisl, imperdiet vel imperdiet et, scelerisque a mauris. Pellentesque varius ex nunc,
+        quis imperdiet eros placerat ac. Duis finibus orci et est auctor tincidunt. Sed non viverra
+        ipsum. Nunc quis augue egestas, cursus lorem at, molestie sem. Morbi a consectetur ipsum, a
+        placerat diam. Etiam vulputate dignissim convallis. Integer faucibus mauris sit amet finibus
+        convallis.\n\n
+        Phasellus in aliquet mi. Pellentesque habitant morbi tristique senectus et netus et
+        malesuada fames ac turpis egestas. In volutpat arcu ut felis sagittis, in finibus massa
+        gravida. Pellentesque id tellus orci. Integer dictum, lorem sed efficitur ullamcorper,
+        libero justo consectetur ipsum, in mollis nisl ex sed nisl. Donec maximus ullamcorper
+        sodales. Praesent bibendum rhoncus tellus nec feugiat. In a ornare nulla. Donec rhoncus
+        libero vel nunc consequat, quis tincidunt nisl eleifend. Cras bibendum enim a justo luctus
+        vestibulum. Fusce dictum libero quis erat maximus, vitae volutpat diam dignissim.
+    </string>
+
+    <!-- COMMON -->
+
+    <!-- Common buttons -->
+
+    <string name="save_button">Guardar</string>
+    <string name="cancel_button">Cancelar</string>
+    <string name="delete_button">Eliminar</string>
+
+    <!-- Common toasts -->
+
+
+    <!-- Common dialogs -->
+    <string name="dialog_fill_out_all_fields">Por favor, completa todos los campos</string>
+    <string name="dialog_unexpected_error">Ocurrió un error inesperado. Por favor, inténtalo más tarde.</string>
+    <string name="dialog_error_title">Error</string>
+    <string name="dialog_positive_button">Aceptar</string>
+
+    <!-- Common exception messages -->
+    <string name="exception_saving_entity">Error al guardar la entidad</string>
+
+    <!-- TASKS -->
+
+    <!-- Task List -->
+
+    <string name="tasks_fragment_title">Tareas</string>
+    <string name="task_list_title">Lista de tareas</string>
+
+    <string name="pending_tasks">Tareas pendientes</string>
+    <string name="overdue_tasks">Tareas atrasadas</string>
+    <string name="completed_tasks">Tareas completadas</string>
+    <string name="no_subject">(Sin asignatura)</string>
+
+    <string name="add_task_button">Nueva tarea</string>
+    <string name="at_time">a las</string>
+
+    <!-- Task CRUD -->
+
+    <string name="task_details_title">Detalles de la tarea</string>
+    <string name="task_edit_title">Editar tarea</string>
+    <string name="task_create_title">Crear tarea</string>
+
+    <string name="task_name">Nombre:</string>
+    <string name="task_description">Descripción:</string>
+    <string name="task_subject">Asignatura:</string>
+    <string name="task_due_date">Fecha límite:</string>
+    <string name="task_due_time">Hora límite:</string>
+    <string name="task_priority">Prioridad:</string>
+    <string name="task_type">Tipo:</string>
+    <string name="task_completed">Completada</string>
+
+    <string name="task_name_hint">Nombre de la tarea</string>
+    <string name="task_description_hint">Descripción de la tarea</string>
+    <string name="task_due_date_hint">DD/MM/AAAA</string>
+    <string name="task_due_time_hint">HH:MM</string>
+
+    <string name="edit_task_button">Editar tarea</string>
+    <string name="delete_task_button">Eliminar tarea</string>
+
+    <string-array name="importance_array">
+        <item>Baja</item>
+        <item>Media</item>
+        <item>Alta</item>
+    </string-array>
+
+    <string-array name="type_array">
+        <item>Estudio</item>
+        <item>Tarea</item>
+        <item>Examen</item>
+        <item>Proyecto</item>
+        <item>Práctica</item>
+        <item>Presentación</item>
+        <item>Reunión</item>
+        <item>Otro</item>
+    </string-array>
+
+    <!-- Task toasts -->
+    <string name="toast_task_created">Tarea creada con éxito</string>
+    <string name="toast_task_updated">Tarea actualizada con éxito</string>
+    <string name="toast_task_deleted">Tarea eliminada con éxito</string>
+
+    <string name="toast_task_status_updated">Estado de la tarea actualizado</string>
+
+    <!-- Task dialogs -->
+    <string name="dialog_task_create_error">Error al crear la tarea</string>
+    <string name="dialog_task_update_error">Error al actualizar la tarea</string>
+    <string name="dialog_task_delete_error">Error al eliminar la tarea</string>
+
+    <string name="dialog_task_name_validation_error">El nombre debe tener entre 3 y 50 caracteres</string>
+    <string name="dialog_task_description_validation_error">La descripción no puede exceder los 400 caracteres</string>
+    <string name="dialog_task_time_validation_error">La hora debe tener el formato HH:MM</string>
+
+
+    <!-- NOTES -->
+
+    <string name="notes_fragment_title">Notas</string>
+    <string name="note_list_title">Lista de notas</string>
+
+    <string name="add_note_button">Nueva nota</string>
+
+    <!-- Note CRUD -->
+
+    <string name="note_create_title">Crear nota</string>
+    <string name="note_edit_title">Editar nota</string>
+
+    <string name="note_title_hint">Título de la nota</string>
+    <string name="note_content_hint">Contenido de la nota</string>
+
+    <!-- Note toasts -->
+    <string name="toast_note_created">Nota creada con éxito</string>
+    <string name="toast_note_updated">Nota actualizada con éxito</string>
+    <string name="toast_note_deleted">Nota eliminada con éxito</string>
+
+    <!-- Note dialogs -->
+    <string name="dialog_note_create_error">Error al crear la nota</string>
+    <string name="dialog_note_update_error">Error al actualizar la nota</string>
+    <string name="dialog_note_delete_error">Error al eliminar la nota</string>
+
+    <string name="dialog_note_title_validation_error">El título no puede exceder los 50 caracteres</string>
+    <string name="dialog_note_content_validation_error">El contenido no puede exceder los 30,000 caracteres</string>
+
+
+    <!-- SUBJECTS -->
+
+    <string name="subjects_fragment_title">Asignaturas</string>
+    <string name="subject_list_title">Lista de asignaturas</string>
+
+    <string name="add_subject_button">Nueva asignatura</string>
+
+    <!-- Subject CRUD -->
+
+    <string name="subject_create_title">Crear asignatura</string>
+    <string name="subject_name">Nombre:</string>
+    <string name="subject_color">Color:</string>
+
+    <string name="color_red">Rojo</string>
+    <string name="color_green">Verde</string>
+    <string name="color_blue">Azul</string>
+    <string name="color_yellow">Amarillo</string>
+    <string name="color_purple">Morado</string>
+    <string name="color_cyan">Cian</string>
+    <string name="color_orange">Naranja</string>
+    <string name="color_pink">Rosa</string>
+    <string name="color_black">Negro</string>
+    <string name="color_white">Blanco</string>
+
+    <string name="subject_edit_title">Editar asignatura</string>
+
+    <string name="subject_name_hint">Nombre de la asignatura</string>
+
+    <!-- Subject toasts -->
+    <string name="toast_subject_created">Asignatura creada con éxito</string>
+    <string name="toast_subject_updated">Asignatura actualizada con éxito</string>
+    <string name="toast_subject_deleted">Asignatura eliminada con éxito</string>
+
+    <!-- Subject dialogs -->
+    <string name="dialog_subject_create_error">Error al crear la asignatura</string>
+    <string name="dialog_subject_update_error">Error al actualizar la asignatura</string>
+    <string name="dialog_subject_delete_error">Error al eliminar la asignatura</string>
+
+    <string name="dialog_subject_name_validation_error">El nombre debe tener entre 3 y 50 caracteres</string>
+    <string name="dialog_subject_color_validation_error">Por favor, seleccione un color válido</string>
+
+
+</resources>

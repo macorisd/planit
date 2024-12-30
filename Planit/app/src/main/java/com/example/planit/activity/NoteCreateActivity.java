@@ -55,6 +55,26 @@ public class NoteCreateActivity extends AppCompatActivity {
             return;
         }
 
+        if (title.length() > 50) {
+            new AlertDialog.Builder(this)
+                    .setTitle(getString(R.string.dialog_error_title))
+                    .setMessage(getString(R.string.dialog_note_title_validation_error))
+                    .setPositiveButton(getString(R.string.dialog_positive_button), null)
+                    .show();
+
+            return;
+        }
+
+        if (content.length() > 30000) {
+            new AlertDialog.Builder(this)
+                    .setTitle(getString(R.string.dialog_error_title))
+                    .setMessage(getString(R.string.dialog_note_content_validation_error))
+                    .setPositiveButton(getString(R.string.dialog_positive_button), null)
+                    .show();
+
+            return;
+        }
+
         try {
             noteManager.createNote(title, content);
             Toast.makeText(this, getString(R.string.toast_note_created), Toast.LENGTH_SHORT).show();

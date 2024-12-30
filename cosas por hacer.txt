@@ -1,17 +1,13 @@
 NEXT
 
-- revisar si en la bd se hace todo con values
 - mejoras:
 	tareas:
-	notas: validación de máximo de caracteres (título y contenido)
+	notas: 
 	asignaturas:
 
 - idiomas:
-	- strings adicionales: recorrer archivos e ir cambiando
-	- sugerencias en campos de form
-	- toast
-	- excepciones en inglés
-- Dialogs (ventanas de información de errores) / Snackbar
+	- strings en español
+
 - icono de app
 - notificaciones?
 - ajustes?
