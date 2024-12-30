@@ -5,18 +5,16 @@ NEXT
 	notas: 
 	asignaturas:
 
-- idiomas:
-	- strings en español
-
 - icono de app
 - notificaciones?
 - ajustes?
 - quitar comentarios
-- manual de usuario?
+- idiomas: más idiomas con chatgpt
+- manual de usuario/pdf explicativo
 
 
 
-MEJORAS
+MEJORAS FUTURAS
 
 - modal confirmación al eliminar
 - obtener día de la semana para la lista de tareas

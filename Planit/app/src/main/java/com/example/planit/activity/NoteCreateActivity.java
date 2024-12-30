@@ -19,6 +19,7 @@ public class NoteCreateActivity extends AppCompatActivity {
     private Button buttonSaveNote;
     private NoteManager noteManager;
 
+    // Initialize NoteManager
     private void initNoteManager() {
         noteManager = (NoteManager) SingletonEntity.getInstance().get(NoteFragment.SHARED_NOTE_LIST);
         if (noteManager == null) {
@@ -32,26 +33,29 @@ public class NoteCreateActivity extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_note_create);
 
+        // Initialize UI components
         editTextNoteTitle = findViewById(R.id.editTextNoteTitle);
         editTextNoteContent = findViewById(R.id.editTextNoteContent);
         buttonSaveNote = findViewById(R.id.buttonSaveNote);
 
         initNoteManager();
 
+        // Set click listener for saving the note
         buttonSaveNote.setOnClickListener(v -> saveNote());
     }
 
+    // Save the note after validation
     private void saveNote() {
         String title = editTextNoteTitle.getText().toString();
         String content = editTextNoteContent.getText().toString();
 
+        // Validate title and content
         if (title.isEmpty() || content.isEmpty()) {
             new AlertDialog.Builder(this)
                     .setTitle(getString(R.string.dialog_error_title))
                     .setMessage(getString(R.string.dialog_fill_out_all_fields))
                     .setPositiveButton(getString(R.string.dialog_positive_button), null)
                     .show();
-
             return;
         }
 
@@ -61,7 +65,6 @@ public class NoteCreateActivity extends AppCompatActivity {
                     .setMessage(getString(R.string.dialog_note_title_validation_error))
                     .setPositiveButton(getString(R.string.dialog_positive_button), null)
                     .show();
-
             return;
         }
 
@@ -71,7 +74,6 @@ public class NoteCreateActivity extends AppCompatActivity {
                     .setMessage(getString(R.string.dialog_note_content_validation_error))
                     .setPositiveButton(getString(R.string.dialog_positive_button), null)
                     .show();
-
             return;
         }
 

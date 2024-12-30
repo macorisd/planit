@@ -26,11 +26,12 @@ public class SubjectEditActivity extends AppCompatActivity {
     private Spinner spinnerSubjectColor;
     private Button buttonSaveSubject, buttonDeleteSubject;
     private SubjectManager subjectManager;
-    private int subjectId = -1;
-    private int selectedColorValue = 0;  // Default color
+    private int subjectId = -1; // Subject ID, -1 if no subject is selected
+    private int selectedColorValue = 0; // Default color value
 
-    private Map<String, Integer> colorMap;
+    private Map<String, Integer> colorMap; // Color map to store color names and values
 
+    // Initializes the SubjectManager from the SingletonEntity or creates a new one
     private void initSubjectManager() {
         subjectManager = (SubjectManager) SingletonEntity.getInstance().get(SubjectFragment.SHARED_SUBJECT_LIST);
         if (subjectManager == null) {
@@ -44,85 +45,89 @@ public class SubjectEditActivity extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_subject_edit);
 
+        // Initialize the UI components
         editTextSubjectName = findViewById(R.id.editTextSubjectName);
         spinnerSubjectColor = findViewById(R.id.spinnerSubjectColor);
         buttonSaveSubject = findViewById(R.id.buttonSaveSubject);
         buttonDeleteSubject = findViewById(R.id.buttonDeleteSubject);
 
-        initSubjectManager();
+        initSubjectManager(); // Initialize the SubjectManager
+        initializeColorMap(); // Initialize color options for the subject
 
-        // Initialize color map
-        initializeColorMap();
-
-        // Set up Spinner
+        // Create and set up an adapter for the color spinner
         ArrayAdapter<String> adapter = new ArrayAdapter<>(this, android.R.layout.simple_spinner_item, colorMap.keySet().toArray(new String[0]));
         adapter.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
         spinnerSubjectColor.setAdapter(adapter);
 
-        // Set up spinner item selection listener
+        // Handle selection changes in the color spinner
         spinnerSubjectColor.setOnItemSelectedListener(new AdapterView.OnItemSelectedListener() {
             @Override
             public void onItemSelected(AdapterView<?> parentView, android.view.View selectedItemView, int position, long id) {
-                selectedColorValue = colorMap.get(parentView.getItemAtPosition(position));
+                selectedColorValue = colorMap.get(parentView.getItemAtPosition(position)); // Set the selected color
             }
 
             @Override
             public void onNothingSelected(AdapterView<?> parentView) {
-                // No action needed
             }
         });
 
+        // Retrieve subject details passed from the previous activity
         Intent intent = getIntent();
         if (intent != null && intent.hasExtra("SUBJECT_ID")) {
-            subjectId = intent.getIntExtra("SUBJECT_ID", -1);
+            subjectId = intent.getIntExtra("SUBJECT_ID", -1); // Get the subject ID
             String subjectName = intent.getStringExtra("SUBJECT_NAME");
             int subjectColor = intent.getIntExtra("SUBJECT_COLOR", 0);
 
+            // Set the subject name and color in the UI
             editTextSubjectName.setText(subjectName);
-            // Set the color in the spinner
+
             if (subjectColor != 0 && colorMap.containsValue(subjectColor)) {
                 for (Map.Entry<String, Integer> entry : colorMap.entrySet()) {
                     if (entry.getValue().equals(subjectColor)) {
-                        spinnerSubjectColor.setSelection(getKeyIndex(entry.getKey()));
+                        spinnerSubjectColor.setSelection(getKeyIndex(entry.getKey())); // Set the correct color in the spinner
                         break;
                     }
                 }
             }
         }
 
+        // Set up the click listeners for saving or deleting the subject
         buttonSaveSubject.setOnClickListener(v -> updateSubject());
         buttonDeleteSubject.setOnClickListener(v -> deleteSubject());
     }
 
+    // Update the subject with the new name and color
     private void updateSubject() {
         String name = editTextSubjectName.getText().toString();
 
+        // Validate the subject name
         if (name.isEmpty()) {
             new AlertDialog.Builder(this)
                     .setTitle(getString(R.string.dialog_error_title))
                     .setMessage(getString(R.string.dialog_fill_out_all_fields))
                     .setPositiveButton(getString(R.string.dialog_positive_button), null)
                     .show();
-
             return;
         }
 
+        // Validate the length of the subject name
         if (name.length() < 3 || name.length() > 50) {
             new AlertDialog.Builder(this)
                     .setTitle(getString(R.string.dialog_error_title))
                     .setMessage(getString(R.string.dialog_subject_name_validation_error))
                     .setPositiveButton(getString(R.string.dialog_positive_button), null)
                     .show();
-
             return;
         }
 
+        // Get the selected color value
         int color = selectedColorValue;
 
+        // Update the subject in the SubjectManager
         if (subjectId != -1) {
             subjectManager.editSubject(subjectId, name, color);
             Toast.makeText(this, getString(R.string.toast_subject_updated), Toast.LENGTH_SHORT).show();
-            finish();
+            finish(); // Close the activity after saving
         } else {
             new AlertDialog.Builder(this)
                     .setTitle(getString(R.string.dialog_error_title))
@@ -132,11 +137,12 @@ public class SubjectEditActivity extends AppCompatActivity {
         }
     }
 
+    // Delete the subject from the SubjectManager
     private void deleteSubject() {
         if (subjectId != -1) {
             subjectManager.deleteSubject(subjectId);
             Toast.makeText(this, getString(R.string.toast_subject_deleted), Toast.LENGTH_SHORT).show();
-            finish();
+            finish(); // Close the activity after deletion
         } else {
             new AlertDialog.Builder(this)
                     .setTitle(getString(R.string.dialog_error_title))
@@ -146,6 +152,7 @@ public class SubjectEditActivity extends AppCompatActivity {
         }
     }
 
+    // Initialize the color map with predefined color options
     private void initializeColorMap() {
         colorMap = new HashMap<>();
         colorMap.put(getString(R.string.color_red), Color.parseColor("#FF0000"));
@@ -160,7 +167,7 @@ public class SubjectEditActivity extends AppCompatActivity {
         colorMap.put(getString(R.string.color_white), Color.parseColor("#FFFFFF"));
     }
 
-
+    // Helper method to find the index of a color key in the map
     private int getKeyIndex(String key) {
         String[] keys = colorMap.keySet().toArray(new String[0]);
         for (int i = 0; i < keys.length; i++) {
@@ -168,6 +175,6 @@ public class SubjectEditActivity extends AppCompatActivity {
                 return i;
             }
         }
-        return 0;  // Default to the first item
+        return 0; // Default to the first item if no match is found
     }
 }

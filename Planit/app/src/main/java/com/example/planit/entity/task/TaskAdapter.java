@@ -18,17 +18,16 @@ import com.example.planit.entity.subject.Subject;
 import com.example.planit.entity.subject.SubjectManager;
 import com.example.planit.fragment.SubjectFragment;
 
-import java.text.ParseException;
-import java.text.SimpleDateFormat;
 import java.util.List;
-import java.util.Locale;
 
 public class TaskAdapter extends RecyclerView.Adapter<TaskAdapter.TaskViewHolder> {
 
     private List<Task> taskList;
     private SubjectManager subjectManager;
 
+    // Initialize SubjectManager to manage the subjects in the app
     private void initSubjectManager(Context context) {
+        // Retrieve the SubjectManager from SingletonEntity or initialize a new one
         subjectManager = (SubjectManager) SingletonEntity.getInstance().get(SubjectFragment.SHARED_SUBJECT_LIST);
         if (subjectManager == null) {
             subjectManager = new SubjectManager(context);
@@ -36,26 +35,31 @@ public class TaskAdapter extends RecyclerView.Adapter<TaskAdapter.TaskViewHolder
         }
     }
 
+    // Constructor for TaskAdapter, initializes task list and SubjectManager
     public TaskAdapter(Context context, List<Task> taskList) {
         this.taskList = taskList;
         initSubjectManager(context);
     }
 
+    // Inflate the layout for each task item and create the view holder
     @NonNull
     @Override
     public TaskViewHolder onCreateViewHolder(@NonNull ViewGroup parent, int viewType) {
+        // Inflate the item layout for tasks
         View view = LayoutInflater.from(parent.getContext()).inflate(R.layout.item_task, parent, false);
         return new TaskViewHolder(view);
     }
 
+    // Bind data to the view for each task item in the list
     @Override
     public void onBindViewHolder(@NonNull TaskViewHolder holder, int position) {
         Task task = taskList.get(position);
+        // Set the task name and formatted due date
         holder.taskName.setText(task.getName());
         holder.taskDueDate.setText(Task.formatDate(task.getDueDate()));
         holder.taskDueTime.setText(task.getDueTime().isEmpty() ? "" : holder.itemView.getContext().getString(R.string.at_time) + " " + task.getDueTime());
 
-        // Obtener el nombre de la asignatura
+        // Retrieve the subject information associated with the task
         Subject subject = subjectManager.getById(task.getSubjectId());
         if (subject != null) {
             holder.taskSubjectName.setText(subject.getName());
@@ -65,7 +69,7 @@ public class TaskAdapter extends RecyclerView.Adapter<TaskAdapter.TaskViewHolder
             holder.subjectColorStrip.setBackgroundColor(holder.itemView.getContext().getResources().getColor(android.R.color.white));
         }
 
-        // Establecer el icono de prioridad según la importancia
+        // Determine which priority icon to display based on the task importance
         int priorityIcon;
         switch (task.getImportance()) {
             case 1:
@@ -83,9 +87,10 @@ public class TaskAdapter extends RecyclerView.Adapter<TaskAdapter.TaskViewHolder
         }
         holder.priorityIcon.setImageResource(priorityIcon);
 
-        // Manejar clics en los elementos de la lista
+        // Set an onClickListener to open the task detail activity when a task item is clicked
         holder.itemView.setOnClickListener(v -> {
             Intent intent = new Intent(v.getContext(), TaskDetailActivity.class);
+            // Pass task data to the detail activity through the Intent
             intent.putExtra("TASK_ID", task.getId());
             intent.putExtra("TASK_NAME", task.getName());
             intent.putExtra("TASK_DESCRIPTION", task.getDescription());
@@ -99,11 +104,13 @@ public class TaskAdapter extends RecyclerView.Adapter<TaskAdapter.TaskViewHolder
         });
     }
 
+    // Return the total number of tasks in the list
     @Override
     public int getItemCount() {
         return taskList.size();
     }
 
+    // ViewHolder for binding task views in each item
     public static class TaskViewHolder extends RecyclerView.ViewHolder {
         TextView taskName;
         TextView taskDueDate;
@@ -112,6 +119,7 @@ public class TaskAdapter extends RecyclerView.Adapter<TaskAdapter.TaskViewHolder
         ImageView priorityIcon;
         View subjectColorStrip;
 
+        // Constructor to initialize the views for each task item
         public TaskViewHolder(@NonNull View itemView) {
             super(itemView);
             taskName = itemView.findViewById(R.id.taskName);

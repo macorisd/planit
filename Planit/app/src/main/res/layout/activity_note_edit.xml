@@ -49,26 +49,26 @@
 
     <Button
         android:id="@+id/buttonSaveNote"
-        android:layout_width="100dp"
+        android:layout_width="120dp"
         android:layout_height="40dp"
+        android:layout_marginEnd="8dp"
+        android:layout_marginBottom="16dp"
         android:text="@string/save_button"
         android:textSize="14sp"
         app:layout_constraintBottom_toBottomOf="parent"
-        app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintEnd_toStartOf="@id/buttonDeleteNote"
-        android:layout_marginEnd="8dp"
-        android:layout_marginBottom="16dp" />
+        app:layout_constraintStart_toStartOf="parent" />
 
     <Button
         android:id="@+id/buttonDeleteNote"
-        android:layout_width="100dp"
+        android:layout_width="120dp"
         android:layout_height="40dp"
+        android:layout_marginStart="8dp"
+        android:layout_marginBottom="16dp"
+        android:backgroundTint="@android:color/holo_red_dark"
         android:text="@string/delete_button"
         android:textSize="14sp"
-        android:backgroundTint="@android:color/holo_red_dark"
         app:layout_constraintBottom_toBottomOf="parent"
-        app:layout_constraintStart_toEndOf="@id/buttonSaveNote"
         app:layout_constraintEnd_toEndOf="parent"
-        android:layout_marginStart="8dp"
-        android:layout_marginBottom="16dp" />
+        app:layout_constraintStart_toEndOf="@id/buttonSaveNote" />
 </androidx.constraintlayout.widget.ConstraintLayout>

@@ -18,7 +18,7 @@ public class NoteManager {
         db = DbHelper.getInstance(context).getDatabase();
     }
 
-    // Método para inicializar notas de ejemplo en la BD
+
     public void initNoteManager() {
 //        ContentValues values = new ContentValues();
 //        values.put(NoteContract.NoteEntry.COLUMN_NAME_NAME, "Nota 1");

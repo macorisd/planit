@@ -38,6 +38,7 @@ public class TaskEditActivity extends AppCompatActivity {
     private int taskId;
     private boolean completed;
 
+    // Initialize the TaskManager object
     private void initTaskManager() {
         taskManager = (TaskManager) SingletonEntity.getInstance().get(TaskFragment.SHARED_TASK_LIST);
         if (taskManager == null) {
@@ -46,6 +47,7 @@ public class TaskEditActivity extends AppCompatActivity {
         }
     }
 
+    // Initialize the SubjectManager object
     private void initSubjectManager() {
         subjectManager = (SubjectManager) SingletonEntity.getInstance().get(SubjectFragment.SHARED_SUBJECT_LIST);
         if (subjectManager == null) {
@@ -59,11 +61,11 @@ public class TaskEditActivity extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_task_edit);
 
-        // Inicializar TaskManager y SubjectManager
+        // Initialize managers
         initTaskManager();
         initSubjectManager();
 
-        // Obtener los datos de la tarea desde el Intent
+        // Get data from the intent
         Intent intent = getIntent();
         taskId = intent.getIntExtra("TASK_ID", -1);
         String name = intent.getStringExtra("TASK_NAME");
@@ -75,7 +77,7 @@ public class TaskEditActivity extends AppCompatActivity {
         String dueTime = intent.getStringExtra("TASK_DUE_TIME");
         this.completed = intent.getBooleanExtra("TASK_COMPLETED", false);
 
-        // Vincular los EditText, Spinner y botones
+        // Initialize UI elements
         etTaskName = findViewById(R.id.etTaskName);
         etDescription = findViewById(R.id.etDescription);
         etDueDate = findViewById(R.id.etDueDate);
@@ -86,27 +88,27 @@ public class TaskEditActivity extends AppCompatActivity {
         btnSave = findViewById(R.id.btnSave);
         btnCancel = findViewById(R.id.btnCancel);
 
-        // Llenar los campos con los datos actuales de la tarea
+        // Set the task data to the UI fields
         etTaskName.setText(name);
         etDescription.setText(description);
         etDueDate.setText(Task.formatDate(dueDate));
         etDueTime.setText(dueTime);
 
-        // Configurar el spinner de importancia
+        // Set up the importance spinner
         ArrayAdapter<CharSequence> importanceAdapter = ArrayAdapter.createFromResource(this,
                 R.array.importance_array, android.R.layout.simple_spinner_item);
         importanceAdapter.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
         spinnerImportance.setAdapter(importanceAdapter);
         spinnerImportance.setSelection(importance - 1);
 
-        // Configurar el spinner de tipo
+        // Set up the type spinner
         ArrayAdapter<CharSequence> typeAdapter = ArrayAdapter.createFromResource(this,
                 R.array.type_array, android.R.layout.simple_spinner_item);
         typeAdapter.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
         spinnerType.setAdapter(typeAdapter);
         spinnerType.setSelection(typeAdapter.getPosition(type));
 
-        // Obtener los subjects y llenar el spinner
+        // Get and display subjects in a spinner
         subjects = subjectManager.getSubjects();
         List<String> subjectNames = new ArrayList<>();
         subjectNames.add(getString(R.string.no_subject));
@@ -117,6 +119,7 @@ public class TaskEditActivity extends AppCompatActivity {
         subjectAdapter.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
         spinnerSubject.setAdapter(subjectAdapter);
 
+        // Set the selected subject in the spinner
         if (subjectId == -1) {
             spinnerSubject.setSelection(0);
         } else {
@@ -128,26 +131,25 @@ public class TaskEditActivity extends AppCompatActivity {
             }
         }
 
-        // Configurar el campo de fecha para mostrar el DatePickerDialog
+        // Set listener for the due date field to show the date picker dialog
         etDueDate.setOnClickListener(v -> showDatePickerDialog());
 
-        // Configurar el botón de guardar con validaciones
+        // Set listener to save the task
         btnSave.setOnClickListener(v -> {
             updateTask();
         });
 
-        // Configurar el botón de cancelar
+        // Set listener to cancel editing and return to previous screen
         btnCancel.setOnClickListener(v -> finish());
     }
 
-
+    // Display the date picker dialog
     private void showDatePickerDialog() {
         final Calendar calendar = Calendar.getInstance();
         int year = calendar.get(Calendar.YEAR);
         int month = calendar.get(Calendar.MONTH);
         int day = calendar.get(Calendar.DAY_OF_MONTH);
 
-        // Crear y mostrar el DatePickerDialog
         DatePickerDialog datePickerDialog = new DatePickerDialog(
                 this,
                 (view, selectedYear, selectedMonth, selectedDay) -> {
@@ -156,7 +158,7 @@ public class TaskEditActivity extends AppCompatActivity {
                     SimpleDateFormat dateFormat = new SimpleDateFormat("dd/MM/yyyy", Locale.getDefault());
                     String formattedDate = dateFormat.format(selectedDate.getTime());
 
-                    // Establecer la fecha en el EditText
+                    // Set the selected date in the due date field
                     etDueDate.setText(formattedDate);
                 },
                 year, month, day
@@ -165,9 +167,8 @@ public class TaskEditActivity extends AppCompatActivity {
         datePickerDialog.show();
     }
 
-    // Método para actualizar una tarea existente
+    // Method to update the task with the data entered by the user
     private void updateTask() {
-        // Obtener los nuevos valores de los campos
         String newName = etTaskName.getText().toString().trim();
         String newDescription = etDescription.getText().toString().trim();
         String newDueDate = Task.formatDateReversed(etDueDate.getText().toString());
@@ -175,18 +176,17 @@ public class TaskEditActivity extends AppCompatActivity {
         String newImportanceString = spinnerImportance.getSelectedItem().toString();
         String newType = spinnerType.getSelectedItem().toString();
 
-        // Validar los campos obligatorios
+        // Check if all required fields are filled
         if (newName.isEmpty() || newDueDate.isEmpty()) {
             new AlertDialog.Builder(this)
                     .setTitle(getString(R.string.dialog_error_title))
                     .setMessage(getString(R.string.dialog_fill_out_all_fields))
                     .setPositiveButton(getString(R.string.dialog_positive_button), null)
                     .show();
-
             return;
         }
 
-        // Validar la longitud del nombre
+        // Validate task name length
         if (newName.length() < 3 || newName.length() > 50) {
             new AlertDialog.Builder(this)
                     .setTitle(getString(R.string.dialog_error_title))
@@ -196,7 +196,7 @@ public class TaskEditActivity extends AppCompatActivity {
             return;
         }
 
-        // Validar la longitud de la descripción
+        // Validate description length
         if (newDescription.length() > 400) {
             new AlertDialog.Builder(this)
                     .setTitle(getString(R.string.dialog_error_title))
@@ -206,7 +206,7 @@ public class TaskEditActivity extends AppCompatActivity {
             return;
         }
 
-        // Validar el formato de la hora (si no está vacía)
+        // Validate due time format
         if (!newDueTime.isEmpty() && !newDueTime.matches("^([01]?\\d|2[0-3]):[0-5]\\d$")) {
             new AlertDialog.Builder(this)
                     .setTitle(getString(R.string.dialog_error_title))
@@ -216,13 +216,14 @@ public class TaskEditActivity extends AppCompatActivity {
             return;
         }
 
+        // Determine the selected subject ID
         int newSubjectId = spinnerSubject.getSelectedItemPosition() == 0
                 ? -1
                 : subjects.get(spinnerSubject.getSelectedItemPosition() - 1).getId();
 
+        // Determine the selected importance value
         int newImportance;
         String[] importanceArray = getResources().getStringArray(R.array.importance_array);
-
         if (newImportanceString.equals(importanceArray[0])) {
             newImportance = 1;
         }
@@ -236,12 +237,12 @@ public class TaskEditActivity extends AppCompatActivity {
             newImportance = 1;
         }
 
-        // Llamar al método editTask del TaskManager
         try {
+            // Update the task using the TaskManager
             taskManager.editTask(taskId, newName, newDescription, newImportance, newType, newSubjectId, newDueDate, newDueTime, 0);
             Toast.makeText(this, getString(R.string.toast_task_updated), Toast.LENGTH_SHORT).show();
 
-            // Navegar de regreso a TaskDetailActivity con los nuevos datos
+            // Navigate to the task details screen
             Intent intent = new Intent(this, TaskDetailActivity.class);
             intent.putExtra("TASK_ID", taskId);
             intent.putExtra("TASK_NAME", newName);
@@ -257,6 +258,7 @@ public class TaskEditActivity extends AppCompatActivity {
 
             finish();
         } catch (Exception e) {
+            // Show error message if something goes wrong
             new AlertDialog.Builder(this)
                     .setTitle(getString(R.string.dialog_error_title))
                     .setMessage(getString(R.string.dialog_task_update_error) + ": " + e.getMessage())

@@ -14,35 +14,27 @@ public class TaskManager {
 
     private SQLiteDatabase db;
 
+    // Constructor to initialize the TaskManager with a database instance
     public TaskManager(Context context) {
         db = DbHelper.getInstance(context).getDatabase();
     }
 
-    // Método para inicializar tareas de ejemplo en la BD
+    // Method to initialize the TaskManager (currently commented out as a sample)
     public void initTaskManager() {
-//        ContentValues values = new ContentValues();
-//        values.put(TaskContract.TaskEntry.COLUMN_NAME_NAME, "Tarea 1");
-//        values.put(TaskContract.TaskEntry.COLUMN_NAME_DESCRIPTION, "Descripción de tarea 1");
-//        values.put(TaskContract.TaskEntry.COLUMN_NAME_COMPLETED, 0); // 0 para no completada
-//        values.put(TaskContract.TaskEntry.COLUMN_NAME_IMPORTANCE, 1);
-//        values.put(TaskContract.TaskEntry.COLUMN_NAME_SUBJECT_ID, 1);
-//        values.put(TaskContract.TaskEntry.COLUMN_NAME_TYPE, "Tipo 1");
-//        values.put(TaskContract.TaskEntry.COLUMN_NAME_DUE_DATE, "2024-12-25");
-//        values.put(TaskContract.TaskEntry.COLUMN_NAME_DUE_TIME, "12:00:00");
-//        db.insert(TaskContract.TaskEntry.TABLE_NAME, null, values);
-//
-//        values.put(TaskContract.TaskEntry.COLUMN_NAME_NAME, "Tarea 2");
-//        values.put(TaskContract.TaskEntry.COLUMN_NAME_DESCRIPTION, "Descripción de tarea 2");
-//        values.put(TaskContract.TaskEntry.COLUMN_NAME_COMPLETED, 1); // 1 para completada
-//        values.put(TaskContract.TaskEntry.COLUMN_NAME_IMPORTANCE, 2);
-//        values.put(TaskContract.TaskEntry.COLUMN_NAME_SUBJECT_ID, 2);
-//        values.put(TaskContract.TaskEntry.COLUMN_NAME_TYPE, "Tipo 2");
-//        values.put(TaskContract.TaskEntry.COLUMN_NAME_DUE_DATE, "2024-12-30");
-//        values.put(TaskContract.TaskEntry.COLUMN_NAME_DUE_TIME, "15:00:00");
-//        db.insert(TaskContract.TaskEntry.TABLE_NAME, null, values);
+        // You can initialize some sample tasks here if needed.
+        // ContentValues values = new ContentValues();
+        // values.put(TaskContract.TaskEntry.COLUMN_NAME_NAME, "Task 1");
+        // values.put(TaskContract.TaskEntry.COLUMN_NAME_DESCRIPTION, "Description of task 1");
+        // values.put(TaskContract.TaskEntry.COLUMN_NAME_COMPLETED, 0); // 0 for incomplete
+        // values.put(TaskContract.TaskEntry.COLUMN_NAME_IMPORTANCE, 1);
+        // values.put(TaskContract.TaskEntry.COLUMN_NAME_SUBJECT_ID, 1);
+        // values.put(TaskContract.TaskEntry.COLUMN_NAME_TYPE, "Type 1");
+        // values.put(TaskContract.TaskEntry.COLUMN_NAME_DUE_DATE, "2024-12-25");
+        // values.put(TaskContract.TaskEntry.COLUMN_NAME_DUE_TIME, "12:00:00");
+        // db.insert(TaskContract.TaskEntry.TABLE_NAME, null, values);
     }
 
-    // COMPLETAR: MÉTODO PARA OBTENER LAS TAREAS
+    // Method to fetch all tasks from the database
     public List<Task> getTasks() {
         List<Task> tasks = new ArrayList<>();
         String[] projection = {
@@ -57,16 +49,18 @@ public class TaskManager {
                 TaskContract.TaskEntry.COLUMN_NAME_DUE_TIME
         };
 
+        // Query to select all tasks from the database
         Cursor cursor = db.query(
-                TaskContract.TaskEntry.TABLE_NAME,  // Nombre de la tabla
-                projection,                        // Columnas a devolver
-                null,                              // Condición WHERE (null para todas)
-                null,                              // Argumentos para la condición
+                TaskContract.TaskEntry.TABLE_NAME,  // Table name
+                projection,                        // Columns to return
+                null,                              // WHERE clause (null for all rows)
+                null,                              // Arguments for WHERE clause
                 null,                              // GROUP BY
                 null,                              // HAVING
                 null                               // ORDER BY
         );
 
+        // Loop through the results and create Task objects
         while (cursor.moveToNext()) {
             int id = cursor.getInt(cursor.getColumnIndexOrThrow(TaskContract.TaskEntry._ID));
             String name = cursor.getString(cursor.getColumnIndexOrThrow(TaskContract.TaskEntry.COLUMN_NAME_NAME));
@@ -78,7 +72,7 @@ public class TaskManager {
             String dueDate = cursor.getString(cursor.getColumnIndexOrThrow(TaskContract.TaskEntry.COLUMN_NAME_DUE_DATE));
             String dueTime = cursor.getString(cursor.getColumnIndexOrThrow(TaskContract.TaskEntry.COLUMN_NAME_DUE_TIME));
 
-            // Crear un objeto Task con todos los datos recuperados
+            // Create a Task object with the data from the database
             tasks.add(new Task(id, name, description, completed, importance, type, subjectId, dueDate, dueTime));
         }
         cursor.close();
@@ -86,32 +80,28 @@ public class TaskManager {
         return tasks;
     }
 
-
+    // Method to create a new task and insert it into the database
     public void createTask(String name, String description, int importance, String type, int subjectId, String dueDate, String dueTime) {
-        // Crear un objeto ContentValues para insertar los valores en la base de datos
         ContentValues values = new ContentValues();
         values.put(TaskContract.TaskEntry.COLUMN_NAME_NAME, name);
         values.put(TaskContract.TaskEntry.COLUMN_NAME_DESCRIPTION, description);
-        values.put(TaskContract.TaskEntry.COLUMN_NAME_COMPLETED, 0);  // Tarea no completada inicialmente
+        values.put(TaskContract.TaskEntry.COLUMN_NAME_COMPLETED, 0); // New tasks are incomplete by default
         values.put(TaskContract.TaskEntry.COLUMN_NAME_IMPORTANCE, importance);
         values.put(TaskContract.TaskEntry.COLUMN_NAME_TYPE, type);
         values.put(TaskContract.TaskEntry.COLUMN_NAME_SUBJECT_ID, subjectId);
         values.put(TaskContract.TaskEntry.COLUMN_NAME_DUE_DATE, dueDate);
         values.put(TaskContract.TaskEntry.COLUMN_NAME_DUE_TIME, dueTime);
 
-        // Insertar los valores en la base de datos
         long newRowId = db.insert(TaskContract.TaskEntry.TABLE_NAME, null, values);
 
-
+        // If the insertion fails, throw an exception
         if (newRowId == -1) {
-            // Si la inserción falla
             throw new RuntimeException("Error saving the task");
         }
     }
 
-    // Método para editar una tarea
+    // Method to edit an existing task
     public void editTask(int taskId, String name, String description, int importance, String type, int subjectId, String dueDate, String dueTime, int completed) {
-        // Crear un objeto ContentValues con los nuevos valores
         ContentValues values = new ContentValues();
         values.put(TaskContract.TaskEntry.COLUMN_NAME_NAME, name);
         values.put(TaskContract.TaskEntry.COLUMN_NAME_DESCRIPTION, description);
@@ -122,31 +112,30 @@ public class TaskManager {
         values.put(TaskContract.TaskEntry.COLUMN_NAME_DUE_DATE, dueDate);
         values.put(TaskContract.TaskEntry.COLUMN_NAME_DUE_TIME, dueTime);
 
-        // Especificar la condición para actualizar la tarea con el ID correspondiente
         String selection = TaskContract.TaskEntry._ID + " = ?";
         String[] selectionArgs = {String.valueOf(taskId)};
 
-        // Actualizar la tarea en la base de datos
+        // Update the task in the database based on its ID
         int rowsUpdated = db.update(
-                TaskContract.TaskEntry.TABLE_NAME,  // Nombre de la tabla
-                values,                             // Nuevos valores
-                selection,                          // Condición de selección (ID de la tarea)
-                selectionArgs                      // Argumentos para la condición
+                TaskContract.TaskEntry.TABLE_NAME,  // Table name
+                values,                             // New values
+                selection,                          // WHERE clause (task ID)
+                selectionArgs                      // Arguments for WHERE clause
         );
 
+        // If no rows were updated, throw an exception
         if (rowsUpdated == 0) {
-            // Si no se actualizó ninguna fila, lanzar un error
             throw new RuntimeException("Error updating the task");
         }
     }
 
-    // Método para alternar el estado de compleción de una tarea
+    // Method to toggle the completion status of a task
     public void toggleCompleted(int taskId) {
-        // Consultar el estado actual de la tarea
         String[] projection = { TaskContract.TaskEntry.COLUMN_NAME_COMPLETED };
         String selection = TaskContract.TaskEntry._ID + " = ?";
         String[] selectionArgs = { String.valueOf(taskId) };
 
+        // Query to get the current completion status of the task
         Cursor cursor = db.query(
                 TaskContract.TaskEntry.TABLE_NAME,
                 projection,
@@ -161,13 +150,13 @@ public class TaskManager {
             int currentCompleted = cursor.getInt(cursor.getColumnIndexOrThrow(TaskContract.TaskEntry.COLUMN_NAME_COMPLETED));
             cursor.close();
 
-            // Alternar el estado de compleción
+            // Toggle the completion status (0 to 1 or 1 to 0)
             int newCompleted = (currentCompleted == 0) ? 1 : 0;
 
-            // Actualizar el valor en la base de datos
             ContentValues values = new ContentValues();
             values.put(TaskContract.TaskEntry.COLUMN_NAME_COMPLETED, newCompleted);
 
+            // Update the task in the database
             int rowsUpdated = db.update(
                     TaskContract.TaskEntry.TABLE_NAME,
                     values,
@@ -175,6 +164,7 @@ public class TaskManager {
                     selectionArgs
             );
 
+            // If no rows were updated, throw an exception
             if (rowsUpdated == 0) {
                 throw new RuntimeException("Error toggling the task completion status");
             }
@@ -184,18 +174,16 @@ public class TaskManager {
         }
     }
 
-
-
-
-    // Método para eliminar una tarea
+    // Method to delete a task from the database
     public void deleteTask(int taskId) {
         String selection = TaskContract.TaskEntry._ID + " = ?";
         String[] selectionArgs = {String.valueOf(taskId)};
 
-        // Eliminar la tarea de la base de datos
+        // Delete the task from the database based on its ID
         db.delete(TaskContract.TaskEntry.TABLE_NAME, selection, selectionArgs);
     }
 
+    // Finalize method to close the database connection when the object is garbage collected
     protected void finalize() throws Throwable {
         db.close();
         super.finalize();

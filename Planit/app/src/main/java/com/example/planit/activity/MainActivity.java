@@ -17,19 +17,21 @@ public class MainActivity extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.fragment_container);
 
+        // Initialize BottomNavigationView
         BottomNavigationView bottomNavigationView = findViewById(R.id.bottom_navigation);
 
-        // Cargar el fragment inicial
+        // Set default fragment if there's no saved state
         if (savedInstanceState == null) {
             getSupportFragmentManager().beginTransaction()
                     .replace(R.id.fragment_container, new TaskFragment())
                     .commit();
         }
 
-        // Configurar el listener de la barra de navegación
+        // Set listener for bottom navigation item selection
         bottomNavigationView.setOnItemSelectedListener(item -> {
             Fragment selectedFragment = null;
 
+            // Select fragment based on clicked navigation item
             int itemId = item.getItemId();
             if (itemId == R.id.nav_tasks) {
                 selectedFragment = new TaskFragment();
@@ -39,6 +41,7 @@ public class MainActivity extends AppCompatActivity {
                 selectedFragment = new NoteFragment();
             }
 
+            // Replace fragment if a valid selection was made
             if (selectedFragment != null) {
                 getSupportFragmentManager().beginTransaction()
                         .replace(R.id.fragment_container, selectedFragment)

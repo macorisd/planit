@@ -34,6 +34,7 @@ public class TaskDetailActivity extends AppCompatActivity {
     private String taskDueDate;
     private String taskDueTime;
 
+    // Initialize SubjectManager with Singleton pattern
     private void initSubjectManager() {
         subjectManager = (SubjectManager) SingletonEntity.getInstance().get(SubjectFragment.SHARED_SUBJECT_LIST);
         if (subjectManager == null) {
@@ -47,7 +48,7 @@ public class TaskDetailActivity extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_task_detail);
 
-        // Obtener datos de la tarea
+        // Retrieve task details from the intent
         taskId = getIntent().getIntExtra("TASK_ID", -1);
         taskName = getIntent().getStringExtra("TASK_NAME");
         taskDescription = getIntent().getStringExtra("TASK_DESCRIPTION");
@@ -58,11 +59,10 @@ public class TaskDetailActivity extends AppCompatActivity {
         taskDueDate = getIntent().getStringExtra("TASK_DUE_DATE");
         taskDueTime = getIntent().getStringExtra("TASK_DUE_TIME");
 
-        // Inicializar TaskManager y SubjectManager
         taskManager = (TaskManager) SingletonEntity.getInstance().get(TaskFragment.SHARED_TASK_LIST);
         initSubjectManager();
 
-        // Configurar vistas
+        // Initialize views and display task details
         TextView taskNameView = findViewById(R.id.taskDetailName);
         TextView taskDescriptionView = findViewById(R.id.taskDetailDescription);
         TextView taskImportanceView = findViewById(R.id.taskDetailImportance);
@@ -74,21 +74,22 @@ public class TaskDetailActivity extends AppCompatActivity {
         Button deleteButton = findViewById(R.id.deleteTaskButton);
         Button editButton = findViewById(R.id.editTaskButton);
 
+        // Set text for task details
         taskNameView.setText(taskName);
         taskDescriptionView.setText(taskDescription.length() > 0 ? taskDescription : "");
 
+        // Set importance level from the resource array
         String[] importanceArray = getResources().getStringArray(R.array.importance_array);
         String importanceText = "";
 
         if (taskImportance >= 1 && taskImportance <= 3) {
             importanceText = importanceArray[taskImportance - 1];
         }
-
         taskImportanceView.setText(getString(R.string.task_priority) + " " + importanceText);
 
         taskTypeView.setText(getString(R.string.task_type) + " " + taskType);
 
-        // Obtener el nombre de la asignatura
+        // Display subject details
         Subject subject = subjectManager.getById(taskSubjectId);
         if (subject != null) {
             taskSubjectView.setText(getString(R.string.task_subject) + " " + subject.getName());
@@ -96,20 +97,20 @@ public class TaskDetailActivity extends AppCompatActivity {
             taskSubjectView.setText(getString(R.string.no_subject));
         }
 
+        // Display due date and time
         taskDueDateView.setText(getString(R.string.task_due_date) + " " + Task.formatDate(taskDueDate));
         taskDueTimeView.setText(taskDueTime.isEmpty() ? "" : getString(R.string.task_due_time) + " " + taskDueTime);
 
-        // Configurar el estado del interruptor
         taskCompletedSwitch.setChecked(taskCompleted);
 
-        // Manejar el cambio de estado del interruptor
+        // Update task status when switch is toggled
         taskCompletedSwitch.setOnCheckedChangeListener((buttonView, isChecked) -> {
             taskManager.toggleCompleted(taskId);
             taskCompleted = isChecked;
             Toast.makeText(this, getString(R.string.toast_task_status_updated), Toast.LENGTH_SHORT).show();
         });
 
-        // Manejar el clic del botón "Eliminar"
+        // Handle task deletion
         deleteButton.setOnClickListener(v -> {
             if (taskId != -1) {
                 taskManager.deleteTask(taskId);
@@ -124,10 +125,9 @@ public class TaskDetailActivity extends AppCompatActivity {
             }
         });
 
-        // Manejar el clic del botón "Editar"
+        // Handle task editing
         editButton.setOnClickListener(v -> {
             if (taskId != -1) {
-                // Pasar los detalles de la tarea a la actividad de edición
                 Intent intent = new Intent(this, TaskEditActivity.class);
                 intent.putExtra("TASK_ID", taskId);
                 intent.putExtra("TASK_NAME", taskName);

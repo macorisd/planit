@@ -5,7 +5,6 @@ public class Note {
     private String title;
     private String content;
 
-    // Constructor, getters y setters
     public Note(int id, String title, String content) {
         this.id = id;
         this.title = title;

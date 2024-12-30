@@ -21,6 +21,7 @@ public class NoteEditActivity extends AppCompatActivity {
     private NoteManager noteManager;
     private int noteId = -1;
 
+    // Initialize NoteManager
     private void initNoteManager() {
         noteManager = (NoteManager) SingletonEntity.getInstance().get(NoteFragment.SHARED_NOTE_LIST);
         if (noteManager == null) {
@@ -34,6 +35,7 @@ public class NoteEditActivity extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_note_edit);
 
+        // Initialize UI components
         editTextNoteTitle = findViewById(R.id.editTextNoteTitle);
         editTextNoteContent = findViewById(R.id.editTextNoteContent);
         buttonSaveNote = findViewById(R.id.buttonSaveNote);
@@ -41,6 +43,7 @@ public class NoteEditActivity extends AppCompatActivity {
 
         initNoteManager();
 
+        // Get the note data from the Intent
         Intent intent = getIntent();
         if (intent != null && intent.hasExtra("NOTE_ID")) {
             noteId = intent.getIntExtra("NOTE_ID", -1);
@@ -51,69 +54,59 @@ public class NoteEditActivity extends AppCompatActivity {
             editTextNoteContent.setText(noteContent);
         }
 
+        // Set button click listeners
         buttonSaveNote.setOnClickListener(v -> updateNote());
         buttonDeleteNote.setOnClickListener(v -> deleteNote());
     }
 
+    // Update the note
     private void updateNote() {
         String title = editTextNoteTitle.getText().toString();
         String content = editTextNoteContent.getText().toString();
 
+        // Validate input fields
         if (title.isEmpty() || content.isEmpty()) {
-            new AlertDialog.Builder(this)
-                    .setTitle(getString(R.string.dialog_error_title))
-                    .setMessage(getString(R.string.dialog_fill_out_all_fields))
-                    .setPositiveButton(getString(R.string.dialog_positive_button), null)
-                    .show();
-
+            showAlertDialog(R.string.dialog_fill_out_all_fields);
             return;
         }
 
         if (title.length() > 50) {
-            new AlertDialog.Builder(this)
-                    .setTitle(getString(R.string.dialog_error_title))
-                    .setMessage(getString(R.string.dialog_note_title_validation_error))
-                    .setPositiveButton(getString(R.string.dialog_positive_button), null)
-                    .show();
-
+            showAlertDialog(R.string.dialog_note_title_validation_error);
             return;
         }
 
         if (content.length() > 30000) {
-            new AlertDialog.Builder(this)
-                    .setTitle(getString(R.string.dialog_error_title))
-                    .setMessage(getString(R.string.dialog_note_content_validation_error))
-                    .setPositiveButton(getString(R.string.dialog_positive_button), null)
-                    .show();
-
+            showAlertDialog(R.string.dialog_note_content_validation_error);
             return;
         }
 
+        // Proceed with note update
         if (noteId != -1) {
             noteManager.editNote(noteId, title, content);
             Toast.makeText(this, getString(R.string.toast_note_updated), Toast.LENGTH_SHORT).show();
             finish();
-        }
-        else {
-            new AlertDialog.Builder(this)
-                    .setTitle(getString(R.string.dialog_error_title))
-                    .setMessage(getString(R.string.dialog_note_update_error))
-                    .setPositiveButton(getString(R.string.dialog_positive_button), null)
-                    .show();
+        } else {
+            showAlertDialog(R.string.dialog_note_update_error);
         }
     }
 
+    // Delete the note
     private void deleteNote() {
         if (noteId != -1) {
             noteManager.deleteNote(noteId);
             Toast.makeText(this, getString(R.string.toast_note_deleted), Toast.LENGTH_SHORT).show();
             finish();
         } else {
-            new AlertDialog.Builder(this)
-                    .setTitle(getString(R.string.dialog_error_title))
-                    .setMessage(getString(R.string.dialog_note_delete_error))
-                    .setPositiveButton(getString(R.string.dialog_positive_button), null)
-                    .show();
+            showAlertDialog(R.string.dialog_note_delete_error);
         }
+    }
+
+    // Show an alert dialog with the provided message resource ID
+    private void showAlertDialog(int messageResId) {
+        new AlertDialog.Builder(this)
+                .setTitle(getString(R.string.dialog_error_title))
+                .setMessage(getString(messageResId))
+                .setPositiveButton(getString(R.string.dialog_positive_button), null)
+                .show();
     }
 }

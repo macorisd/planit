@@ -15,6 +15,7 @@ public class DbHelper extends SQLiteOpenHelper {
     private static DbHelper instance;
     private static SQLiteDatabase database;
 
+    // Singleton pattern to get the instance of DbHelper
     public static DbHelper getInstance(Context context) {
         if (instance == null) {
             instance = new DbHelper(context.getApplicationContext());
@@ -22,6 +23,7 @@ public class DbHelper extends SQLiteOpenHelper {
         return instance;
     }
 
+    // Return the database instance, ensuring it's open
     public synchronized SQLiteDatabase getDatabase() {
         if (database == null || !database.isOpen()) {
             database = getWritableDatabase();
@@ -29,11 +31,12 @@ public class DbHelper extends SQLiteOpenHelper {
         return database;
     }
 
+    // Constructor for the DbHelper
     public DbHelper(Context context) {
         super(context, DATABASE_NAME, null, DATABASE_VERSION);
     }
 
-    // Crear la tabla task con las columnas definidas en TaskContract
+    // SQL query to create the task table
     private static final String SQL_CREATE_TASK_ENTRIES =
             "CREATE TABLE " + TaskContract.TaskEntry.TABLE_NAME + " (" +
                     TaskContract.TaskEntry._ID + " INTEGER PRIMARY KEY AUTOINCREMENT," +
@@ -47,12 +50,11 @@ public class DbHelper extends SQLiteOpenHelper {
                     TaskContract.TaskEntry.COLUMN_NAME_DUE_TIME + " TEXT" +
                     " )";
 
-    // Eliminar la tabla task si existe
+    // SQL query to delete the task table
     private static final String SQL_DELETE_TASK_ENTRIES =
             "DROP TABLE IF EXISTS " + TaskContract.TaskEntry.TABLE_NAME;
 
-
-    // Crear la tabla note con las columnas definidas en NoteContract
+    // SQL query to create the note table
     private static final String SQL_CREATE_NOTE_ENTRIES =
             "CREATE TABLE " + NoteContract.NoteEntry.TABLE_NAME + " (" +
                     NoteContract.NoteEntry._ID + " INTEGER PRIMARY KEY AUTOINCREMENT," +
@@ -60,11 +62,11 @@ public class DbHelper extends SQLiteOpenHelper {
                     NoteContract.NoteEntry.COLUMN_NAME_CONTENT + " TEXT" +
                     " )";
 
-    // Eliminar la tabla note si existe
+    // SQL query to delete the note table
     private static final String SQL_DELETE_NOTE_ENTRIES =
             "DROP TABLE IF EXISTS " + NoteContract.NoteEntry.TABLE_NAME;
 
-    // Crear la tabla subject con las columnas definidas en SubjectContract
+    // SQL query to create the subject table
     private static final String SQL_CREATE_SUBJECT_ENTRIES =
             "CREATE TABLE " + SubjectContract.SubjectEntry.TABLE_NAME + " (" +
                     SubjectContract.SubjectEntry._ID + " INTEGER PRIMARY KEY AUTOINCREMENT," +
@@ -72,19 +74,21 @@ public class DbHelper extends SQLiteOpenHelper {
                     SubjectContract.SubjectEntry.COLUMN_NAME_COLOR + " INTEGER" +
                     " )";
 
-    // Eliminar la tabla subject si existe
+    // SQL query to delete the subject table
     private static final String SQL_DELETE_SUBJECT_ENTRIES =
             "DROP TABLE IF EXISTS " + SubjectContract.SubjectEntry.TABLE_NAME;
 
     @Override
     public void onCreate(SQLiteDatabase sqLiteDatabase) {
+        // Create the tables in the database
         sqLiteDatabase.execSQL(SQL_CREATE_TASK_ENTRIES);
         sqLiteDatabase.execSQL(SQL_CREATE_NOTE_ENTRIES);
         sqLiteDatabase.execSQL(SQL_CREATE_SUBJECT_ENTRIES);
     }
 
     @Override
-    public void onUpgrade(SQLiteDatabase sqLiteDatabase, int i, int i1) {
+    public void onUpgrade(SQLiteDatabase sqLiteDatabase, int oldVersion, int newVersion) {
+        // Drop the old tables and recreate them for the new version
         sqLiteDatabase.execSQL(SQL_DELETE_TASK_ENTRIES);
         sqLiteDatabase.execSQL(SQL_DELETE_NOTE_ENTRIES);
         sqLiteDatabase.execSQL(SQL_DELETE_SUBJECT_ENTRIES);
@@ -93,6 +97,7 @@ public class DbHelper extends SQLiteOpenHelper {
 
     @Override
     public void onDowngrade(SQLiteDatabase db, int oldVersion, int newVersion) {
+        // Handle database downgrade by dropping tables and recreating them
         db.execSQL(SQL_DELETE_TASK_ENTRIES);
         db.execSQL(SQL_DELETE_NOTE_ENTRIES);
         db.execSQL(SQL_DELETE_SUBJECT_ENTRIES);
@@ -101,11 +106,11 @@ public class DbHelper extends SQLiteOpenHelper {
 
     @Override
     public void close() {
+        // Close the database if it is open
         if (database != null && database.isOpen()) {
             Log.d("DbHelper", "Closing database");
             database.close();
         }
         super.close();
     }
-
 }

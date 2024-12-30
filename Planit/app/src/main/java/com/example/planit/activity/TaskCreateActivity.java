@@ -31,11 +31,11 @@ public class TaskCreateActivity extends AppCompatActivity {
     private EditText taskNameEditText, taskDescriptionEditText, taskDueDateEditText, taskDueTimeEditText;
     private Spinner taskImportanceSpinner, taskTypeSpinner, taskSubjectSpinner;
     private Button saveButton;
-
     private TaskManager taskManager;
     private SubjectManager subjectManager;
     private List<Subject> subjects;
 
+    // Initialize the TaskManager, checking if it's already in Singleton, if not, create a new one
     private void initTaskManager() {
         taskManager = (TaskManager) SingletonEntity.getInstance().get(TaskFragment.SHARED_TASK_LIST);
         if (taskManager == null) {
@@ -44,6 +44,7 @@ public class TaskCreateActivity extends AppCompatActivity {
         }
     }
 
+    // Initialize the SubjectManager, checking if it's already in Singleton, if not, create a new one
     private void initSubjectManager() {
         subjectManager = (SubjectManager) SingletonEntity.getInstance().get(SubjectFragment.SHARED_SUBJECT_LIST);
         if (subjectManager == null) {
@@ -57,7 +58,7 @@ public class TaskCreateActivity extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_task_create);
 
-        // Inicialización de vistas
+        // Find views for task name, description, due date, due time, importance, type, and subject
         taskNameEditText = findViewById(R.id.editTextTaskName);
         taskDescriptionEditText = findViewById(R.id.editTextTaskDescription);
         taskDueDateEditText = findViewById(R.id.editTextDueDate);
@@ -67,20 +68,20 @@ public class TaskCreateActivity extends AppCompatActivity {
         taskSubjectSpinner = findViewById(R.id.spinnerSubject);
         saveButton = findViewById(R.id.buttonSaveTask);
 
-        // Inicializar el TaskManager y SubjectManager
+        // Initialize the managers
         initTaskManager();
         initSubjectManager();
 
-        // Configurar el spinner de importancia
+        // Set up the importance spinner with values from resources
         ArrayAdapter<CharSequence> importanceAdapter = ArrayAdapter.createFromResource(this,
                 R.array.importance_array, android.R.layout.simple_spinner_item);
         importanceAdapter.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
         taskImportanceSpinner.setAdapter(importanceAdapter);
 
-        // Obtener los subjects y llenar el spinner
+        // Initialize subject spinner
         subjects = subjectManager.getSubjects();
         List<String> subjectNames = new ArrayList<>();
-        subjectNames.add(getString(R.string.no_subject));
+        subjectNames.add(getString(R.string.no_subject));  // Add a default option
         for (Subject subject : subjects) {
             subjectNames.add(subject.getName());
         }
@@ -88,21 +89,22 @@ public class TaskCreateActivity extends AppCompatActivity {
         adapter.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
         taskSubjectSpinner.setAdapter(adapter);
 
+        // Set a listener for the due date field to show a date picker dialog
         taskDueDateEditText.setOnClickListener(v -> showDatePickerDialog());
 
-        // Configuración del botón de guardar
+        // Set a listener for the save button to save the task
         saveButton.setOnClickListener(v -> {
             saveTask();
         });
     }
 
+    // Show a date picker dialog for the user to select a date
     private void showDatePickerDialog() {
         final Calendar calendar = Calendar.getInstance();
         int year = calendar.get(Calendar.YEAR);
         int month = calendar.get(Calendar.MONTH);
         int day = calendar.get(Calendar.DAY_OF_MONTH);
 
-        // Crear y mostrar el DatePickerDialog
         DatePickerDialog datePickerDialog = new DatePickerDialog(
                 this,
                 (view, selectedYear, selectedMonth, selectedDay) -> {
@@ -111,7 +113,6 @@ public class TaskCreateActivity extends AppCompatActivity {
                     SimpleDateFormat dateFormat = new SimpleDateFormat("dd/MM/yyyy", Locale.getDefault());
                     String formattedDate = dateFormat.format(selectedDate.getTime());
 
-                    // Establecer la fecha en el EditText
                     taskDueDateEditText.setText(formattedDate);
                 },
                 year, month, day
@@ -120,9 +121,8 @@ public class TaskCreateActivity extends AppCompatActivity {
         datePickerDialog.show();
     }
 
-    // Método para guardar la tarea en la base de datos
+    // Save the task after validating the inputs
     private void saveTask() {
-        // Obtener los valores ingresados por el usuario
         String name = taskNameEditText.getText().toString().trim();
         String description = taskDescriptionEditText.getText().toString().trim();
         String dueDate = Task.formatDateReversed(taskDueDateEditText.getText().toString().trim());
@@ -133,7 +133,7 @@ public class TaskCreateActivity extends AppCompatActivity {
         int taskItemPosition = taskSubjectSpinner.getSelectedItemPosition();
         int subjectId = taskItemPosition == 0 ? -1 : subjects.get(taskItemPosition - 1).getId();
 
-        // Validar los campos obligatorios
+        // Check if essential fields are filled
         if (name.isEmpty() || dueDate.isEmpty()) {
             new AlertDialog.Builder(this)
                     .setTitle(getString(R.string.dialog_error_title))
@@ -144,7 +144,7 @@ public class TaskCreateActivity extends AppCompatActivity {
             return;
         }
 
-        // Validar la longitud del nombre
+        // Validate the task name length
         if (name.length() < 3 || name.length() > 50) {
             new AlertDialog.Builder(this)
                     .setTitle(getString(R.string.dialog_error_title))
@@ -154,7 +154,7 @@ public class TaskCreateActivity extends AppCompatActivity {
             return;
         }
 
-        // Validar la longitud de la descripción
+        // Validate the description length
         if (description.length() > 400) {
             new AlertDialog.Builder(this)
                     .setTitle(getString(R.string.dialog_error_title))
@@ -164,7 +164,7 @@ public class TaskCreateActivity extends AppCompatActivity {
             return;
         }
 
-        // Validar el formato de la hora (si no está vacía)
+        // Validate the due time format
         if (!dueTime.isEmpty() && !dueTime.matches("^([01]?\\d|2[0-3]):[0-5]\\d$")) {
             new AlertDialog.Builder(this)
                     .setTitle(getString(R.string.dialog_error_title))
@@ -174,6 +174,7 @@ public class TaskCreateActivity extends AppCompatActivity {
             return;
         }
 
+        // Set importance level based on the selected option
         int importance;
         String[] importanceArray = getResources().getStringArray(R.array.importance_array);
 
@@ -190,8 +191,8 @@ public class TaskCreateActivity extends AppCompatActivity {
             importance = 1;
         }
 
+        // Try to create the task and handle possible errors
         try {
-            // Llamar al método createTask para insertar la nueva tarea
             taskManager.createTask(name, description, importance, type, subjectId, dueDate, dueTime);
             Toast.makeText(TaskCreateActivity.this, getString(R.string.toast_task_created), Toast.LENGTH_SHORT).show();
             finish();
