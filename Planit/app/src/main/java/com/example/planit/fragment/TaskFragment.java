@@ -26,6 +26,9 @@ import java.util.Date;
 import java.util.List;
 import java.util.Locale;
 
+import java.util.Collections;
+import java.util.Comparator;
+
 public class TaskFragment extends Fragment {
     private TaskManager taskManager;
 
@@ -33,10 +36,8 @@ public class TaskFragment extends Fragment {
 
     // Initialize TaskManager and Singleton
     private void initTaskManager() {
-        // Try to get TaskManager from Singleton
         taskManager = (TaskManager) SingletonEntity.getInstance().get(SHARED_TASK_LIST);
         if (taskManager == null) {
-            // If not present, create a new instance and store it in Singleton
             taskManager = new TaskManager(requireContext());
             SingletonEntity.getInstance().put(SHARED_TASK_LIST, taskManager);
         }
@@ -45,15 +46,16 @@ public class TaskFragment extends Fragment {
     @Nullable
     @Override
     public View onCreateView(@NonNull LayoutInflater inflater, @Nullable ViewGroup container, @Nullable Bundle savedInstanceState) {
-        // Inflate the layout for the fragment
         View view = inflater.inflate(R.layout.fragment_task_list, container, false);
 
-        // Initialize TaskManager and set up data
         initTaskManager();
         taskManager.initTaskManager();
 
-        // Separate tasks into pending, overdue, and completed
+        // Get and sort tasks by date
         List<Task> allTasks = taskManager.getTasks();
+        sortTasksByDate(allTasks);
+
+        // Separate tasks into pending, overdue, and completed
         List<Task> pendingTasks = new ArrayList<>();
         List<Task> overdueTasks = new ArrayList<>();
         List<Task> completedTasks = new ArrayList<>();
@@ -73,15 +75,12 @@ public class TaskFragment extends Fragment {
             }
         }
 
-        // Add sections for each task category
         ViewGroup taskSectionsContainer = view.findViewById(R.id.taskSectionsContainer);
         addSection(taskSectionsContainer, getString(R.string.pending_tasks), pendingTasks);
         addSection(taskSectionsContainer, getString(R.string.overdue_tasks), overdueTasks);
         addSection(taskSectionsContainer, getString(R.string.completed_tasks), completedTasks);
 
-        // Button to add a new task
         view.findViewById(R.id.buttonAddTask).setOnClickListener(v -> {
-            // Launch TaskCreateActivity to add a new task
             Intent intent = new Intent(requireContext(), TaskCreateActivity.class);
             startActivity(intent);
         });
@@ -89,35 +88,38 @@ public class TaskFragment extends Fragment {
         return view;
     }
 
-    // Adds a section (with a title and list of tasks) to the container
+    // Sort tasks by due date and time
+    private void sortTasksByDate(List<Task> tasks) {
+        Collections.sort(tasks, (task1, task2) -> {
+            String dateTime1 = task1.getDueDate() + " " + task1.getDueTime();
+            String dateTime2 = task2.getDueDate() + " " + task2.getDueTime();
+            return dateTime1.compareTo(dateTime2);
+        });
+    }
+
     private void addSection(ViewGroup container, String title, List<Task> tasks) {
         if (tasks.isEmpty()) {
-            return; // No section added if there are no tasks
+            return;
         }
 
-        // Create and add a section title
         TextView sectionTitle = new TextView(requireContext());
         sectionTitle.setText(title);
         sectionTitle.setTextSize(18);
         sectionTitle.setPadding(16, 16, 16, 8);
         container.addView(sectionTitle);
 
-        // Set up RecyclerView for the task list
         RecyclerView sectionRecyclerView = new RecyclerView(requireContext());
         sectionRecyclerView.setLayoutManager(new LinearLayoutManager(requireContext()));
         sectionRecyclerView.setNestedScrollingEnabled(false);
 
-        // Set the adapter for RecyclerView with the given tasks
         TaskAdapter taskAdapter = new TaskAdapter(requireContext(), tasks);
         sectionRecyclerView.setAdapter(taskAdapter);
 
         container.addView(sectionRecyclerView);
 
-        // Adjust RecyclerView height based on the number of items
         sectionRecyclerView.post(() -> setRecyclerViewHeightBasedOnItems(sectionRecyclerView));
     }
 
-    // Adjusts RecyclerView height to fit the number of items
     private void setRecyclerViewHeightBasedOnItems(RecyclerView recyclerView) {
         RecyclerView.Adapter adapter = recyclerView.getAdapter();
         if (adapter == null) {
@@ -135,7 +137,6 @@ public class TaskFragment extends Fragment {
         recyclerView.requestLayout();
     }
 
-    // Get the current date and time as a string
     private String getCurrentDateTime() {
         SimpleDateFormat sdf = new SimpleDateFormat("yyyy/MM/dd HH:mm", Locale.getDefault());
         return sdf.format(new Date());
@@ -145,12 +146,12 @@ public class TaskFragment extends Fragment {
     public void onResume() {
         super.onResume();
         if (getView() != null) {
-            // Remove all existing sections when fragment is resumed
             ViewGroup taskSectionsContainer = getView().findViewById(R.id.taskSectionsContainer);
             taskSectionsContainer.removeAllViews();
 
-            // Separate tasks into pending, overdue, and completed again
             List<Task> allTasks = taskManager.getTasks();
+            sortTasksByDate(allTasks);
+
             List<Task> pendingTasks = new ArrayList<>();
             List<Task> overdueTasks = new ArrayList<>();
             List<Task> completedTasks = new ArrayList<>();
@@ -170,7 +171,6 @@ public class TaskFragment extends Fragment {
                 }
             }
 
-            // Add updated sections for each task category
             addSection(taskSectionsContainer, getString(R.string.pending_tasks), pendingTasks);
             addSection(taskSectionsContainer, getString(R.string.overdue_tasks), overdueTasks);
             addSection(taskSectionsContainer, getString(R.string.completed_tasks), completedTasks);
