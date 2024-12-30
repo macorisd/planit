@@ -6,7 +6,7 @@
         android:id="@+id/title"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:text="Lista de Tareas"
+        android:text="@string/task_list_title"
         android:textSize="18sp"
         android:textStyle="bold"
         android:layout_alignParentTop="true"
@@ -36,7 +36,7 @@
         android:id="@+id/buttonAddTask"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:text="Add Task"
+        android:text="@string/add_task_button"
         android:layout_alignParentBottom="true"
         android:layout_centerHorizontal="true"
         android:layout_marginBottom="95dp" />

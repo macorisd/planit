@@ -124,18 +124,18 @@ public class SubjectEditActivity extends AppCompatActivity {
 
     private void initializeColorMap() {
         colorMap = new HashMap<>();
-        colorMap.put("Red", Color.parseColor("#FF0000"));
-        colorMap.put("Green", Color.parseColor("#00FF00"));
-        colorMap.put("Blue", Color.parseColor("#0000FF"));
-        colorMap.put("Yellow", Color.parseColor("#FFFF00"));
-        colorMap.put("Purple", Color.parseColor("#800080"));
-        colorMap.put("Cyan", Color.parseColor("#00FFFF"));
-        colorMap.put("Orange", Color.parseColor("#FFA500"));
-        colorMap.put("Pink", Color.parseColor("#FFC0CB"));
-        colorMap.put("Black", Color.parseColor("#000000"));
-        colorMap.put("White", Color.parseColor("#FFFFFF"));
-
+        colorMap.put(getString(R.string.color_red), Color.parseColor("#FF0000"));
+        colorMap.put(getString(R.string.color_green), Color.parseColor("#00FF00"));
+        colorMap.put(getString(R.string.color_blue), Color.parseColor("#0000FF"));
+        colorMap.put(getString(R.string.color_yellow), Color.parseColor("#FFFF00"));
+        colorMap.put(getString(R.string.color_purple), Color.parseColor("#800080"));
+        colorMap.put(getString(R.string.color_cyan), Color.parseColor("#00FFFF"));
+        colorMap.put(getString(R.string.color_orange), Color.parseColor("#FFA500"));
+        colorMap.put(getString(R.string.color_pink), Color.parseColor("#FFC0CB"));
+        colorMap.put(getString(R.string.color_black), Color.parseColor("#000000"));
+        colorMap.put(getString(R.string.color_white), Color.parseColor("#FFFFFF"));
     }
+
 
     private int getKeyIndex(String key) {
         String[] keys = colorMap.keySet().toArray(new String[0]);

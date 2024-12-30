@@ -69,9 +69,9 @@ public class TaskFragment extends Fragment {
         }
 
         ViewGroup taskSectionsContainer = view.findViewById(R.id.taskSectionsContainer);
-        addSection(taskSectionsContainer, "Tareas Pendientes", pendingTasks);
-        addSection(taskSectionsContainer, "Tareas Atrasadas", overdueTasks);
-        addSection(taskSectionsContainer, "Tareas Completadas", completedTasks);
+        addSection(taskSectionsContainer, getString(R.string.pending_tasks), pendingTasks);
+        addSection(taskSectionsContainer, getString(R.string.overdue_tasks), overdueTasks);
+        addSection(taskSectionsContainer, getString(R.string.completed_tasks), completedTasks);
 
         view.findViewById(R.id.buttonAddTask).setOnClickListener(v -> {
             Intent intent = new Intent(requireContext(), TaskCreateActivity.class);
@@ -158,9 +158,9 @@ public class TaskFragment extends Fragment {
                 }
             }
 
-            addSection(taskSectionsContainer, "Tareas Pendientes", pendingTasks);
-            addSection(taskSectionsContainer, "Tareas Atrasadas", overdueTasks);
-            addSection(taskSectionsContainer, "Tareas Completadas", completedTasks);
+            addSection(taskSectionsContainer, getString(R.string.pending_tasks), pendingTasks);
+            addSection(taskSectionsContainer, getString(R.string.overdue_tasks), overdueTasks);
+            addSection(taskSectionsContainer, getString(R.string.completed_tasks), completedTasks);
         }
     }
 }

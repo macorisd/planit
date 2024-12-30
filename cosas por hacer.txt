@@ -2,10 +2,16 @@ NEXT
 
 - mejoras:
 	tareas:
-	notas:
-	asignaturas:
+	notas: validación de máximo de caracteres (título y contenido)
+	asignaturas: botones abajo
 
-- idiomas
+- idiomas:
+	- strings normales
+	- strings adicionales: recorrer archivos e ir cambiando
+	- sugerencias en campos de form
+	- toast
+	- excepciones en inglés
+- Dialogs (ventanas de información de errores) / Snackbar
 - icono de app
 - notificaciones?
 - ajustes?

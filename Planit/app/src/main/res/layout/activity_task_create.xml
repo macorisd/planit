@@ -10,7 +10,7 @@
         android:id="@+id/title"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:text="Crear Tarea"
+        android:text="@string/task_create_label"
         android:textSize="18sp"
         android:textStyle="bold"
         android:layout_marginBottom="16dp"
@@ -25,13 +25,13 @@
         <TextView
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:text="Nombre:" />
+            android:text="@string/task_name" />
         <EditText
             android:id="@+id/editTextTaskName"
             android:layout_width="0dp"
             android:layout_height="48dp"
             android:layout_weight="1"
-            android:hint="Nombre de la tarea"
+            android:hint="@string/task_name"
             android:inputType="text" />
     </LinearLayout>
 
@@ -45,13 +45,13 @@
         <TextView
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:text="Descripción:" />
+            android:text="@string/task_description" />
 
         <EditText
             android:id="@+id/editTextTaskDescription"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:hint="Descripción detallada"
+            android:hint="@string/task_description"
             android:inputType="textMultiLine"
             android:lines="10"
             android:minLines="2"
@@ -60,7 +60,6 @@
             android:overScrollMode="always"
             android:padding="8dp" />
     </LinearLayout>
-
 
     <!-- Spinner de asignatura -->
     <LinearLayout
@@ -71,7 +70,7 @@
         <TextView
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:text="Asignatura:" />
+            android:text="@string/task_subject" />
         <Spinner
             android:id="@+id/spinnerSubject"
             android:layout_width="0dp"
@@ -88,13 +87,13 @@
         <TextView
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:text="Fecha de vencimiento:" />
+            android:text="@string/task_due_date" />
         <EditText
             android:id="@+id/editTextDueDate"
             android:layout_width="0dp"
             android:layout_height="48dp"
             android:layout_weight="1"
-            android:hint="DD-MM-YYYY"
+            android:hint="@string/task_due_date"
             android:focusableInTouchMode="false"
             android:inputType="date" />
     </LinearLayout>
@@ -108,13 +107,13 @@
         <TextView
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:text="Hora de vencimiento:" />
+            android:text="@string/task_due_time" />
         <EditText
             android:id="@+id/editTextDueTime"
             android:layout_width="0dp"
             android:layout_height="48dp"
             android:layout_weight="1"
-            android:hint="HH:MM"
+            android:hint="@string/task_due_time"
             android:inputType="time" />
     </LinearLayout>
 
@@ -127,7 +126,7 @@
         <TextView
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:text="Importancia:" />
+            android:text="@string/task_priority" />
         <Spinner
             android:id="@+id/spinnerImportance"
             android:layout_width="0dp"
@@ -145,7 +144,7 @@
         <TextView
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:text="Tipo:" />
+            android:text="@string/task_type" />
         <Spinner
             android:id="@+id/spinnerType"
             android:layout_width="0dp"
@@ -164,7 +163,7 @@
         android:id="@+id/buttonSaveTask"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:text="Guardar tarea"
+        android:text="@string/save_button"
         android:layout_gravity="bottom" />
 
 </LinearLayout>

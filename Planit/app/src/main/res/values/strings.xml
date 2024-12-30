@@ -3,9 +3,11 @@
     <string name="task_detail_label">Task Details</string>
     <string name="task_create_label">Create Task</string>
     <string name="task_edit_label">Edit Task</string>
+    <string name="note_create_label">Create Note</string>
+    <string name="note_edit_label">Edit Note</string>
+    <string name="subject_create_label">Create Subject</string>
+    <string name="subject_edit_label">Edit Subject</string>
     <!-- Strings used for fragments for navigation -->
-    <string name="first_fragment_label">First Fragment</string>
-    <string name="second_fragment_label">Second Fragment</string>
     <string name="next">Next</string>
     <string name="previous">Previous</string>
 
@@ -46,20 +48,101 @@
         vestibulum. Fusce dictum libero quis erat maximus, vitae volutpat diam dignissim.
     </string>
 
+    <!-- COMMON -->
+
+    <string name="save_button">Save</string>
+    <string name="cancel_button">Cancel</string>
+    <string name="delete_button">Delete</string>
+
+    <!-- TASKS -->
+
+    <!-- Task List -->
+
+    <string name="tasks_fragment_title">Tasks</string>
+    <string name="task_list_title">Task List</string>
+
+    <string name="pending_tasks">Pending Tasks</string>
+    <string name="overdue_tasks">Overdue Tasks</string>
+    <string name="completed_tasks">Completed Tasks</string>
+    <string name="no_subject">(No subject)</string>
+
+    <string name="add_task_button">Add Task</string>
+    <string name="at_time">at</string>
+
+    <!-- Task CRUD -->
+
+    <string name="task_details_title">Task Details</string>
+    <string name="task_edit_title">Edit Task</string>
+    <string name="task_create_title">Create Task</string>
+
+    <string name="task_name">Name:</string>
+    <string name="task_description">Description:</string>
+    <string name="task_subject">Subject:</string>
+    <string name="task_due_date">Due date:</string>
+    <string name="task_due_time">Due time:</string>
+    <string name="task_priority">Priority:</string>
+    <string name="task_type">Type:</string>
+    <string name="task_completed">Completed</string>
+
+    <string name="edit_task_button">Edit Task</string>
+    <string name="delete_task_button">Delete Task</string>
+
     <string-array name="importance_array">
-        <item>Baja</item>
-        <item>Media</item>
-        <item>Alta</item>
+        <item>Low</item>
+        <item>Medium</item>
+        <item>High</item>
     </string-array>
 
     <string-array name="type_array">
-        <item>Estudio</item>
-        <item>Deberes</item>
-        <item>Examen</item>
-        <item>Proyecto</item>
-        <item>Práctica</item>
-        <item>Presentación</item>
-        <item>Reunión</item>
-        <item>Otro</item>
+        <item>Study</item>
+        <item>Homework</item>
+        <item>Exam</item>
+        <item>Project</item>
+        <item>Practice</item>
+        <item>Presentation</item>
+        <item>Meeting</item>
+        <item>Other</item>
     </string-array>
+
+
+    <!-- NOTES -->
+
+    <string name="notes_fragment_title">Notes</string>
+    <string name="note_list_title">Note List</string>
+
+    <string name="add_note_button">Add Note</string>
+
+    <!-- Note CRUD -->
+
+    <string name="note_create_title">Create Note</string>
+    <string name="note_edit_title">Edit Note</string>
+
+
+    <!-- SUBJECTS -->
+
+    <string name="subjects_fragment_title">Subjects</string>
+    <string name="subject_list_title">Subject List</string>
+
+    <string name="add_subject_button">Add Subject</string>
+
+    <!-- Subject CRUD -->
+
+    <string name="subject_create_title">Create Subject</string>
+    <string name="subject_name">Name:</string>
+    <string name="subject_color">Color:</string>
+
+    <string name="color_red">Red</string>
+    <string name="color_green">Green</string>
+    <string name="color_blue">Blue</string>
+    <string name="color_yellow">Yellow</string>
+    <string name="color_purple">Purple</string>
+    <string name="color_cyan">Cyan</string>
+    <string name="color_orange">Orange</string>
+    <string name="color_pink">Pink</string>
+    <string name="color_black">Black</string>
+    <string name="color_white">White</string>
+
+    <string name="subject_edit_title">Edit Subject</string>
+
+
 </resources>

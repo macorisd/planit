@@ -99,15 +99,15 @@ public class SubjectCreateActivity extends AppCompatActivity {
 
     private void initializeColorMap() {
         colorMap = new HashMap<>();
-        colorMap.put("Red", "#FF0000");
-        colorMap.put("Green", "#00FF00");
-        colorMap.put("Blue", "#0000FF");
-        colorMap.put("Yellow", "#FFFF00");
-        colorMap.put("Purple", "#800080");
-        colorMap.put("Cyan", "#00FFFF");
-        colorMap.put("Orange", "#FFA500");
-        colorMap.put("Pink", "#FFC0CB");
-        colorMap.put("Black", "#000000");
-        colorMap.put("White", "#FFFFFF");
+        colorMap.put(getString(R.string.color_red), "#FF0000");
+        colorMap.put(getString(R.string.color_green), "#00FF00");
+        colorMap.put(getString(R.string.color_blue), "#0000FF");
+        colorMap.put(getString(R.string.color_yellow), "#FFFF00");
+        colorMap.put(getString(R.string.color_purple), "#800080");
+        colorMap.put(getString(R.string.color_cyan), "#00FFFF");
+        colorMap.put(getString(R.string.color_orange), "#FFA500");
+        colorMap.put(getString(R.string.color_pink), "#FFC0CB");
+        colorMap.put(getString(R.string.color_black), "#000000");
+        colorMap.put(getString(R.string.color_white), "#FFFFFF");
     }
 }

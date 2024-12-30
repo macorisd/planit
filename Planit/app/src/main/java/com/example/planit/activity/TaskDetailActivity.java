@@ -76,32 +76,27 @@ public class TaskDetailActivity extends AppCompatActivity {
         taskNameView.setText(taskName);
         taskDescriptionView.setText(taskDescription.length() > 0 ? taskDescription : "");
 
+        String[] importanceArray = getResources().getStringArray(R.array.importance_array);
         String importanceText = "";
-        switch(taskImportance) {
-            case 1:
-                importanceText = "Baja";
-                break;
-            case 2:
-                importanceText = "Media";
-                break;
-            case 3:
-                importanceText = "Alta";
-                break;
+
+        if (taskImportance >= 1 && taskImportance <= 3) {
+            importanceText = importanceArray[taskImportance - 1]; // Restamos 1 para que los índices empiecen en 0
         }
 
-        taskImportanceView.setText("Prioridad: " + importanceText);
-        taskTypeView.setText("Tipo: " + taskType);
+        taskImportanceView.setText(getString(R.string.task_priority) + " " + importanceText);
+
+        taskTypeView.setText(getString(R.string.task_type) + " " + taskType);
 
         // Obtener el nombre de la asignatura
         Subject subject = subjectManager.getById(taskSubjectId);
         if (subject != null) {
-            taskSubjectView.setText("Asignatura: " + subject.getName());
+            taskSubjectView.setText(getString(R.string.task_subject) + " " + subject.getName());
         } else {
-            taskSubjectView.setText("(Sin asignatura)");
+            taskSubjectView.setText(getString(R.string.no_subject));
         }
 
-        taskDueDateView.setText("Fecha de vencimiento: " + Task.formatDate(taskDueDate));
-        taskDueTimeView.setText(taskDueTime.isEmpty() ? "" : "Hora de vencimiento: " + taskDueTime);
+        taskDueDateView.setText(getString(R.string.task_due_date) + " " + Task.formatDate(taskDueDate));
+        taskDueTimeView.setText(taskDueTime.isEmpty() ? "" : getString(R.string.task_due_time) + " " + taskDueTime);
 
         // Configurar el estado del interruptor
         taskCompletedSwitch.setChecked(taskCompleted);

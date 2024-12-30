@@ -10,7 +10,7 @@
         android:id="@+id/titleTaskDetail"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:text="Detalles de Tarea"
+        android:text="@string/task_details_title"
         android:textSize="18sp"
         android:textStyle="bold"
         android:layout_marginBottom="16dp"
@@ -21,7 +21,6 @@
         android:id="@+id/taskDetailName"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:text="Task Name"
         android:textSize="24sp"
         android:textStyle="bold"
         android:paddingBottom="8dp" />
@@ -32,7 +31,6 @@
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:paddingBottom="8dp"
-        android:text="Task Description"
         android:textSize="16sp"
         android:maxLines="10" />
 
@@ -43,7 +41,6 @@
         android:layout_width="wrap_content"
         android:layout_height="50dp"
         android:paddingBottom="8dp"
-        android:text="Task Subject"
         android:textSize="16sp"
         android:textStyle="bold" />
 
@@ -53,7 +50,6 @@
         android:layout_width="wrap_content"
         android:layout_height="30dp"
         android:paddingBottom="8dp"
-        android:text="Task Due Date"
         android:textSize="16sp"
         android:textStyle="bold" />
 
@@ -63,7 +59,6 @@
         android:layout_width="wrap_content"
         android:layout_height="30dp"
         android:paddingBottom="8dp"
-        android:text="Task Due Time"
         android:textSize="16sp"
         android:textStyle="bold" />
 
@@ -72,7 +67,6 @@
         android:id="@+id/taskDetailImportance"
         android:layout_width="wrap_content"
         android:layout_height="30dp"
-        android:text="Task Importance"
         android:textSize="16sp"
         android:textStyle="bold" />
 
@@ -82,7 +76,6 @@
         android:layout_width="wrap_content"
         android:layout_height="30dp"
         android:paddingBottom="8dp"
-        android:text="Task Type"
         android:textSize="16sp"
         android:textStyle="bold" />
 
@@ -91,7 +84,7 @@
         android:layout_width="wrap_content"
         android:layout_height="50dp"
         android:paddingBottom="8dp"
-        android:text="Completada"
+        android:text="@string/task_completed"
         android:textStyle="bold" />
 
     <!-- Espacio extra para empujar los botones hacia abajo -->
@@ -112,7 +105,7 @@
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:layout_marginTop="16dp"
-            android:text="Editar Tarea"
+            android:text="@string/edit_task_button"
             android:backgroundTint="@color/design_default_color_primary"
             android:textColor="@android:color/white" />
 
@@ -122,7 +115,7 @@
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:layout_marginTop="16dp"
-            android:text="Eliminar Tarea"
+            android:text="@string/delete_task_button"
             android:backgroundTint="@color/design_default_color_error"
             android:textColor="@android:color/white" />
     </LinearLayout>

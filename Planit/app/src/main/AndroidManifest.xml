@@ -41,16 +41,24 @@
             android:theme="@style/Theme.Planit" />
         <activity
             android:name=".activity.NoteCreateActivity"
-            android:exported="false" />
+            android:exported="false"
+            android:label="@string/note_create_label"
+            android:theme="@style/Theme.Planit"/>
         <activity
             android:name=".activity.NoteEditActivity"
-            android:exported="false" />
+            android:exported="false"
+            android:label="@string/note_edit_label"
+            android:theme="@style/Theme.Planit"/>
         <activity
             android:name=".activity.SubjectCreateActivity"
-            android:exported="false" />
+            android:exported="false"
+            android:label="@string/subject_create_label"
+            android:theme="@style/Theme.Planit"/>
         <activity
             android:name=".activity.SubjectEditActivity"
-            android:exported="false" />
+            android:exported="false"
+            android:label="@string/subject_edit_label"
+            android:theme="@style/Theme.Planit"/>
     </application>
 
 </manifest>

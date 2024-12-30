@@ -53,7 +53,7 @@ public class TaskAdapter extends RecyclerView.Adapter<TaskAdapter.TaskViewHolder
         Task task = taskList.get(position);
         holder.taskName.setText(task.getName());
         holder.taskDueDate.setText(Task.formatDate(task.getDueDate()));
-        holder.taskDueTime.setText(task.getDueTime().isEmpty() ? "" : "a las " + task.getDueTime());
+        holder.taskDueTime.setText(task.getDueTime().isEmpty() ? "" : holder.itemView.getContext().getString(R.string.at_time) + " " + task.getDueTime());
 
         // Obtener el nombre de la asignatura
         Subject subject = subjectManager.getById(task.getSubjectId());
@@ -61,7 +61,7 @@ public class TaskAdapter extends RecyclerView.Adapter<TaskAdapter.TaskViewHolder
             holder.taskSubjectName.setText(subject.getName());
             holder.subjectColorStrip.setBackgroundColor(subject.getColor());
         } else {
-            holder.taskSubjectName.setText("(Sin asignatura)");
+            holder.taskSubjectName.setText(holder.itemView.getContext().getString(R.string.no_subject));
             holder.subjectColorStrip.setBackgroundColor(holder.itemView.getContext().getResources().getColor(android.R.color.white));
         }
 

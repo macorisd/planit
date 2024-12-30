@@ -10,7 +10,7 @@
         android:id="@+id/titleEditTask"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:text="Editar Tarea"
+        android:text="@string/task_edit_title"
         android:textSize="18sp"
         android:textStyle="bold"
         android:layout_marginBottom="16dp"
@@ -25,13 +25,13 @@
         <TextView
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:text="Nombre:" />
+            android:text="@string/task_name" />
         <EditText
             android:id="@+id/etTaskName"
             android:layout_width="0dp"
             android:layout_height="48dp"
             android:layout_weight="1"
-            android:hint="Nombre de la tarea"
+            android:hint="@string/task_name"
             android:inputType="text" />
     </LinearLayout>
 
@@ -41,12 +41,10 @@
         android:layout_height="wrap_content"
         android:orientation="vertical"
         android:layout_marginBottom="8dp">
-
         <TextView
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:text="Descripción:" />
-
+            android:text="@string/task_description" />
         <EditText
             android:id="@+id/etDescription"
             android:layout_width="match_parent"
@@ -69,7 +67,7 @@
         <TextView
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:text="Asignatura:" />
+            android:text="@string/task_subject" />
         <Spinner
             android:id="@+id/spinnerSubject"
             android:layout_width="0dp"
@@ -86,7 +84,7 @@
         <TextView
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:text="Fecha de vencimiento:" />
+            android:text="@string/task_due_date" />
         <EditText
             android:id="@+id/etDueDate"
             android:layout_width="0dp"
@@ -106,7 +104,7 @@
         <TextView
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:text="Hora de vencimiento:" />
+            android:text="@string/task_due_time" />
         <EditText
             android:id="@+id/etDueTime"
             android:layout_width="0dp"
@@ -125,7 +123,7 @@
         <TextView
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:text="Importancia:" />
+            android:text="@string/task_priority" />
         <Spinner
             android:id="@+id/spinnerImportance"
             android:layout_width="0dp"
@@ -143,7 +141,7 @@
         <TextView
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:text="Tipo:" />
+            android:text="@string/task_type" />
         <Spinner
             android:id="@+id/spinnerType"
             android:layout_width="0dp"
@@ -162,7 +160,7 @@
         android:id="@+id/btnSave"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:text="Guardar"
+        android:text="@string/save_button"
         android:layout_gravity="bottom" />
 
     <!-- Botón de cancelar -->
@@ -170,6 +168,6 @@
         android:id="@+id/btnCancel"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:text="Cancelar" />
+        android:text="@string/cancel_button" />
 
 </LinearLayout>
